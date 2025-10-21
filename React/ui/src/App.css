@@ -1,38 +1,112 @@
-.App {
-  text-align: center;
+:root {
+    --main: #1A2B42;
+    --sel: #F78C26;
+    --bg: #EAECEE;
+    --text: #2C3E50;
+    --text-light: #566573;
+    --white: #FFFFFF;
+    --black: #000000;
+    --border: #B08010;
+    --icon: #4AA8AA;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Orev Edge Regular";
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.expanded {
+    width: 250px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.collapsed {
+    width: 80px;
 }
 
-.App-link {
-  color: #61dafb;
+.hide {
+    display: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.expanded, .collapsed, .hide, .selected {
+    transition: width 0.3s;
+}
+
+.admin {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+.adminSideBar {
+    height: 100%;
+}
+
+.navigation {
+    background-color: var(--main);
+    height: 100%;
+    border-right: 2px dotted var(--text-light);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navHeader {
+    display: flex;
+    align-items: center;
+    height: 8%;
+    gap: 10px;
+}
+
+.adminLogo {
+    display: flex;
+    font-size: 50px;
+    color: var(--sel);
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.adminTitle {
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.adminHeader {
+    height: 8%;
+    width: 100%;
+    background-color: var(--main);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profileLogo {
+    display: flex;
+    font-size: 40px;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.navItems {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: var(--white);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.selected {
+    width: 90%;
+    background-color: var(--sel);
+    border-radius: 5px;
 }

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { TbSquareRoundedLetterAFilled, TbWriting } from 'react-icons/tb';
-import { LuLayoutDashboard } from 'react-icons/lu';
+import { LuLayoutDashboard,LuTickets } from 'react-icons/lu';
 import { PiStudent } from 'react-icons/pi';
 import { MdManageAccounts } from 'react-icons/md';
 
@@ -58,6 +58,14 @@ const Navigation = ({ settings, sendDataToParent }) => {
         >
           <PiStudent />
           <span className={`navText ${pressed ? '' : 'hide'}`}>Students</span>
+        </div>
+
+        <div
+          className={`navItem ${selected === "hallTicket" ? 'selected' : ''}`}
+          onClick={() => setSelected("hallTicket")}
+        >
+          <LuTickets />
+          <span className={`navText ${pressed ? '' : 'hide'}`}>Hall Tickets</span>
         </div>
 
         <div

@@ -7,7 +7,8 @@
     --white: #FFFFFF;
     --black: #000000;
     --border: #B08010;
-    --icon: #4AA8AA;
+    --edit: #4AA8AA;
+    --del: #E74C3C; 
 }
 
 * {
@@ -15,6 +16,11 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Orev Edge Regular";
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .expanded {
@@ -99,7 +105,7 @@
 .adminContent {
     height: 92%;
     width: 100%;
-    background-color: var(--bg);
+    background-color: var(--white);
     padding: 20px;
     overflow-y: auto;
 }
@@ -126,7 +132,13 @@
     border-radius: 5px;
 }
 
-.dashBoard{
+.pageTitle {
+    color: var(--text);
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.dashBoard,.exams,.students,.hallTickets,.settings {
     height: 100%;
     width: 100%;
 }
@@ -187,4 +199,125 @@
     font-size: 20px;
     font-weight:bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.addExamBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--sel);
+    color: var(--bg);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.examSelector {
+    height: 30%;
+    width: 100%;
+    padding: 20px;
+    background-color: var(--bg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.examCard {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.semSelect, .examSelect {
+    width: 60%;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.examHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.examContainer {
+    height: 60%;
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.examTitle {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.addSubBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: transparent;
+    color: var(--sel);
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rowHead {
+    background-color: var(--bg);
+    font-size: 18px;
+    font-weight: 600;
+    height: 40px;
+    padding: 20px;
+}
+
+.cellHead {
+    padding: 0 10px;
+    color: var(--text);
+    border-right: 2px dotted var(--bg);
+}
+
+.cellBody {
+    padding: 10px;
+    border: 2px dotted var(--bg);
+    border-left: none;
+    border-top: none;
+    color: var(--text-light);
+}
+
+.cellBody:last-child {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.editIc {
+    color: var(--edit);
+    cursor: pointer;
+}
+
+.delIc {
+    color: var(--del);
+    cursor: pointer;
 }

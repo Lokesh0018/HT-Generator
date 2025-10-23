@@ -6,6 +6,9 @@ import { BsFillPassFill } from 'react-icons/bs';
 const DashBoard = () => {
     return (
         <div className="dashBoard">
+            <div className="pageTitle">
+                Admin Dashboard
+            </div>
             <div className="dashBoardCards">
                 <div className="boardCard">
                     <div className="cardTitle">

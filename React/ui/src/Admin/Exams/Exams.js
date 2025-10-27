@@ -9,7 +9,7 @@ const Exams = () => {
         <div className="exams">
             <div className="pageHeader">
                 <div className="pageTitle">Exams Management</div>
-                <button className="addExamBtn"><FaPlus />Add New Exam</button>
+                <button className="addBtn"><FaPlus />Add New Student</button>
             </div>
             <div className="examSelector">
                 <div className="examCard">
@@ -17,21 +17,21 @@ const Exams = () => {
                         <option value="midterm">Midterm Exam - March 2024</option>
                         <option value="final">Final Exam - June 2024</option>
                     </select>
-                    <select className="examSelect hide">
+                    <select className="examSelect">
                         <option value="math101">Math 101</option>
                         <option value="phy101">Physics 101</option>
                     </select>
                 </div>
             </div>
             <div className="examContainer">
-                <div className="examHeader">
-                    <div className="examTitle">
+                <div className="tabHeader">
+                    <div className="tabTitle">
                         Time Table
                     </div>
                     <button className="addSubBtn"><FaCirclePlus />Add Subject</button>
                 </div>
-                <div className="examCard">
-                    <table className="examTable">
+                <div className="tableCard">
+                    <table className="table">
                         <thead>
                             <tr className="rowHead">
                                 <td className="cellHead">S.no</td>

@@ -4,11 +4,11 @@
     --bg: #EAECEE;
     --text: #2C3E50;
     --text-light: #566573;
-    --white: #FFFFFF;
+    --white: #ffffff;
     --black: #000000;
     --border: #B08010;
     --edit: #4AA8AA;
-    --del: #E74C3C; 
+    --del: #E74C3C;
 }
 
 * {
@@ -35,7 +35,10 @@ a {
     display: none;
 }
 
-.expanded, .collapsed, .hide, .selected {
+.expanded,
+.collapsed,
+.hide,
+.selected {
     transition: width 0.3s;
 }
 
@@ -138,7 +141,11 @@ a {
     font-weight: 700;
 }
 
-.dashBoard,.exams,.students,.hallTickets,.settings {
+.dashBoard,
+.exams,
+.students,
+.hallTickets,
+.settings {
     height: 100%;
     width: 100%;
 }
@@ -197,7 +204,7 @@ a {
     border-radius: 5px;
     cursor: pointer;
     font-size: 20px;
-    font-weight:bold;
+    font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -208,7 +215,7 @@ a {
     margin-bottom: 20px;
 }
 
-.addExamBtn {
+.addBtn {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -231,7 +238,9 @@ a {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.examCard {
+.examCard,
+.tableCard {
+    background-color: #F5F7FA;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -242,7 +251,8 @@ a {
     border-radius: 10px;
 }
 
-.semSelect, .examSelect {
+.semSelect,
+.examSelect {
     width: 60%;
     cursor: pointer;
     padding: 10px;
@@ -250,7 +260,7 @@ a {
     border-radius: 5px;
 }
 
-.examHeader {
+.tabHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -265,7 +275,15 @@ a {
     scrollbar-width: none;
 }
 
-.examTitle {
+.studentContainer {
+    height: 80%;
+    width: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.tabTitle {
     font-size: 30px;
     font-weight: 600;
     color: var(--text);
@@ -320,4 +338,71 @@ a {
 .delIc {
     color: var(--del);
     cursor: pointer;
+}
+
+.checkboxWrapper .toggle {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.checkboxWrapper .toggle::before {
+  content: "";
+  position: relative;
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 14px;
+  background: #9A9999;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  display: block;
+}
+
+.checkboxWrapper .toggle span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.checkboxWrapper .toggle span::before {
+  content: "";
+  position: absolute;
+  margin: -18px;
+  width: 56px;
+  height: 56px;
+  background: #F78C2680;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+  display: block;
+}
+
+.checkboxWrapper .cbx:checked + .toggle::before {
+  background: #F9A85C;
+}
+
+.checkboxWrapper .cbx:checked + .toggle span {
+  background: var(--sel);
+  transform: translateX(20px);
+  transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+  box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+
+.checkboxWrapper .cbx:checked + .toggle span::before {
+  transform: scale(1);
+  opacity: 0;
+  transition: all 0.4s ease;
 }

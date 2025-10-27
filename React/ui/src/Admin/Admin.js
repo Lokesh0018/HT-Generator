@@ -34,7 +34,7 @@ const Admin = () => {
                         <Route path="/admin/dashboard" element={<DashBoard />} />
                         <Route path="/admin/exams" element={<Exams />} />
                         <Route path="/admin/students" element={<Students />} />
-                        <Route path="/admin/hall-tickets" element={<HallTickets />} />
+                        <Route path="/admin/halltickets" element={<HallTickets />} />
                         <Route path="/admin/settings" element={<Settings />} />
                     </Routes>
                 </div>

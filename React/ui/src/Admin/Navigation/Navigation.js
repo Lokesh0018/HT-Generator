@@ -3,27 +3,15 @@ import { TbSquareRoundedLetterAFilled, TbWriting } from 'react-icons/tb';
 import { LuLayoutDashboard, LuTickets } from 'react-icons/lu';
 import { PiStudent } from 'react-icons/pi';
 import { MdManageAccounts } from 'react-icons/md';
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
-const Navigation = ({ settings, sendDataToParent }) => {
-  const [pressed, setPressed] = useState(true);
-  const [selected, setSelected] = useState("dashboard");
+const Navigation = () => {
+
+  const [pressed,setPressed] = useState(false);
 
   const toggle = () => {
     setPressed(!pressed);
   }
-
-  useEffect(() => {
-    if (settings === true) {
-      setSelected("settings");
-    }
-  }, [settings]);
-
-  useEffect(() => {
-    if (selected !== "settings") {
-      sendDataToParent();
-    }
-  }, [selected, sendDataToParent]);
 
   return (
     <div className={`navigation ${pressed ? 'expanded' : 'collapsed'}`}>
@@ -35,53 +23,50 @@ const Navigation = ({ settings, sendDataToParent }) => {
           <h2>Admin</h2>
         </div>
       </div>
-
       <div className="navItems">
-        <Link to="/admin/dashboard">
-          <div
-            className={`navItem ${selected === "dashboard" ? 'selected' : ''}`}
-            onClick={() => setSelected("dashboard")}
-          >
-            <LuLayoutDashboard />
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Dashboard</span>
-          </div>
-        </Link>
-        <Link to="/admin/exams">
-          <div
-            className={`navItem ${selected === "exam" ? 'selected' : ''}`}
-            onClick={() => setSelected("exam")}
-          >
+        <NavLink
+          to="/admin"
+          end
+          className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
+        >
+          <div className="navIcon">
+          <LuLayoutDashboard />
+        </div>
+          <span className={`navText ${pressed ? "" : "hide"}`}>Dashboard</span>
+        </NavLink>
+
+        <NavLink to="/admin/exams"
+            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+        >
+          <div className="navIcon">
             <TbWriting />
+            </div>
             <span className={`navText ${pressed ? '' : 'hide'}`}>Exams</span>
-          </div>
-        </Link>
-        <Link to="/admin/students">
-          <div
-            className={`navItem ${selected === "students" ? 'selected' : ''}`}
-            onClick={() => setSelected("students")}
-          >
+        </NavLink>
+        <NavLink to="/admin/students"
+            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+        >
+          <div className="navIcon">
             <PiStudent />
+            </div>
             <span className={`navText ${pressed ? '' : 'hide'}`}>Students</span>
-          </div>
-        </Link>
-        <Link to="/admin/halltickets">
-          <div
-            className={`navItem ${selected === "hallTicket" ? 'selected' : ''}`}
-            onClick={() => setSelected("hallTicket")}
-          >
+        </NavLink>
+        <NavLink to="/admin/halltickets"
+            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+        >
+          <div className="navIcon">
             <LuTickets />
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Hall Tickets</span>
-          </div>
-        </Link>
-        <Link to="/admin/settings">
-          <div
-            className={`navItem ${selected === "settings" ? 'selected' : ''}`}
-            onClick={() => setSelected("settings")}
-          >
+            </div>
+            <span className={`navText ${pressed ? '' : 'hide'}`}>Hall&nbsp;Tickets</span>
+        </NavLink>
+        <NavLink to="/admin/settings"
+            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+        >
+          <div className="navIcon">
             <MdManageAccounts />
+            </div>
             <span className={`navText ${pressed ? '' : 'hide'}`}>Settings</span>
-          </div>
-        </Link>
+        </NavLink>
 
       </div>
     </div>

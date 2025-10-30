@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { CgProfile } from 'react-icons/cg';
-import { Link, Routes, Route } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import Navigation from "./Navigation/Navigation";
 import DashBoard from "./DashBoard/DashBoard";
 import Exams from "./Exams/Exams";
@@ -19,23 +19,23 @@ const Admin = () => {
     return (
         <div className="admin">
             <aside className="adminSideBar">
-                <Navigation settings={pressed} sendDataToParent={receive} />
+                <Navigation />
             </aside>
             <div className="adminMain">
                 <div className="adminHeader">
                     <div className="profileLogo">
-                        <Link to="/admin/settings">
+                        <NavLink to="/admin/settings">
                             <CgProfile onClick={select} />
-                        </Link>
+                        </NavLink>
                     </div>
                 </div>
                 <div className="adminContent">
                     <Routes>
-                        <Route path="/admin/dashboard" element={<DashBoard />} />
-                        <Route path="/admin/exams" element={<Exams />} />
-                        <Route path="/admin/students" element={<Students />} />
-                        <Route path="/admin/halltickets" element={<HallTickets />} />
-                        <Route path="/admin/settings" element={<Settings />} />
+                        <Route path="/" element={<DashBoard />} />
+                        <Route path="/exams" element={<Exams />} />
+                        <Route path="/students" element={<Students />} />
+                        <Route path="/halltickets" element={<HallTickets />} />
+                        <Route path="/settings" element={<Settings />} />
                     </Routes>
                 </div>
             </div>

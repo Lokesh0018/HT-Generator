@@ -1,3 +1,5 @@
+@import url(https://db.onlinewebfonts.com/c/4ced975fa3e5923499c64211ab8d7777?family=Orev+Edge+Regular);
+
 :root {
     --main: #1A2B42;
     --sel: #F78C26;
@@ -9,7 +11,7 @@
     --border: #B08010;
     --edit: #4AA8AA;
     --del: #E74C3C;
-    --primaryBackgroundSidebar:	#202A44;
+    --primaryBackgroundSidebar: #202A44;
     --AccentActionButton: #F78C2F;
     --GeneralBackground: #F5F7FA;
     --BorderDivider: #DDDDDD;
@@ -121,7 +123,7 @@ a {
     width: 100%;
     background-color: var(--GeneralBackground);
     padding: 20px;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .navItems {
@@ -141,7 +143,7 @@ a {
 }
 
 .selected {
-    width: 90%;
+    width: 100%;
     background-color: var(--sel);
     border-radius: 5px;
 }
@@ -242,15 +244,16 @@ a {
 }
 
 .examSelector {
-    height: 30%;
-    width: 100%;
+    height: 200px;
+    border: 1px solid var(--BorderDivider);
+    border-radius: 5px;
     padding: 20px;
     background-color: var(--bg);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .examCard,
-.tableCard {
+.tableContainer {
     background-color: #F5F7FA;
     height: 100%;
     display: flex;
@@ -260,6 +263,12 @@ a {
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+}
+
+.examTable {
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
 .semSelect,
@@ -281,9 +290,6 @@ a {
     height: 60%;
     width: 100%;
     padding: 20px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
 }
 
 .studentContainer {
@@ -319,6 +325,8 @@ a {
     font-weight: 600;
     height: 40px;
     padding: 20px;
+    position: sticky;
+    top: 0;
 }
 
 .cellHead {
@@ -352,73 +360,73 @@ a {
 }
 
 .checkboxWrapper .toggle {
-  position: relative;
-  display: block;
-  width: 40px;
-  height: 20px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transform: translate3d(0, 0, 0);
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transform: translate3d(0, 0, 0);
 }
 
 .checkboxWrapper .toggle::before {
-  content: "";
-  position: relative;
-  top: 3px;
-  left: 3px;
-  width: 34px;
-  height: 14px;
-  background: #9A9999;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-  display: block;
+    content: "";
+    position: relative;
+    top: 3px;
+    left: 3px;
+    width: 34px;
+    height: 14px;
+    background: #9A9999;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+    display: block;
 }
 
 .checkboxWrapper .toggle span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
-  transition: all 0.2s ease;
-  display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+    transition: all 0.2s ease;
+    display: block;
 }
 
 .checkboxWrapper .toggle span::before {
-  content: "";
-  position: absolute;
-  margin: -18px;
-  width: 56px;
-  height: 56px;
-  background: #F78C2680;
-  border-radius: 50%;
-  transform: scale(0);
-  opacity: 1;
-  pointer-events: none;
-  display: block;
+    content: "";
+    position: absolute;
+    margin: -18px;
+    width: 56px;
+    height: 56px;
+    background: #F78C2680;
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+    display: block;
 }
 
-.checkboxWrapper .cbx:checked + .toggle::before {
-  background: #F9A85C;
+.checkboxWrapper .cbx:checked+.toggle::before {
+    background: #F9A85C;
 }
 
-.checkboxWrapper .cbx:checked + .toggle span {
-  background: var(--sel);
-  transform: translateX(20px);
-  transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
-  box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+.checkboxWrapper .cbx:checked+.toggle span {
+    background: var(--sel);
+    transform: translateX(20px);
+    transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+    box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
 }
 
-.checkboxWrapper .cbx:checked + .toggle span::before {
-  transform: scale(1);
-  opacity: 0;
-  transition: all 0.4s ease;
+.checkboxWrapper .cbx:checked+.toggle span::before {
+    transform: scale(1);
+    opacity: 0;
+    transition: all 0.4s ease;
 }
 
-.settingsContainer{
+.settingsContainer {
     width: 100%;
     height: 50%;
     display: flex;
@@ -454,14 +462,96 @@ a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.editTimeTable {
+.subCard, .stuCard {
     position: absolute;
     z-index: 1;
-    transform: translate(50%,50%);
+    transform: translate(50%, 20%);
     width: 40%;
-    height: 40%;
+    height: 60%;
     background-color: var(--bg);
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cardTable {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+.cardTable td {
+    padding: 5px;
+}
+
+.cardLable {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid var(--BorderDivider);
+    border-radius: 5px;
+}
+
+.saveChanges {
+    display: flex;
+    justify-content: center;
+}
+
+.saveBtn {
+    width: 30%;
+    padding: 10px;
+    background-color: var(--sel);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.deleteCard {
+    position: absolute;
+    z-index: 1;
+    transform: translate(90%, 80%);
+    width: 30%;
+    height: 30%;
+    background-color: var(--bg);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.delActions {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: auto;
+}
+
+.cancelBtn {
+    padding: 10px;
+    border: 1px solid var(--AccentActionButton);
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 30%;
+}
+
+.deleteBtn {
+    padding: 10px;
+    background-color: var(--sel);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 30%;
 }

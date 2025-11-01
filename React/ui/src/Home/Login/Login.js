@@ -11,10 +11,24 @@ const Login = () => {
 
   return (
     <div className="login">
-      <h1>Login</h1>
-      <input type="text" placeholder="Username" />
-      <input type="password" placeholder="Password" />
-      <button type="button" onClick={create}>Login</button>
+      <div className="loginContainer">
+        <div className="loginHeader">
+          Admin Login
+        </div>
+        <div className="loginContent">
+          <div className="loginDetails">
+            <span className="loginLable">Username :</span>
+            <input type="text" placeholder="Enter Username" className="loginIp" />
+          </div>
+          <div className="loginDetails">
+            <span className="loginLable">Password :</span>
+            <input type="password" placeholder="Enter Password" className="loginIp" />
+          </div>
+          <div className="loginDetails">
+            <button className="loginBtn" onClick={create}>Login</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

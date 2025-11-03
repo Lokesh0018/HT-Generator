@@ -16,6 +16,9 @@
     --GeneralBackground: #F5F7FA;
     --BorderDivider: #DDDDDD;
     --SubtleTextHint: #777777;
+    --toastSuccess: #269b24;
+    --toastError:  #d10d0d;
+    --toastInfo: #124fff;
 }
 
 * {
@@ -46,6 +49,75 @@ a {
     filter: blur(2px);
     pointer-events: none;
     user-select: none;
+}
+
+.disable {
+    cursor: not-allowed !important;
+    opacity: 0.7;
+}
+
+.toast {
+    position: absolute;
+    right: -350px;
+    bottom: 50px;
+    width: 330px;
+    height: 100px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;
+    overflow: hidden;
+    transition: all 0.8s ease;
+    gap: 2px;
+}
+
+.toast.show {
+  right: 30px;
+}
+
+.toastWave {
+    height: 100%;
+    width: 3%;
+}
+
+
+.toastContent {
+    width: 97%;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toastHeader {
+    width: 100%;
+    height: 30%;
+    display: flex;
+}
+
+.toastHead {
+    display: flex;
+    width: 90%;
+    align-items: center;
+    gap: 10px;
+}
+
+.toastIc {
+    display: flex;
+    font-size: 24px;
+}
+
+.toastClose {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.toastBody {
+    font-size: 20px;
 }
 
 .expanded,
@@ -462,7 +534,8 @@ a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.subCard, .stuCard {
+.subCard,
+.stuCard {
     position: absolute;
     z-index: 1;
     transform: translate(50%, 20%);
@@ -626,9 +699,11 @@ a {
 }
 
 .home {
+    position: relative;
     height: 100vh;
     width: 100vw;
     background-color: var(--bg);
+    overflow: hidden;
 }
 
 .homeHeader {
@@ -662,13 +737,19 @@ a {
 }
 
 .homeContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
     height: 80%;
 }
 
 .homeDetails {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 10%;
+    width: 100%;
     margin: 30px;
 }
 
@@ -681,16 +762,17 @@ a {
     height: 60%;
     border-radius: 5px;
     font-size: 18px;
-    padding: 10px;
+    padding: 10px 30px 10px 10px;
+    border: none;
 }
 
 .sendIc {
     cursor: pointer;
     position: absolute;
     width: 3%;
-    height: 4.9%;
+    height: 5%;
     padding: 10px;
-    left: 32%;
+    left: 65%;
     border: 1px solid black;
     border-left: none;
     font-size: 20px;
@@ -700,4 +782,39 @@ a {
     border-bottom-right-radius: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 1;
+}
+
+.homeOtp {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.otpIp {
+    height: 80%;
+    width: 10%;
+    font-size: 22px;
+    padding-left: 16px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.verifyBtn {
+    cursor: pointer;
+    margin: 0 0 0 50px;
+    height: 8%;
+    width: 30%;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--AccentActionButton);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

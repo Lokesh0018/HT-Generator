@@ -1,6 +1,28 @@
 import React from "react";
+import { FaRegEdit } from 'react-icons/fa';
+import { MdDeleteOutline } from 'react-icons/md';
 
 const HallTickets = () => {
+    const data = [
+        {
+            "S.no": 1,
+            "Id": "233J5A0513",
+            "Name": "Munakala Lokesh",
+            "Email": "233j5a0513@raghuinstech.com",
+            "Branch": "CSE",
+            "Year": 4,
+            "Semester": 1
+        },
+        {
+            "S.no": 2,
+            "Id": "233J5A0513",
+            "Name": "Munakala Lokesh",
+            "Email": "233j5a0513@raghuinstech.com",
+            "Branch": "CSE",
+            "Year": 4,
+            "Semester": 1
+        }
+    ];
     return (
         <div className="hallTickets">
             <div className="pageHeader">
@@ -12,91 +34,26 @@ const HallTickets = () => {
                         <thead>
                             <tr className="rowHead">
                                 <td className="cellHead">S.no</td>
-                                <td className="cellHead">Semester</td>
-                                <td className="cellHead">Status</td>
+                                <td className="cellHead">Id</td>
+                                <td className="cellHead">Name</td>
+                                <td className="cellHead">Regulation</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="cellBody">1</td>
-                                <td className="cellBody">Mid Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-1" />
-                                        <label for="cbx-1" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">2</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-2" />
-                                        <label for="cbx-2" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">3</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-3" />
-                                        <label for="cbx-3" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">4</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-4" />
-                                        <label for="cbx-4" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">5</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-5" />
-                                        <label for="cbx-5" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">6</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-6" />
-                                        <label for="cbx-6" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">7</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-7" />
-                                        <label for="cbx-7" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="cellBody">8</td>
-                                <td className="cellBody">Final Exam</td>
-                                <td className="cellBody">
-                                    <div class="checkboxWrapper">
-                                        <input type="checkbox" className="cbx hide" id="cbx-8" />
-                                        <label for="cbx-8" class="toggle"><span></span></label>
-                                    </div>
-                                </td>
-                            </tr>
+                            {data.map((stu) => (
+                                <tr key={stu.key}>
+                                    <td className="cellBody">{stu["S.no"]}</td>
+                                    <td className="cellBody">{stu["Id"]}</td>
+                                    <td className="cellBody">{stu["Name"]}</td>
+                                    <td className="cellBody">{stu["Branch"]}</td>
+                                    <td className="cellBody">{stu["Year"]}</td>
+                                    <td className="cellBody">{stu["Semester"]}</td>
+                                    <td className="cellBody">
+                                        <FaRegEdit className="editIc"  />
+                                        <MdDeleteOutline className="delIc" />
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

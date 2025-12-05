@@ -2,6 +2,8 @@ import React from "react";
 import { MdUpcoming } from 'react-icons/md';
 import { GiGraduateCap } from 'react-icons/gi';
 import { BsFillPassFill } from 'react-icons/bs';
+import { IoIosMail } from "react-icons/io";
+import { FiSend } from "react-icons/fi";
 
 const DashBoard = () => {
     return (
@@ -47,6 +49,22 @@ const DashBoard = () => {
                             <span>120</span>
                         </div>
                         <button className="cardBtn">View Hall Tickets</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="dashBoardCards dbc-2">
+                <div className="boardCard dbc-2">
+                    <div className="cardTitle">
+                        Send Notification
+                    </div>
+                    <div className="cardContent dbc-2">
+                        <div className="cardData dbc-2">
+                            <span><IoIosMail /></span>
+                            <span>Message :</span>
+                            <textarea className="notifyArea"></textarea>
+                        </div>
+                        <button className="cardBtn dbc-2"><FiSend />Send</button>
                     </div>
                 </div>
             </div>

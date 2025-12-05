@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaCirclePlus } from 'react-icons/fa6';
+import { FaPlus } from 'react-icons/fa';
 
 const Exams = () => {
     const data = [

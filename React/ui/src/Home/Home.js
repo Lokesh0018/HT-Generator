@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LuSend, LuInfo } from "react-icons/lu";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiErrorCircle } from "react-icons/bi";
 import { IoCloseOutline } from "react-icons/io5";
+import { LiaWpforms } from 'react-icons/lia';
 
 const Home = () => {
+  const [verified, setVerified] = useState(true);
   const toastMap = {
     success: {
       head: "Success",
@@ -123,6 +125,42 @@ const Home = () => {
         <button type="submit" className="verifyBtn" disabled={disable}>
           Verify
         </button>
+
+        {(verified) && (
+          <div className="stuDetailsHome">
+            <div className="stuDetailsHomeContainer">
+              <div className="stuDetailsHomeHeader">
+                <LiaWpforms className="detailsCardIc" /> <h1>Details</h1>
+              </div>
+              <hr />
+              <div className="stuDetailsHomeBody">
+                <div className="stuDetailsImgHome"><img /></div>
+                <table>
+                  <tr>
+                    <td>Name :</td>
+                    <td>Munakala Lokesh</td>
+                  </tr>
+                  <tr>
+                    <td>Id :</td>
+                    <td>233J5A0513</td>
+                  </tr>
+                  <tr>
+                    <td>Branch :</td>
+                    <td>Computer Science and Engineering</td>
+                  </tr>
+                  <tr>
+                    <td>Year :</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>Semester :</td>
+                    <td>2</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
       </form>
 
       {toastData && (

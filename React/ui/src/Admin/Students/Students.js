@@ -7,22 +7,22 @@ const Students = () => {
 
     const data = [
         {
-            "S.no" : 1,
-            "Id" : "233J5A0513",
-            "Name" : "Munakala Lokesh",
-            "Email" : "233j5a0513@raghuinstech.com",
-            "Branch" : "CSE",
-            "Year" : 4,
-            "Semester" : 1
+            "S.no": 1,
+            "Id": "233J5A0513",
+            "Name": "Munakala Lokesh",
+            "Email": "233j5a0513@raghuinstech.com",
+            "Branch": "CSE",
+            "Year": 4,
+            "Semester": 1
         },
         {
-            "S.no" : 2,
-            "Id" : "233J5A0513",
-            "Name" : "Munakala Lokesh",
-            "Email" : "233j5a0513@raghuinstech.com",
-            "Branch" : "CSE",
-            "Year" : 4,
-            "Semester" : 1
+            "S.no": 2,
+            "Id": "233J5A0513",
+            "Name": "Munakala Lokesh",
+            "Email": "233j5a0513@raghuinstech.com",
+            "Branch": "CSE",
+            "Year": 4,
+            "Semester": 1
         }
     ];
 
@@ -32,7 +32,7 @@ const Students = () => {
     const editStuRef = useRef(null);
     const delStuRef = useRef(null);
 
-    const [showCard,setShowCard] = useState(null);
+    const [showCard, setShowCard] = useState(null);
 
     const addStudent = () => {
         document.querySelector('.studentContent').classList.add('blur');
@@ -51,7 +51,7 @@ const Students = () => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (showCard && addStuRef.current && !addStuRef.current.contains(event.target)){
+            if (showCard && addStuRef.current && !addStuRef.current.contains(event.target)) {
                 setShowCard(null);
                 document.querySelector('.studentContent').classList.remove('blur');
             }
@@ -86,13 +86,13 @@ const Students = () => {
         document.querySelector('.studentContent').classList.remove('blur');
     }
 
-    const  handleDelete = () => {
+    const handleDelete = () => {
         window.location.reload();
     }
 
     return (
         <div className="students">
-            {(showCard==="addStu") &&
+            {(showCard === "addStu") &&
                 <div className="stuCard" ref={addStuRef}>
                     <div className="cardHeader">
                         <h2>Add New Student</h2>
@@ -130,7 +130,7 @@ const Students = () => {
                     </div>
                 </div>
             }
-            {(showCard==="editStu") &&
+            {(showCard === "editStu") &&
                 <div className="stuCard" ref={editStuRef}>
                     <div className="cardHeader">
                         <h2>Update Student</h2>
@@ -168,7 +168,7 @@ const Students = () => {
                     </div>
                 </div>
             }
-            {(showCard==="delStu") &&
+            {(showCard === "delStu") &&
                 <div className="deleteCard" ref={delStuRef}>
                     <div className="cardHeader">
                         <h2>Delete Exam</h2>
@@ -183,45 +183,45 @@ const Students = () => {
                 </div>
             }
             <div className="studentContent">
-            <div className="pageHeader">
-                <div className="pageTitle">Students Management</div>
-                <button className="addBtn" onClick={addStudent}><FaPlus />Add New Student</button>
-            </div>
-            <div className="studentContainer">
-                <div className="tableContainer">
-                <table className="table">
-                    <thead>
-                        <tr className="rowHead">
-                            <td className="cellHead">S.no</td>
-                            <td className="cellHead">Id</td>
-                            <td className="cellHead">Name</td>
-                            <td className="cellHead">Email</td>
-                            <td className="cellHead">Branch</td>
-                            <td className="cellHead">Year</td>
-                            <td className="cellHead">Semester</td>
-                            <td className="cellHead">Actions</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((stu) => (
-                        <tr key={stu.key}>
-                            <td className="cellBody">{stu["S.no"]}</td>
-                            <td className="cellBody">{stu["Id"]}</td>
-                            <td className="cellBody">{stu["Name"]}</td>
-                            <td className="cellBody">{stu["Email"]}</td>
-                            <td className="cellBody">{stu["Branch"]}</td>
-                            <td className="cellBody">{stu["Year"]}</td>
-                            <td className="cellBody">{stu["Semester"]}</td>
-                            <td className="cellBody">
-                            <FaRegEdit className="editIc" onClick={()=>editStudent(stu)} />
-                            <MdDeleteOutline className="delIc" onClick={()=>deleteStudent(stu)} />
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="pageHeader">
+                    <div className="pageTitle">Students Management</div>
+                    <button className="addBtn" onClick={addStudent}><FaPlus />Add New Student</button>
                 </div>
-            </div>
+                <div className="studentContainer">
+                    <div className="tableContainer">
+                        <table className="table">
+                            <thead>
+                                <tr className="rowHead">
+                                    <td className="cellHead">S.no</td>
+                                    <td className="cellHead">Id</td>
+                                    <td className="cellHead">Name</td>
+                                    <td className="cellHead">Email</td>
+                                    <td className="cellHead">Branch</td>
+                                    <td className="cellHead">Year</td>
+                                    <td className="cellHead">Semester</td>
+                                    <td className="cellHead">Actions</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.map((stu) => (
+                                    <tr key={stu.key}>
+                                        <td className="cellBody">{stu["S.no"]}</td>
+                                        <td className="cellBody">{stu["Id"]}</td>
+                                        <td className="cellBody">{stu["Name"]}</td>
+                                        <td className="cellBody">{stu["Email"]}</td>
+                                        <td className="cellBody">{stu["Branch"]}</td>
+                                        <td className="cellBody">{stu["Year"]}</td>
+                                        <td className="cellBody">{stu["Semester"]}</td>
+                                        <td className="cellBody">
+                                            <FaRegEdit className="editIc" onClick={() => editStudent(stu)} />
+                                            <MdDeleteOutline className="delIc" onClick={() => deleteStudent(stu)} />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     );

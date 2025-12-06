@@ -231,7 +231,8 @@ a {
 .exams,
 .students,
 .hallTickets,
-.settings {
+.settings,
+.hallTicket {
     height: 100%;
     width: 100%;
 }
@@ -299,20 +300,23 @@ a {
     height: 80%;
 }
 
-.cardBtn {
+.cardBtnContainer {
+    color: var(--bg);
     width: 100%;
     height: 40%;
     background-color: var(--sel);
-    color: var(--bg);
+    font-size: 20px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.cardBtn.dbc-2 {
+.cardBtnContainer.dbc-2 {
     position: relative;
     display: flex;
     align-items: center;
@@ -321,6 +325,16 @@ a {
     width: 89%;
     height: 25%;
     margin-left: auto;
+}
+
+.cardBtn {
+    color: var(--bg);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .notifyArea {
@@ -613,6 +627,7 @@ a {
     position: absolute;
     height: 40%;
     transform: translate(60%,50%);
+    z-index: 1;
 }
 
 .login {
@@ -847,7 +862,6 @@ hr {
 }
 
 .stuDetailsHomeBody {
-    border: 1px solid var(--black);
     display: flex;
     gap: 20px;
     width: 100%;
@@ -859,4 +873,44 @@ hr {
     border: 1px solid red;
     width: 30%;
     height: 100%;
+}
+
+.pageHeader.ht {
+    justify-content: center;
+}
+
+.hallTicketContainer {
+    border: var(--bor);
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.hallTicketContainer .ht {
+    border: var(--bor);
+    height: 80%;
+    width: 60%;
+}
+
+.htHeader {
+    display: flex;
+    border: var(--bor);
+    justify-content: center;
+}
+
+.clgLogo {
+    border: var(--bor);
+    height: 100px;
+}
+
+.htTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headerTxt1 {
+    border: var(--bor);
+    font-size: 48px;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { MdUpcoming } from 'react-icons/md';
 import { GiGraduateCap } from 'react-icons/gi';
 import { BsFillPassFill } from 'react-icons/bs';
@@ -6,6 +7,10 @@ import { IoIosMail } from "react-icons/io";
 import { FiSend } from "react-icons/fi";
 
 const DashBoard = () => {
+    const handleNotify = () => {
+        if(!document.querySelector(".notifyArea").value)
+            alert("Fill");
+    }
     return (
         <div className="dashBoard">
             <div className="pageTitle">
@@ -22,7 +27,7 @@ const DashBoard = () => {
                             <span>Upcoming Exams :</span>
                             <span>3</span>
                         </div>
-                        <button className="cardBtn">View Exams</button>
+                        <NavLink to="/admin/exams" className="cardBtnContainer" ><button className="cardBtn">View Exams</button></NavLink>
                     </div>
                 </div>
                 <div className="boardCard">
@@ -35,7 +40,7 @@ const DashBoard = () => {
                             <span>Registered Students :</span>
                             <span>150</span>
                         </div>
-                        <button className="cardBtn">View Students</button>
+                        <NavLink to="/admin/students" className="cardBtnContainer"><button className="cardBtn">View Students</button></NavLink>
                     </div>
                 </div>
                 <div className="boardCard">
@@ -48,7 +53,7 @@ const DashBoard = () => {
                             <span>Generated Hall Tickets :</span>
                             <span>120</span>
                         </div>
-                        <button className="cardBtn">View Hall Tickets</button>
+                        <NavLink to="/admin/halltickets" className="cardBtnContainer"><button className="cardBtn">View Hall Tickets</button></NavLink>
                     </div>
                 </div>
             </div>
@@ -62,9 +67,9 @@ const DashBoard = () => {
                         <div className="cardData dbc-2">
                             <span><IoIosMail /></span>
                             <span>Message :</span>
-                            <textarea className="notifyArea"></textarea>
+                            <textarea className="notifyArea" required></textarea>
                         </div>
-                        <button className="cardBtn dbc-2"><FiSend />Send</button>
+                        <button className="cardBtnContainer dbc-2" type="submit" onClick={handleNotify}><FiSend />Send</button>
                     </div>
                 </div>
             </div>

@@ -161,6 +161,9 @@ const Home = () => {
             </div>
           </div>
         )}
+        <button type="submit" className="verifyBtn" disabled={disable}>
+          Confirm
+        </button>
       </form>
 
       {toastData && (
@@ -185,7 +188,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };

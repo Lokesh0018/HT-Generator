@@ -248,12 +248,14 @@ const Exams = () => {
                 <div className="examSelector">
                     <div className="examCard">
                         <select className="semSelect">
-                            <option value="midterm">Midterm Exam - March 2024</option>
-                            <option value="final">Final Exam - June 2024</option>
+                            <option value="first">First Year</option>
+                            <option value="second">Second Year</option>
+                            <option value="third">Third Year</option>
+                            <option value="fourth">Fourth Year</option>
                         </select>
                         <select className="examSelect">
-                            <option value="math101">Math 101</option>
-                            <option value="phy101">Physics 101</option>
+                            <option value="sem1">Semester 1</option>
+                            <option value="sem2">Semester 2</option>
                         </select>
                     </div>
                 </div>

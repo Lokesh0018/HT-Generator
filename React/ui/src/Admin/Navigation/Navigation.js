@@ -3,7 +3,7 @@ import { TbSquareRoundedLetterAFilled, TbWriting } from 'react-icons/tb';
 import { LuLayoutDashboard, LuTickets } from 'react-icons/lu';
 import { PiStudent } from 'react-icons/pi';
 import { MdManageAccounts } from 'react-icons/md';
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navigation = () => {
 

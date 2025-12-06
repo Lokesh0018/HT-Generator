@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import { FaEye } from 'react-icons/fa';
 import { LiaWpforms } from 'react-icons/lia';
 
@@ -27,7 +27,9 @@ const HallTickets = () => {
     ];
 
     const [students, setStudents] = useState(initialData);
-    const [viewCard, setViewCard] = useState();
+    const [showCard, setShowCard] = useState(null);
+
+    const viewRef = useRef(null);
 
     const approveAll = () => {
         setStudents(prev => {
@@ -47,51 +49,63 @@ const HallTickets = () => {
 
     const handleViewCard = (id) => {
         const student = initialData.find(s => s.Id == id);
-        setViewCard(student);
-        console.log(viewCard);
+        setShowCard(student);
+        document.querySelector(".hallTickets").classList.add("blur");
     }
 
-    return (
-        <div className="hallTickets">
-            {(viewCard) && (
-                <div className="stuDetailsHomeContainer sdh">
-                    <div className="stuDetailsHomeHeader">
-                        <LiaWpforms className="detailsCardIc" /> <h1>Details</h1>
-                    </div>
-                    <hr />
-                    <div className="stuDetailsHomeBody">
-                        <div className="stuDetailsImgHome"><img /></div>
-                        <table>
-                            <tr>
-                                <td>Name :</td>
-                                <td>Munakala Lokesh</td>
-                            </tr>
-                            <tr>
-                                <td>Id :</td>
-                                <td>233J5A0513</td>
-                            </tr>
-                            <tr>
-                                <td>Branch :</td>
-                                <td>Computer Science and Engineering</td>
-                            </tr>
-                            <tr>
-                                <td>Year :</td>
-                                <td>4</td>
-                            </tr>
-                            <tr>
-                                <td>Semester :</td>
-                                <td>2</td>
-                            </tr>
-                        </table>
-                    </div>
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (showCard && viewRef.current && !viewRef.current.contains(event.target)) {
+                setShowCard(null);
+                document.querySelector(".hallTickets").classList.remove("blur");
+            }
+        };
+        document.addEventListener("mousedown",handleClickOutside);
+        return () => document.removeEventListener("mousedown",handleClickOutside);
+    }, [showCard]);
+
+return (
+    <>
+        {(showCard) && (
+            <div className="stuDetailsHomeContainer sdh" ref={viewRef}>
+                <div className="stuDetailsHomeHeader">
+                    <LiaWpforms className="detailsCardIc" /> <h1>Details</h1>
                 </div>
-            )}
+                <hr />
+                <div className="stuDetailsHomeBody">
+                    <div className="stuDetailsImgHome"><img /></div>
+                    <table>
+                        <tr>
+                            <td>Name :</td>
+                            <td>{showCard.Name}</td>
+                        </tr>
+                        <tr>
+                            <td>Id :</td>
+                            <td>{showCard.Id}</td>
+                        </tr>
+                        <tr>
+                            <td>Branch :</td>
+                            <td>{showCard.Branch}</td>
+                        </tr>
+                        <tr>
+                            <td>Year :</td>
+                            <td>{showCard.Year}</td>
+                        </tr>
+                        <tr>
+                            <td>Semester :</td>
+                            <td>{showCard.Semester}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        )}
+        <div className="hallTickets">
             <div className="pageHeader">
                 <div className="pageTitle">HallTickets Management</div>
                 <button className="addBtn" onClick={approveAll}>Approve All</button>
             </div>
 
-            <div className="hallTicketContainer">
+            <div className="hallTicketsContainer">
                 <div className="tableContainer">
                     <table className="table">
                         <thead>
@@ -130,7 +144,8 @@ const HallTickets = () => {
                 </div>
             </div>
         </div>
-    );
+    </>
+);
 };
 
 export default HallTickets;

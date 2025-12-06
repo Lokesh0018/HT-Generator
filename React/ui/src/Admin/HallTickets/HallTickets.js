@@ -1,33 +1,96 @@
-import React from "react";
-import { FaRegEdit } from 'react-icons/fa';
-import { MdDeleteOutline } from 'react-icons/md';
+import { React, useState } from "react";
+import { FaEye } from 'react-icons/fa';
+import { LiaWpforms } from 'react-icons/lia';
 
 const HallTickets = () => {
-    const data = [
+    const initialData = [
         {
             "S.no": 1,
             "Id": "233J5A0513",
             "Name": "Munakala Lokesh",
-            "Email": "233j5a0513@raghuinstech.com",
             "Branch": "CSE",
             "Year": 4,
-            "Semester": 1
+            "Semester": 1,
+            "Regulation": "AR20",
+            "Status": true
         },
         {
             "S.no": 2,
-            "Id": "233J5A0513",
+            "Id": "233J5A0514",
             "Name": "Munakala Lokesh",
-            "Email": "233j5a0513@raghuinstech.com",
             "Branch": "CSE",
             "Year": 4,
-            "Semester": 1
+            "Semester": 1,
+            "Regulation": "AR20",
+            "Status": false
         }
     ];
+
+    const [students, setStudents] = useState(initialData);
+    const [viewCard, setViewCard] = useState();
+
+    const approveAll = () => {
+        setStudents(prev => {
+            return prev.map(stu => {
+                return { ...stu, Status: true }
+            })
+        })
+    }
+
+    const updateAction = (id, newStatus) => {
+        setStudents(prev =>
+            prev.map(stu =>
+                stu.Id === id ? { ...stu, Status: newStatus } : stu
+            )
+        );
+    };
+
+    const handleViewCard = (id) => {
+        const student = initialData.find(s => s.Id == id);
+        setViewCard(student);
+        console.log(viewCard);
+    }
+
     return (
         <div className="hallTickets">
+            {(viewCard) && (
+                <div className="stuDetailsHomeContainer sdh">
+                    <div className="stuDetailsHomeHeader">
+                        <LiaWpforms className="detailsCardIc" /> <h1>Details</h1>
+                    </div>
+                    <hr />
+                    <div className="stuDetailsHomeBody">
+                        <div className="stuDetailsImgHome"><img /></div>
+                        <table>
+                            <tr>
+                                <td>Name :</td>
+                                <td>Munakala Lokesh</td>
+                            </tr>
+                            <tr>
+                                <td>Id :</td>
+                                <td>233J5A0513</td>
+                            </tr>
+                            <tr>
+                                <td>Branch :</td>
+                                <td>Computer Science and Engineering</td>
+                            </tr>
+                            <tr>
+                                <td>Year :</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>Semester :</td>
+                                <td>2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            )}
             <div className="pageHeader">
                 <div className="pageTitle">HallTickets Management</div>
+                <button className="addBtn" onClick={approveAll}>Approve All</button>
             </div>
+
             <div className="hallTicketContainer">
                 <div className="tableContainer">
                     <table className="table">
@@ -37,20 +100,28 @@ const HallTickets = () => {
                                 <td className="cellHead">Id</td>
                                 <td className="cellHead">Name</td>
                                 <td className="cellHead">Regulation</td>
+                                <td className="cellHead">View</td>
+                                <td className="cellHead">Action</td>
                             </tr>
                         </thead>
+
                         <tbody>
-                            {data.map((stu) => (
-                                <tr key={stu.key}>
+                            {students.map((stu, index) => (
+                                <tr key={index}>
                                     <td className="cellBody">{stu["S.no"]}</td>
                                     <td className="cellBody">{stu["Id"]}</td>
                                     <td className="cellBody">{stu["Name"]}</td>
-                                    <td className="cellBody">{stu["Branch"]}</td>
-                                    <td className="cellBody">{stu["Year"]}</td>
-                                    <td className="cellBody">{stu["Semester"]}</td>
+                                    <td className="cellBody">{stu["Regulation"]}</td>
+                                    <td className="cellBody"><FaEye className="viewIc" onClick={() => handleViewCard(stu.Id)} /></td>
+
                                     <td className="cellBody">
-                                        <FaRegEdit className="editIc"  />
-                                        <MdDeleteOutline className="delIc" />
+                                        <input
+                                            type="checkbox"
+                                            checked={stu.Status}
+                                            onChange={(e) =>
+                                                updateAction(stu.Id, e.target.checked)
+                                            }
+                                        />
                                     </td>
                                 </tr>
                             ))}
@@ -60,6 +131,6 @@ const HallTickets = () => {
             </div>
         </div>
     );
-}
+};
 
 export default HallTickets;

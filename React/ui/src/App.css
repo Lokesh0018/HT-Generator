@@ -605,6 +605,16 @@ a {
     width: 30%;
 }
 
+.viewIc {
+    cursor: pointer;
+}
+
+.stuDetailsHomeContainer.sdh {
+    position: absolute;
+    height: 40%;
+    transform: translate(60%,50%);
+}
+
 .login {
     background-color: var(--bg);
     height: 100vh;
@@ -849,79 +859,4 @@ hr {
     border: 1px solid red;
     width: 30%;
     height: 100%;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* From Uiverse.io by Ghost-aft */ 
-.radio-input input {
-  display: none;
-}
-
-.radio-input {
-  --container_width: 300px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  border-radius: 10px;
-  background-color: #fff;
-  color: #000000;
-  width: var(--container_width);
-  overflow: hidden;
-  border: 1px solid rgba(53, 52, 52, 0.226);
-}
-
-.radio-input label {
-  width: 100%;
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  font-weight: 600;
-  letter-spacing: -1px;
-  font-size: 14px;
-}
-
-.selection {
-  display: none;
-  position: absolute;
-  height: 100%;
-  width: calc(var(--container_width) / 2);
-  z-index: 0;
-  left: 0;
-  top: 0;
-  transition: 0.15s ease;
-}
-
-.radio-input label:has(input:checked) {
-  color: #fff;
-}
-
-.radio-input label:nth-child(1):has(input:checked) ~ .selection {
-  transform: translateX(calc(var(--container_width) * 0 / 2));
-}
-
-.radio-input label:nth-child(2):has(input:checked) ~ .selection {
-  transform: translateX(calc(var(--container_width) * 1 / 2));
-}
-
-.approve {
-    background-color: var(--toastSuccess);
-}
-
-.reject {
-    background-color: var(--del);
 }

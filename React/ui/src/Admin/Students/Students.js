@@ -1,6 +1,5 @@
 import { React, useEffect, useRef, useState } from "react";
-import { FaPlus } from 'react-icons/fa';
-import { FaRegEdit } from 'react-icons/fa';
+import { FaRegEdit,FaPlus } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 
 const Students = () => {

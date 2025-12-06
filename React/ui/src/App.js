@@ -38,30 +38,6 @@ function App() {
           <Route path="/admin/*" element={<ProtectedRoute isAuth={authToken}><Admin /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
-      {data.map((item,index) => {
-  return (
-    <div className="radio-input" key={index}>
-      <label className={flag ? "approve" : ""}>
-        <input
-          name={`value-radio-${index}`}
-          type="radio"
-        />
-        <span>Approve</span>
-      </label>
-
-      <label className={!flag ? "reject" : ""}>
-        <input
-          name={`value-radio-${index}`}
-          type="radio"
-        />
-        <span>Reject</span>
-      </label>
-
-      <span className="selection"></span>
-    </div>
-  );
-})}
-
     </div>
   );
 }

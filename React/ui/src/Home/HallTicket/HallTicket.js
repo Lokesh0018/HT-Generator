@@ -1,17 +1,39 @@
-import React from "react";
+import { React, useRef } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { IoMdDownload } from "react-icons/io";
 
 const HallTicket = () => {
+
     const Year = 4;
     const Month = "October";
     const YearExam = 2025;
     const Semester = 1;
+
+
+    const printRef = useRef();
+
+    const downloadPDF = () => {
+        const input = printRef.current;
+
+        html2canvas(input, { scale: 2 }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF("p", "mm", "a4");
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+            pdf.save("HallTicket.pdf");
+        });
+    };
+
     return (
         <div className="hallTicket">
             <div className="pageHeader ht">
                 <div className="pageTitle">Hall Ticket</div>
             </div>
-            <div className="hallTicketContainer">
+            <div className="hallTicketContainer" ref={printRef}>
                 <div className="ht">
                     <div className="htHeader1">
                         <img
@@ -140,13 +162,21 @@ const HallTicket = () => {
                         </table>
                     </div>
                     <div className="htFooter">
-                        <b>Signature of the Student</b>
-                        <b>Controller of Examinations</b>
-                        <b>Principal</b>
+                        <span>
+                            <b>Signature of the Student</b>
+                        </span>
+                        <span>
+                            <img src="/img/COF Sign.png" className="signature"/>
+                            <b>Controller of Examinations</b>
+                        </span>
+                        <span>
+                            <img src="/img/Principal Sign.png" className="signature" />
+                            <b>Principal</b>
+                        </span>
                     </div>
                 </div>
             </div>
-            <button className="addBtn htdBtn"><IoMdDownload />Download</button>
+            <button className="addBtn htdBtn" onClick={downloadPDF}><IoMdDownload />Download</button>
         </div>
     )
 }

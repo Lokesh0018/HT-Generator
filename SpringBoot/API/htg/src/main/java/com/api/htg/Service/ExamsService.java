@@ -23,7 +23,7 @@ public class ExamsService {
         String subCode = entity.getSubCode();
         Optional<ExamsEntity> optional = examsRepo.findById(subCode);
         if(optional.isPresent())
-            throw new IllegalStateException("Subject with code "+subCode+" already exists");
+            throw new IllegalStateException();
         examsRepo.save(entity);
     }
 

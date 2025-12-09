@@ -1,5 +1,5 @@
-import { React, useEffect, useRef, useState } from "react";
-import { FaRegEdit,FaPlus } from 'react-icons/fa';
+import { React, use, useEffect, useRef, useState } from "react";
+import { FaRegEdit, FaPlus } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 
 const Students = () => {
@@ -24,6 +24,8 @@ const Students = () => {
             "Semester": 1
         }
     ];
+
+    const [preview, setPreview] = useState(null);
 
     const [selectedRow, setSelectedRow] = useState(null);
 
@@ -53,6 +55,7 @@ const Students = () => {
             if (showCard && addStuRef.current && !addStuRef.current.contains(event.target)) {
                 setShowCard(null);
                 document.querySelector('.studentContent').classList.remove('blur');
+                setPreview(null);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -63,6 +66,7 @@ const Students = () => {
             if (showCard && editStuRef.current && !editStuRef.current.contains(event.target)) {
                 setShowCard(null);
                 document.querySelector('.studentContent').classList.remove('blur');
+                setPreview(null)
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -89,6 +93,14 @@ const Students = () => {
         window.location.reload();
     }
 
+    const handleImg = (e) => {
+        const file = e.target.files[0];
+        if (file)
+            setPreview(URL.createObjectURL(file));
+        else
+            setPreview(null);
+    }
+
     return (
         <div className="students">
             {(showCard === "addStu") &&
@@ -96,8 +108,15 @@ const Students = () => {
                     <div className="cardHeader">
                         <h2>Add New Student</h2>
                     </div>
-                    <div className="cardForm">
+                    <div className="previewContainer">
+                        {(preview) && <img src={preview} alt="preview" className="previewImg" />}
+                    </div>
+                    <div className="cardForm stu">
                         <table className="cardTable">
+                            <tr>
+                                <td>Image</td>
+                                <td><input type="file" accept="image/*" onChange={handleImg} className="cardLable" required /></td>
+                            </tr>
                             <tr>
                                 <td>Id</td>
                                 <td><input type="text" className="cardLable" required /></td>
@@ -110,22 +129,10 @@ const Students = () => {
                                 <td>Email</td>
                                 <td><input type="text" className="cardLable" required /></td>
                             </tr>
-                            <tr>
-                                <td>Branch</td>
-                                <td><input type="text" className="cardLable" required /></td>
-                            </tr>
-                            <tr>
-                                <td>Year</td>
-                                <td><input type="text" className="cardLable" required /></td>
-                            </tr>
-                            <tr>
-                                <td>Semester</td>
-                                <td><input type="text" className="cardLable" required /></td>
-                            </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn">Add Subject</button>
+                        <button className="saveBtn">Add Student</button>
                     </div>
                 </div>
             }
@@ -134,8 +141,16 @@ const Students = () => {
                     <div className="cardHeader">
                         <h2>Update Student</h2>
                     </div>
+
+                    <div className="previewContainer">
+                        {(preview) && <img src={preview} alt="preview" className="previewImg" />}
+                    </div>
                     <div className="cardForm">
                         <table className="cardTable">
+                            <tr>
+                                <td>Image</td>
+                                <td><input type="file" accept="image/*" onChange={handleImg} className="cardLable" required /></td>
+                            </tr>
                             <tr>
                                 <td>Id</td>
                                 <td><input type="text" className="cardLable" value={selectedRow.Id} required /></td>
@@ -147,18 +162,6 @@ const Students = () => {
                             <tr>
                                 <td>Email</td>
                                 <td><input type="text" className="cardLable" value={selectedRow.Email} required /></td>
-                            </tr>
-                            <tr>
-                                <td>Branch</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.Branch} required /></td>
-                            </tr>
-                            <tr>
-                                <td>Year</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.Year} required /></td>
-                            </tr>
-                            <tr>
-                                <td>Semester</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.Semester} required /></td>
                             </tr>
                         </table>
                     </div>

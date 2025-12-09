@@ -590,15 +590,20 @@ a {
     padding: 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.cardForm.stu {
+    height:50%;
+}
+
 .cardTable {
     width: 100%;
-    height: 100%;
+    height: 80%;
     border-collapse: collapse;
+    overflow: hidden;
 }
 
 .cardTable td {
@@ -611,6 +616,18 @@ a {
     font-size: 16px;
     border: 1px solid var(--BorderDivider);
     border-radius: 5px;
+}
+
+.previewContainer {
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.previewImg {
+    height: 100px;
+    width: 150px;
 }
 
 .saveChanges {

@@ -2,7 +2,6 @@ import { React, useState, useEffect, useRef } from "react";
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaCirclePlus } from 'react-icons/fa6';
-import { FaPlus } from 'react-icons/fa';
 
 const Exams = () => {
     const data = [
@@ -21,7 +20,7 @@ const Exams = () => {
             "Time": "14:00 - 16:00"
         },
         {
-            "S.no": 1,
+            "S.no": 3,
             "Sub Code": "20CS501",
             "Subject": "Data Structures",
             "Date": "2024-03-15",
@@ -63,7 +62,7 @@ const Exams = () => {
             "Time": "14:00 - 16:00"
         },
         {
-            "S.no": 1,
+            "S.no": 9,
             "Sub Code": "20CS501",
             "Subject": "Data Structures",
             "Date": "2024-03-15",
@@ -78,62 +77,28 @@ const Exams = () => {
         }
     ];
 
-    
-
-    const addSubRef = useRef(null);
     const [showCard, setShowCard] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const cardRef = useRef(null);
 
     const addSub = () => {
         setShowCard("addSub");
-        document.querySelector('.examsContent').classList.add('blur');
-    }
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (showCard && addSubRef.current && !addSubRef.current.contains(event.target)){
-                setShowCard(null);
-                document.querySelector('.examsContent').classList.remove('blur');
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown",handleClickOutside);
-    },[showCard]);
-    
-    const [selectedRow, setSelectedRow] = useState(null);
-    const editCardRef = useRef(null);
+    };
 
     const editRow = (row) => {
-        document.querySelector('.examsContent').classList.add('blur');
         setSelectedRow(row);
         setShowCard("editSub");
     };
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (showCard && editCardRef.current && !editCardRef.current.contains(event.target)) {
-                setShowCard(null);
-                setSelectedRow(null);
-                document.querySelector('.examsContent').classList.remove('blur');
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [showCard]);
-
-    const delCardRef = useRef(null);
-
     const deleteRow = (row) => {
-        document.querySelector('.examsContent').classList.add('blur');
         setSelectedRow(row);
         setShowCard("delSub");
-    }
+    };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (showCard && delCardRef.current && !delCardRef.current.contains(event.target)) {
-                setShowCard(null);
-                setSelectedRow(null);
-                document.querySelector('.examsContent').classList.remove('blur');
+            if (showCard && cardRef.current && !cardRef.current.contains(event.target)) {
+                handleCancel();
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -142,26 +107,25 @@ const Exams = () => {
 
     const handleDelete = () => {
         window.location.reload();
-    }
+    };
 
-    const handleCancle = () => {
+    const handleCancel = () => {
         setShowCard(null);
         setSelectedRow(null);
-        document.querySelector('.examsContent').classList.remove('blur');
-    }
+    };
 
     return (
         <div className="exams">
             {(showCard==="addSub" &&
-                <div ref={addSubRef} className="subCard">
+                <div ref={cardRef} className="subCard">
                     <div className="cardHeader">
                         <h2>Add New Subject</h2>
                     </div>
                     <div className="cardForm">
                         <table className="cardTable">
                             <tr>
-                                <td>S.no</td>
-                                <td><input type="text" className="cardLable" required /></td>
+                                <td>Regulation</td>
+                                <td><input type="text" className="cardLable" value="AR20" readOnly /></td>
                             </tr>
                             <tr>
                                 <td>Sub Code</td>
@@ -191,7 +155,7 @@ const Exams = () => {
                 </div>
             )}
             {(showCard==="editSub" &&
-                <div ref={editCardRef} className="subCard">
+                <div ref={cardRef} className="subCard">
                     <div className="cardHeader">
                         <h2>Edit Exam Details</h2>
                     </div>
@@ -228,7 +192,7 @@ const Exams = () => {
                     </div>
                 </div>)}
             {(showCard==="delSub" &&
-                <div ref={delCardRef} className="deleteCard">
+                <div ref={cardRef} className="deleteCard">
                     <div className="cardHeader">
                         <h2>Delete Exam</h2>
                     </div>
@@ -236,12 +200,12 @@ const Exams = () => {
                         <p>Are you sure you want to delete the exam for <strong>{selectedRow["Subject"]}</strong> scheduled on <strong>{selectedRow["Date"]}</strong> at <strong>{selectedRow["Time"]}</strong>?</p>
                     </div>
                     <div className="delActions">
-                        <button className="cancelBtn" onClick={handleCancle}>Cancel</button>
+                        <button className="cancelBtn" onClick={handleCancel}>Cancel</button>
                         <button className="deleteBtn" onClick={handleDelete}>Delete</button>
                     </div>
                 </div>
             )}
-            <div className="examsContent">
+            <div className={`examsContent ${showCard ? 'blur' : ''}`}>
                 <div className="pageHeader">
                     <div className="pageTitle">Exams Management</div>
                 </div>
@@ -280,15 +244,15 @@ const Exams = () => {
                             </thead>
                             <tbody>
                                 {data.map((exam) => (
-                                    <tr key={exam.key}>
+                                    <tr key={exam["S.no"]}>
                                         <td className="cellBody">{exam["S.no"]}</td>
                                         <td className="cellBody">{exam["Sub Code"]}</td>
                                         <td className="cellBody">{exam["Subject"]}</td>
                                         <td className="cellBody">{exam["Date"]}</td>
                                         <td className="cellBody">{exam["Time"]}</td>
                                         <td className="cellBody">
-                                            <FaRegEdit className="editIc" onClick={() => editRow(exam)} />
-                                            <MdDeleteOutline className="delIc" onClick={() => deleteRow(exam)} />
+                                            <FaRegEdit data-testid="edit-icon" className="editIc" onClick={() => editRow(exam)} />
+                                            <MdDeleteOutline data-testid="delete-icon" className="delIc" onClick={() => deleteRow(exam)} />
                                         </td>
                                     </tr>
                                 ))}
@@ -300,5 +264,6 @@ const Exams = () => {
         </div>
     );
 }
+
 
 export default Exams;

@@ -21,10 +21,10 @@ public class AdminController {
     private AdminService adminService;
 
     @PutMapping("settings")
-    public ResponseEntity<Void> updateGeneral(@RequestBody AdminEntity entity) {
+    public ResponseEntity<AdminEntity> updateGeneral(@RequestBody AdminEntity entity) {
         try {
-            adminService.updateGeneral(entity);
-            return new ResponseEntity<>(HttpStatus.OK);
+            AdminEntity admin = adminService.updateGeneral(entity);
+            return new ResponseEntity<>(admin, HttpStatus.OK);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

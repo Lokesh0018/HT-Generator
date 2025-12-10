@@ -12,8 +12,8 @@ public class AdminService {
     @Autowired
     AdminJpa adminRepo;
 
-    public void updateGeneral(AdminEntity entity) {
-        adminRepo.save(entity);
+    public AdminEntity updateGeneral(AdminEntity entity) {
+        return adminRepo.save(entity);
     }
 
 }

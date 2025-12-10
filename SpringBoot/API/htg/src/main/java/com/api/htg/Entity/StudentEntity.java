@@ -18,6 +18,7 @@ public class StudentEntity {
     private String imgType;
     @Lob
     private byte[] imgData;
+    private boolean approve;
 
     public StudentEntity() {
     }
@@ -29,6 +30,7 @@ public class StudentEntity {
         this.imgName = imgName;
         this.imgType = imgType;
         this.imgData = imgData;
+        this.approve = false;
     }
 
     public String getId() {
@@ -77,6 +79,14 @@ public class StudentEntity {
 
     public void setImgData(byte[] imgData) {
         this.imgData = imgData;
+    }
+
+    public void setApprove(boolean approve) {
+        this.approve = approve;
+    }
+
+    public boolean getApprove() {
+        return approve;
     }
 
 }

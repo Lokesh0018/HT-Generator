@@ -19,26 +19,22 @@ public class ExamsService {
         return examsRepo.findByYearAndSemester(year,semester);
     }
 
-    public void addSubject(ExamsEntity entity) throws Exception {
-        String subCode = entity.getSubCode();
-        Optional<ExamsEntity> optional = examsRepo.findById(subCode);
+    public List<ExamsEntity> addSubject(ExamsEntity entity) throws Exception {
+        Optional<ExamsEntity> optional = examsRepo.findById(entity.getSubCode());
         if(optional.isPresent())
             throw new IllegalStateException();
         examsRepo.save(entity);
+        return getTimeTable(entity.getYear(), entity.getSemester());
     }
 
-    public void editSubject(ExamsEntity entity) {
-        String subCode = entity.getSubCode();
-        Optional<ExamsEntity> optional = examsRepo.findById(subCode);
-        ExamsEntity existingEntity = optional.get();
-        existingEntity.setSub(entity.getSub());
-        existingEntity.setDate(entity.getDate());
-        existingEntity.setTime(entity.getTime());
-        examsRepo.save(existingEntity);
+    public List<ExamsEntity> editSubject(ExamsEntity entity) {
+        examsRepo.save(entity);
+        return getTimeTable(entity.getYear(), entity.getSemester());
     }
 
-    public void deleteSubject(String subCode) {
-        examsRepo.deleteById(subCode);
+    public List<ExamsEntity> deleteSubject(ExamsEntity entity) {
+        examsRepo.deleteById(entity.getSubCode());
+        return getTimeTable(entity.getYear(), entity.getSemester());
     }
 
 }

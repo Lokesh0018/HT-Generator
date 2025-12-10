@@ -30,6 +30,11 @@ const Settings = () => {
                         </div>
                     </div>
                     <div className="settingsContainer">
+                        <h3>Admin Id:</h3>
+                        <div className="detailsContainer">
+                            <span className="value">ADMIN001</span>
+                        </div>
+
                         <h3>Admin Name:</h3>
                         <div className="detailsContainer">
                             <span className="value">John Doe</span>
@@ -58,11 +63,6 @@ const Settings = () => {
                         </div>
                     </div>
                     <div className="settingsContainer">
-                        <h3>Batch:</h3>
-                        <div className="detailsContainer">
-                            <span className="value">2023-2026</span>
-                        </div>
-
                         <h3 className="label">Branch:</h3>
                         <div className="detailsContainer">
                             <input className="value" type="text" />
@@ -76,6 +76,11 @@ const Settings = () => {
                         <h3 className="label">Semester:</h3>
                         <div className="detailsContainer">
                             <input className="value" type="number" />
+                        </div>
+                        
+                        <h3>Section:</h3>
+                        <div className="detailsContainer">
+                            <span className="value">A</span>
                         </div>
 
                         <button className="logoutBtn">

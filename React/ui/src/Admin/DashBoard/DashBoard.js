@@ -37,7 +37,7 @@ const DashBoard = () => {
                     <div className="cardContent">
                         <div className="cardData">
                             <span><GiGraduateCap /></span>
-                            <span>Registered Students :</span>
+                            <span>Total Students :</span>
                             <span>150</span>
                         </div>
                         <NavLink to="/admin/students" className="cardBtnContainer"><button className="cardBtn">View Students</button></NavLink>
@@ -50,7 +50,7 @@ const DashBoard = () => {
                     <div className="cardContent">
                         <div className="cardData">
                             <span><BsFillPassFill /></span>
-                            <span>Generated Hall Tickets :</span>
+                            <span>Approved Hall Tickets :</span>
                             <span>120</span>
                         </div>
                         <NavLink to="/admin/halltickets" className="cardBtnContainer"><button className="cardBtn">View Hall Tickets</button></NavLink>

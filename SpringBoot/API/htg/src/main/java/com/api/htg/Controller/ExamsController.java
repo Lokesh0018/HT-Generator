@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
-
 @RestController
 @RequestMapping("/admin")
 public class ExamsController {
@@ -28,35 +25,43 @@ public class ExamsController {
     @Autowired
     private ExamsService examsService;
 
-
     @GetMapping("/exams/{year}/{semester}")
-    public ResponseEntity<List<ExamsEntity>> getTimeTable(@PathVariable int year,@PathVariable int semester) {
-        List<ExamsEntity> exams = examsService.getTimeTable(year,semester);
-        if(exams.isEmpty())
+    public ResponseEntity<List<ExamsEntity>> getTimeTable(@PathVariable int year, @PathVariable int semester) {
+        List<ExamsEntity> exams = examsService.getTimeTable(year, semester);
+        if (exams.isEmpty())
             return new ResponseEntity<>(exams, HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(exams,HttpStatus.OK);
+        return new ResponseEntity<>(exams, HttpStatus.OK);
     }
-    
+
     @PostMapping("/exams")
-    public ResponseEntity<Void> addSubject(@RequestBody ExamsEntity entity) {
+    public ResponseEntity<List<ExamsEntity>> addSubject(@RequestBody ExamsEntity entity) {
         try {
-            examsService.addSubject(entity);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            List<ExamsEntity> exams = examsService.addSubject(entity);
+            return new ResponseEntity<>(exams, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping("/exams")
+    public ResponseEntity<List<ExamsEntity>> editSubject(@RequestBody ExamsEntity entity) {
+        try {
+            List<ExamsEntity> exams = examsService.editSubject(entity);
+            return new ResponseEntity<>(exams, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @DeleteMapping("/exams")
+    public ResponseEntity<List<ExamsEntity>> deleteSubject(@RequestBody ExamsEntity entity) {
+        try {
+            List<ExamsEntity> exams = examsService.deleteSubject(entity);
+            return new ResponseEntity<>(exams,HttpStatus.OK);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-    }
-    
-    @PutMapping("exams")
-    public ResponseEntity<Void> editSubject(@RequestBody ExamsEntity entity) {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @DeleteMapping("/exams/{subCode}")
-    public ResponseEntity<Void> deleteSubject(@PathVariable String subCode) {
-        examsService.deleteSubject(subCode);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

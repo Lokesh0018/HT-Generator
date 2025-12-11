@@ -12,4 +12,6 @@ public interface StudentJpa extends JpaRepository<StudentEntity,String> {
 
     List<StudentEntity> findBySection(Character section);
 
+    StudentEntity findByEmail(String stuMail);
+
 }

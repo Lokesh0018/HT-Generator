@@ -1,5 +1,7 @@
 package com.api.htg.Entity;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
@@ -20,6 +22,8 @@ public class StudentEntity {
     @Lob
     private byte[] imgData;
     private boolean approve;
+    private String otp;
+    private LocalDateTime expiryTime;
 
     public StudentEntity() {
     }
@@ -33,6 +37,20 @@ public class StudentEntity {
         this.imgType = imgType;
         this.imgData = imgData;
         this.approve = false;
+    }
+
+    public StudentEntity(String id, String name, String email, Character section, String imgName, String imgType,
+            byte[] imgData, boolean approve, String otp, LocalDateTime expiryTime) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.section = section;
+        this.imgName = imgName;
+        this.imgType = imgType;
+        this.imgData = imgData;
+        this.approve = approve;
+        this.otp = otp;
+        this.expiryTime = expiryTime;
     }
 
     public String getId() {
@@ -99,4 +117,20 @@ public class StudentEntity {
         return approve;
     }
 
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public LocalDateTime getExpiryTime() {
+        return expiryTime;
+    }
+
+    public void setExpiryTime(LocalDateTime expiryTime) {
+        this.expiryTime = expiryTime;
+    }
+    
 }

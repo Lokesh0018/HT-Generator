@@ -2,7 +2,8 @@ package com.api.htg.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.htg.DTO.LoginDTO;
+import com.api.htg.DTO.LoginRequestDTO;
+import com.api.htg.DTO.LoginResponseDTO;
 import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Service.LoginService;
 
@@ -20,10 +21,10 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<AdminEntity> verifyLogin(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<LoginResponseDTO> verifyLogin(@RequestBody LoginRequestDTO loginDTO) {
         try {
-            AdminEntity entity = loginService.verifyLogin(loginDTO);
-            return new ResponseEntity<>(entity,HttpStatus.OK);
+            LoginResponseDTO responseDTO = loginService.verifyLogin(loginDTO);
+            return new ResponseEntity<>(responseDTO,HttpStatus.OK);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

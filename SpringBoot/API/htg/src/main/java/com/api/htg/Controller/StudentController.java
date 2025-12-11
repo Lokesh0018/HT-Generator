@@ -32,30 +32,36 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/students")
-    public ResponseEntity<Void> addStudent(@RequestPart("img") MultipartFile img ,@RequestPart("entity") String entityJson) {
+    public ResponseEntity<List<StudentEntity>> addStudent(@RequestPart("img") MultipartFile img ,@RequestPart("entity") String entityJson) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             StudentEntity entity = mapper.readValue(entityJson, StudentEntity.class);
-            studentService.addStudent(img,entity);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            List<StudentEntity> students = studentService.addStudent(img,entity);
+            return new ResponseEntity<>(students,HttpStatus.CREATED);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 
-    @GetMapping("/students")
-    public List<StudentEntity> getStudents() {
-        return studentService.getStudents();
+    @GetMapping("/students/{section}")
+    public ResponseEntity<List<StudentEntity>> getStudents(@PathVariable Character section) {
+        try {
+            List<StudentEntity> students = studentService.getStudents(section);
+            return new ResponseEntity<>(students,HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);   
+        }
     }
 
     @PutMapping("/students")
-    public ResponseEntity<Void> updateStudent(@RequestPart("img") MultipartFile img,@RequestPart("entity") String entityJson) {
+    public ResponseEntity<List<StudentEntity>> updateStudent(@RequestPart("img") MultipartFile img,@RequestPart("entity") String entityJson) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             StudentEntity entity = mapper.readValue(entityJson, StudentEntity.class);
-            studentService.updateStudent(img, entity);
-            return new ResponseEntity<>(HttpStatus.OK);
+            List<StudentEntity> students = studentService.updateStudent(img, entity);
+            return new ResponseEntity<>(students,HttpStatus.OK);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -63,10 +69,10 @@ public class StudentController {
     }
 
     @DeleteMapping("/students/{stuId}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable String stuId) {
+    public ResponseEntity<List<StudentEntity>> deleteStudent(@PathVariable String stuId) {
         try {
-            studentService.deleteStudent(stuId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            List<StudentEntity> students = studentService.deleteStudent(stuId);
+            return new ResponseEntity<>(students,HttpStatus.OK);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

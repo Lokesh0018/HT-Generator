@@ -16,25 +16,23 @@ public class StudentService {
     @Autowired
     private StudentJpa studentRepo;
 
+    public List<StudentEntity> getStudents(Character section) {
+        return studentRepo.findBySection(section);
+    }
 
-    public void addStudent(MultipartFile img,StudentEntity entity) throws Exception {
-        String stuId = entity.getId();
-        Optional<StudentEntity> optional = studentRepo.findById(stuId);
-        if(optional.isPresent())
-            throw new IllegalStateException();
+    public List<StudentEntity> addStudent(MultipartFile img, StudentEntity entity) throws Exception {
+        if (studentRepo.existsById(entity.getId()))
+            throw new IllegalStateException("Student already exists!");
         entity.setImgData(img.getBytes());
         entity.setImgType(img.getContentType());
         entity.setImgName(entity.getId());
         studentRepo.save(entity);
+        return getStudents(entity.getSection());
     }
 
-    public List<StudentEntity> getStudents() {
-        return studentRepo.findAll();
-    }
-
-    public void updateStudent(MultipartFile img,StudentEntity entity) throws Exception {
+    public List<StudentEntity> updateStudent(MultipartFile img, StudentEntity entity) throws Exception {
         Optional<StudentEntity> optional = studentRepo.findById(entity.getId());
-        if(!optional.isPresent())
+        if (!optional.isPresent())
             throw new IllegalStateException();
         StudentEntity existingEntity = optional.get();
         existingEntity.setName(entity.getName());
@@ -42,14 +40,15 @@ public class StudentService {
         existingEntity.setImgData(img.getBytes());
         existingEntity.setImgType(img.getContentType());
         studentRepo.save(existingEntity);
+        return getStudents(entity.getSection());
     }
 
-    public void deleteStudent(String stuId) throws Exception{
+    public List<StudentEntity> deleteStudent(String stuId) throws Exception {
         Optional<StudentEntity> optional = studentRepo.findById(stuId);
-        if(!optional.isPresent())
+        if (!optional.isPresent())
             throw new IllegalStateException();
         studentRepo.deleteById(stuId);
+        return getStudents(optional.get().getSection());
     }
-       
 
 }

@@ -1,14 +1,14 @@
 package com.api.htg.DTO;
 
-public class LoginDTO {
+public class LoginRequestDTO {
 
     private String id;
     private String password;
 
-    public LoginDTO() {
+    public LoginRequestDTO() {
     }
 
-    public LoginDTO(String id, String password) {
+    public LoginRequestDTO(String id, String password) {
         this.id = id;
         this.password = password;
     }

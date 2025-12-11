@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-
-
 @RestController
 @RequestMapping("/admin")
 public class HallTicketController {
@@ -28,9 +26,15 @@ public class HallTicketController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/halltickets")
-    public List<StudentEntity> getStudents() {
-        return studentService.getStudents();
+    @GetMapping("/halltickets/{section}")
+    public ResponseEntity<List<StudentEntity>> getStudents(@PathVariable Character section) {
+        try {
+            List<StudentEntity> students = studentService.getStudents(section);
+            return new ResponseEntity<>(students,HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("/halltickets")

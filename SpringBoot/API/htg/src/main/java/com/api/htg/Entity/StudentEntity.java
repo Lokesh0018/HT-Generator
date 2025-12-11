@@ -14,6 +14,7 @@ public class StudentEntity {
     private String id;
     private String name;
     private String email;
+    private Character section;
     private String imgName;
     private String imgType;
     @Lob
@@ -23,10 +24,11 @@ public class StudentEntity {
     public StudentEntity() {
     }
 
-    public StudentEntity(String id, String name, String email, String imgName, String imgType, byte[] imgData) {
+    public StudentEntity(String id, String name, String email, Character section, String imgName, String imgType, byte[] imgData) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.section = section;
         this.imgName = imgName;
         this.imgType = imgType;
         this.imgData = imgData;
@@ -55,6 +57,14 @@ public class StudentEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Character getSection() {
+        return section;
+    }
+
+    public void setSection(Character section) {
+        this.section = section;
     }
 
     public String getImgName() {

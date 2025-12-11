@@ -1,19 +1,10 @@
-package com.api.htg.Entity;
+package com.api.htg.DTO;
 
-import org.springframework.stereotype.Component;
+public class LoginResponseDTO {
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Component
-@Entity
-public class AdminEntity {
-
-    @Id
     private String id;
     private String name;
     private String email;
-    private String password;
     private String collageName;
     private String branch;
     private Character section;
@@ -22,15 +13,14 @@ public class AdminEntity {
     private Integer upComingExams;
     private Integer approvedHallTickets;
 
-    public AdminEntity() {
+    public LoginResponseDTO() {
     }
-    
-    public AdminEntity(String id, String name, String email, String password, String collageName, String branch,
-            Character section, Integer year, Integer semester, Integer upComingExams, Integer approvedHallTickets) {
+
+    public LoginResponseDTO(String id, String name, String email, String collageName, String branch, Character section,
+            Integer year, Integer semester, Integer upComingExams, Integer approvedHallTickets) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
         this.collageName = collageName;
         this.branch = branch;
         this.section = section;
@@ -39,96 +29,85 @@ public class AdminEntity {
         this.upComingExams = upComingExams;
         this.approvedHallTickets = approvedHallTickets;
     }
-    
+
     public String getId() {
         return id;
     }
-    
+
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getEmail() {
         return email;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
+
     public String getCollageName() {
         return collageName;
     }
-    
+
     public void setCollageName(String collageName) {
         this.collageName = collageName;
     }
-    
+
     public String getBranch() {
         return branch;
     }
-    
+
     public void setBranch(String branch) {
         this.branch = branch;
     }
-    
+
     public Character getSection() {
         return section;
     }
-    
+
     public void setSection(Character section) {
         this.section = section;
     }
-    
+
     public Integer getYear() {
         return year;
     }
-    
+
     public void setYear(Integer year) {
         this.year = year;
     }
-    
+
     public Integer getSemester() {
         return semester;
     }
-    
+
     public void setSemester(Integer semester) {
         this.semester = semester;
     }
-    
+
     public Integer getUpComingExams() {
         return upComingExams;
     }
-    
+
     public void setUpComingExams(Integer upComingExams) {
         this.upComingExams = upComingExams;
     }
-    
+
     public Integer getApprovedHallTickets() {
         return approvedHallTickets;
     }
-    
+
     public void setApprovedHallTickets(Integer approvedHallTickets) {
         this.approvedHallTickets = approvedHallTickets;
     }
-    
 
-
-    
 }

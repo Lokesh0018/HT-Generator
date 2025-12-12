@@ -25,11 +25,14 @@ public class VerificationService {
         return String.valueOf(otp);
     }
 
-    public void sendOtp(String stuMail) {
-        String otp = generateOtp();
+    public void sendOtp(String stuMail) throws Exception{
         StudentEntity student = studentRepo.findByEmail(stuMail);
+        if(!student.getApprove())
+            throw new Exception("You are not Approved");
+        String otp = generateOtp();
         student.setOtp(otp);
         student.setExpiryTime(LocalDateTime.now().plusMinutes(5));
+        studentRepo.save(student);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(stuMail);
         message.setSubject("HTG Account Verification – OTP (Valid for 5 Minutes)");

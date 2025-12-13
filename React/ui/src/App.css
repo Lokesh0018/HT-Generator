@@ -70,12 +70,12 @@ a {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     display: flex;
     overflow: hidden;
-    transition: all 0.8s ease;
+    transition: all 0.3s ease;
     gap: 2px;
 }
 
 .toast.show {
-  right: 30px;
+    right: 30px;
 }
 
 .toastWave {
@@ -750,7 +750,6 @@ a {
 
 .loginIp {
     width: 100%;
-    height: 70%;
     border-radius: 5px;
     padding: 5px;
     font-size: 20px;

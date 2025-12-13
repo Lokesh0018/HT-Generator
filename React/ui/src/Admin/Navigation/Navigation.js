@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { TbSquareRoundedLetterAFilled, TbWriting } from 'react-icons/tb';
 import { LuLayoutDashboard, LuTickets } from 'react-icons/lu';
 import { PiStudent } from 'react-icons/pi';

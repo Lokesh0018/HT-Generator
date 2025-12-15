@@ -23,7 +23,7 @@ function App() {
             <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
             <Route path="/admin/*"
               element={
-                <ProtectedRoute isAuth={!authToken}>
+                <ProtectedRoute isAuth={authToken}>
                   <Admin />
                 </ProtectedRoute>
               }

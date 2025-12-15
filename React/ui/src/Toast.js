@@ -15,25 +15,31 @@ const ToastProvider = ({ children }) => {
             head: "Success",
             color: "#269b24",
             icon: <FaRegCircleCheck />,
-            msg: "Verification Success",
+            msg: "Verification Success"
         },
         emptyFields: {
             head: "Info",
             color: "#124fff",
             icon: <LuInfo />,
-            msg: "Username and Password are required",
+            msg: "Username and Password are required"
+        },
+        emptyMsg: {
+            head: "Info",
+            color: "#124fff",
+            icon: <LuInfo />,
+            msg: "Message is required"
         },
         invalidCredentials: {
             head: "Error",
             color: "#d10d0d",
             icon: <BiErrorCircle />,
-            msg: "Invalid Credentials",
+            msg: "Invalid Credentials"
         },
         serverError: {
             head: "Error",
             color: "#d10d0d",
             icon: <BiErrorCircle />,
-            msg: "Something went wrong",
+            msg: "Something went wrong"
         },
     };
 

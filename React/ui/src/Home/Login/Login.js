@@ -25,8 +25,7 @@ const Login = () => {
         id: username,
         password: password
       })
-    })
-      .then(res => {
+    }).then(res => {
         if (!res.ok) {
           if (res.status === 401)
             throw new Error("invalidCredentials");

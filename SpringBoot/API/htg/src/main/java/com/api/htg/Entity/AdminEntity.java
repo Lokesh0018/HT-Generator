@@ -19,14 +19,12 @@ public class AdminEntity {
     private Character section;
     private Integer year;
     private Integer semester;
-    private Integer upComingExams;
-    private Integer approvedHallTickets;
 
     public AdminEntity() {
     }
     
     public AdminEntity(String id, String name, String email, String password, String collageName, String branch,
-            Character section, Integer year, Integer semester, Integer upComingExams, Integer approvedHallTickets) {
+            Character section, Integer year, Integer semester) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,8 +34,6 @@ public class AdminEntity {
         this.section = section;
         this.year = year;
         this.semester = semester;
-        this.upComingExams = upComingExams;
-        this.approvedHallTickets = approvedHallTickets;
     }
     
     public String getId() {
@@ -111,24 +107,5 @@ public class AdminEntity {
     public void setSemester(Integer semester) {
         this.semester = semester;
     }
-    
-    public Integer getUpComingExams() {
-        return upComingExams;
-    }
-    
-    public void setUpComingExams(Integer upComingExams) {
-        this.upComingExams = upComingExams;
-    }
-    
-    public Integer getApprovedHallTickets() {
-        return approvedHallTickets;
-    }
-    
-    public void setApprovedHallTickets(Integer approvedHallTickets) {
-        this.approvedHallTickets = approvedHallTickets;
-    }
-    
-
-
     
 }

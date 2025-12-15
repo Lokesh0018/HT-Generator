@@ -10,6 +10,7 @@ public class LoginResponseDTO {
     private Character section;
     private Integer year;
     private Integer semester;
+    private Integer students;
     private Integer upComingExams;
     private Integer approvedHallTickets;
 
@@ -17,7 +18,7 @@ public class LoginResponseDTO {
     }
 
     public LoginResponseDTO(String id, String name, String email, String collageName, String branch, Character section,
-            Integer year, Integer semester, Integer upComingExams, Integer approvedHallTickets) {
+            Integer year, Integer semester,Integer students, Integer upComingExams, Integer approvedHallTickets) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -26,6 +27,7 @@ public class LoginResponseDTO {
         this.section = section;
         this.year = year;
         this.semester = semester;
+        this.students = students;
         this.upComingExams = upComingExams;
         this.approvedHallTickets = approvedHallTickets;
     }
@@ -92,6 +94,14 @@ public class LoginResponseDTO {
 
     public void setSemester(Integer semester) {
         this.semester = semester;
+    }
+    
+    public Integer getStudents() {
+        return students;
+    }
+
+    public void setStudents(Integer students) {
+        this.students = students;
     }
 
     public Integer getUpComingExams() {

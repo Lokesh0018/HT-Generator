@@ -1,15 +1,51 @@
-import React from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MdUpcoming } from 'react-icons/md';
 import { GiGraduateCap } from 'react-icons/gi';
 import { BsFillPassFill } from 'react-icons/bs';
 import { IoIosMail } from "react-icons/io";
 import { FiSend } from "react-icons/fi";
+import { ToastContext } from "../../Toast";
 
 const DashBoard = () => {
+
+    const { showToastMsg } = useContext(ToastContext);
+
+    const [data, setData] = useState(null);
+
+    const [sending, setSending] = useState(false);
+
+
+    useEffect(() => {
+        const storedData = localStorage.getItem("data");
+        if(storedData)
+            setData(JSON.parse(storedData));
+    },[]);
+
+    const map = data ? new Map(Object.entries(data)) : new Map();
     const handleNotify = () => {
-        if(!document.querySelector(".notifyArea").value)
-            alert("Fill");
+        const message = document.querySelector(".notifyArea").value.trim();
+
+        if(!message){
+            showToastMsg("emptyMsg");
+            return;
+        }
+
+        const section = map.get("section");
+        setSending(true);
+        fetch(`http://localhost:8081/admin/${section}`,{
+            method : "POST",
+            headers : {"Content-Type" : "application/json"},
+            body : JSON.stringify(message)
+        }).then(res => {
+            if(!res.ok)
+                throw new Error("serverError");
+            showToastMsg("success");
+        }).catch(err => {
+            showToastMsg(err.message || "serverError");
+        }).finally(() => {
+            setSending(false);
+        });
     }
     return (
         <div className="dashBoard">
@@ -25,7 +61,7 @@ const DashBoard = () => {
                         <div className="cardData">
                             <span><MdUpcoming /></span>
                             <span>Upcoming Exams :</span>
-                            <span>3</span>
+                            <span>{map.get("upComingExams")}</span>
                         </div>
                         <NavLink to="/admin/exams" className="cardBtnContainer" ><button className="cardBtn">View Exams</button></NavLink>
                     </div>
@@ -38,7 +74,7 @@ const DashBoard = () => {
                         <div className="cardData">
                             <span><GiGraduateCap /></span>
                             <span>Total Students :</span>
-                            <span>150</span>
+                            <span>{map.get("students")}</span>
                         </div>
                         <NavLink to="/admin/students" className="cardBtnContainer"><button className="cardBtn">View Students</button></NavLink>
                     </div>
@@ -51,7 +87,7 @@ const DashBoard = () => {
                         <div className="cardData">
                             <span><BsFillPassFill /></span>
                             <span>Approved Hall Tickets :</span>
-                            <span>120</span>
+                            <span>{map.get("approvedHallTickets")}</span>
                         </div>
                         <NavLink to="/admin/halltickets" className="cardBtnContainer"><button className="cardBtn">View Hall Tickets</button></NavLink>
                     </div>
@@ -69,7 +105,7 @@ const DashBoard = () => {
                             <span>Message :</span>
                             <textarea className="notifyArea" required></textarea>
                         </div>
-                        <button className="cardBtnContainer dbc-2" type="submit" onClick={handleNotify}><FiSend />Send</button>
+                        <button className={`cardBtnContainer dbc-2 ${sending ? "disable" : ""}`} type="submit" onClick={handleNotify} disabled={sending}><FiSend />Send</button>
                     </div>
                 </div>
             </div>

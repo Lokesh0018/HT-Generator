@@ -1,10 +1,13 @@
-import { React, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Toast } from "../../Toast";
+import { ToastContext } from "../../Toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { showToastMsg } = useContext()
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { showToastMsg } = useContext(ToastContext);
 
   const handleSubmit = () => {
     const username = document.getElementById("username").value.trim();
@@ -14,16 +17,18 @@ const Login = () => {
       showToastMsg("emptyFields");
       return;
     }
+
     fetch("http://localhost:8081/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        "id": username,
-        "password": password
+        id: username,
+        password: password
       })
-    }).then(res => {
-        if(!res.ok){
-          if(res.status === 401)
+    })
+      .then(res => {
+        if (!res.ok) {
+          if (res.status === 401)
             throw new Error("invalidCredentials");
           if (res.status >= 500)
             throw new Error("serverError");
@@ -32,39 +37,51 @@ const Login = () => {
       })
       .then(data => {
         localStorage.setItem("data", JSON.stringify(data));
+        localStorage.setItem("token", "true");
         showToastMsg("success");
-        localStorage.setItem("token" , "true");
         navigate("/admin");
       })
       .catch(err => {
-        if(toastMap[err.message])
-          showToastMsg(err.message);
-        else
-          showToastMsg("serverError");
+        localStorage.removeItem("token");
+        localStorage.removeItem("data");
+        showToastMsg(err.message || "serverError");
       });
   };
 
   return (
     <div className="login">
       <div className="loginContainer">
-        <div className="loginHeader">
-          Admin Login
-        </div>
+        <div className="loginHeader">Admin Login</div>
+
         <div className="loginContent">
           <div className="loginDetails">
             <span className="loginLable">Username :</span>
-            <input type="text" placeholder="Enter Username" id="username" className="loginIp" required />
+            <input
+              type="text"
+              placeholder="Enter Username"
+              id="username"
+              className="loginIp"
+            />
           </div>
+
           <div className="loginDetails">
             <span className="loginLable">Password :</span>
-            <input type="password" placeholder="Enter Password" id="password" className="loginIp" required />
+            <input
+              type={(showPassword ? "text" : "password")}
+              placeholder="Enter Password"
+              id="password"
+              className="loginIp"
+            />
+            <span className="eyeIc" onClick={ () => setShowPassword(!showPassword)}>{(showPassword) ? <FaEye /> : <FaEyeSlash /> }</span>
           </div>
+
           <div className="loginDetails">
-            <button className="loginBtn" onClick={handleSubmit}>Login</button>
+            <button className="loginBtn" onClick={handleSubmit}>
+              Login
+            </button>
           </div>
         </div>
       </div>
-
     </div>
   );
 };

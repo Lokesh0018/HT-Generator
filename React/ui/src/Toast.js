@@ -1,12 +1,14 @@
-import { React, createContext, useState } from "react";
-
+import React, { createContext, useState } from "react";
 import { LuInfo } from "react-icons/lu";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { BiErrorCircle } from "react-icons/bi";
+import { IoCloseOutline } from "react-icons/io5";
 
-export const Toast = createContext();
+export const ToastContext = createContext();
 
-const ToastProvider = ({ child }) => {
+const ToastProvider = ({ children }) => {
+    const [toastData, setToastData] = useState(null);
+    const [showToast, setShowToast] = useState(false);
 
     const toastMap = {
         success: {
@@ -21,7 +23,6 @@ const ToastProvider = ({ child }) => {
             icon: <LuInfo />,
             msg: "Username and Password are required",
         },
-
         invalidCredentials: {
             head: "Error",
             color: "#d10d0d",
@@ -32,51 +33,52 @@ const ToastProvider = ({ child }) => {
             head: "Error",
             color: "#d10d0d",
             icon: <BiErrorCircle />,
-            msg: "Some thing went Wrong",
-        }
+            msg: "Something went wrong",
+        },
     };
 
-    const [toastData, setToastData] = useState(null);
-    const [showToast, setShowToast] = useState(false);
-
-    const showToastMsg = (toast) => {
-        setToastData(toast);
-        setShowToast(true);
-
+    const showToastMsg = (type) => {
+        const toast = toastMap[type];
+        if (!toast)
+            setToastData(toastMap.serverError);
+        else
+            setToastData(toast);
+        requestAnimationFrame(() => {
+            setShowToast(true);
+        });
         setTimeout(() => {
             setShowToast(false);
         }, 3000);
     };
 
     return (
-        <Toast.Provider value={{ showToastMsg }}>
-            {child}
+        <ToastContext.Provider value={{ showToastMsg }}>
+            {children}
+
             {toastData && (
                 <div className={`toast ${showToast ? "show" : ""}`}>
                     <div
                         className="toastWave"
                         style={{ backgroundColor: toastData.color }}
                     ></div>
-
                     <div className="toastContent">
                         <div className="toastHeader">
-                            <div
-                                className="toastHead"
-                                style={{ color: toastData.color }}
-                            >
+                            <div className="toastHead" style={{ color: toastData.color }}>
                                 <span className="toastIc">{toastData.icon}</span>
                                 <h1>{toastData.head}</h1>
                             </div>
+                            <div className="toastClose" onClick={() => setShowToast(false)}>
+                                <IoCloseOutline />
+                            </div>
                         </div>
-
                         <div className="toastBody">
-                            <p>{toastData.msg}</p>
+                            <p className="toastMsg">{toastData.msg}</p>
                         </div>
                     </div>
                 </div>
             )}
-        </Toast.Provider>
+        </ToastContext.Provider>
     );
-}
+};
 
 export default ToastProvider;

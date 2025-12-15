@@ -18,7 +18,7 @@
     --BorderDivider: #DDDDDD;
     --SubtleTextHint: #777777;
     --toastSuccess: #269b24;
-    --toastError:  #d10d0d;
+    --toastError: #d10d0d;
     --toastInfo: #124fff;
     --bor: 1px solid rgb(255, 0, 0);
 }
@@ -59,8 +59,8 @@ a {
 }
 
 .toast {
-    position: absolute;
-    right: -350px;
+    position: fixed;
+    right: 30px;
     bottom: 50px;
     width: 330px;
     height: 100px;
@@ -70,12 +70,15 @@ a {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     display: flex;
     overflow: hidden;
-    transition: all 0.3s ease;
     gap: 2px;
+    opacity: 0;
+    transform: translateX(380px);
+    transition: transform 0.3s ease, opacity 0.2s ease;
 }
 
 .toast.show {
-    right: 30px;
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .toastWave {
@@ -596,7 +599,7 @@ a {
 }
 
 .cardForm.stu {
-    height:50%;
+    height: 50%;
 }
 
 .cardTable {
@@ -698,7 +701,7 @@ a {
 .stuDetailsHomeContainer.sdh {
     position: absolute;
     height: 40%;
-    transform: translate(60%,50%);
+    transform: translate(60%, 50%);
     z-index: 1;
 }
 
@@ -740,6 +743,7 @@ a {
 }
 
 .loginDetails {
+    position: relative;
     height: 25%;
 }
 
@@ -751,9 +755,19 @@ a {
 .loginIp {
     width: 100%;
     border-radius: 5px;
-    padding: 5px;
+    padding: 5px 35px 5px 5px;
+    outline: none;
     font-size: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.eyeIc {
+    position: absolute;
+    cursor: pointer;
+    right: 12px;
+    top: 45px;
+    transform: translateY(-50%);
+    font-size: 22px;
 }
 
 .loginBtn {
@@ -1012,7 +1026,7 @@ hr {
     padding: 10px;
 }
 
-.htLable table{
+.htLable table {
     height: 120px;
     width: 500px;
 }
@@ -1027,7 +1041,7 @@ hr {
     width: 120px;
 }
 
-.htInfo{
+.htInfo {
     width: 100%;
 }
 
@@ -1036,7 +1050,7 @@ hr {
     border-collapse: collapse;
 }
 
-.htInfo table thead{
+.htInfo table thead {
     background-color: var(--htHeader);
     text-align: left;
     margin: 0;
@@ -1065,7 +1079,7 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:flex-end;
+    justify-content: flex-end;
     height: 100%;
 }
 

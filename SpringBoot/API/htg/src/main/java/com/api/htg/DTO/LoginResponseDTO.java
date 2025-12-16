@@ -13,12 +13,13 @@ public class LoginResponseDTO {
     private Integer students;
     private Integer upComingExams;
     private Integer approvedHallTickets;
+    private String regulation;
 
     public LoginResponseDTO() {
     }
 
     public LoginResponseDTO(String id, String name, String email, String collageName, String branch, Character section,
-            Integer year, Integer semester,Integer students, Integer upComingExams, Integer approvedHallTickets) {
+            Integer year, Integer semester,Integer students, Integer upComingExams, Integer approvedHallTickets, String regulation) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -30,6 +31,7 @@ public class LoginResponseDTO {
         this.students = students;
         this.upComingExams = upComingExams;
         this.approvedHallTickets = approvedHallTickets;
+        this.regulation = regulation;
     }
 
     public String getId() {
@@ -119,5 +121,14 @@ public class LoginResponseDTO {
     public void setApprovedHallTickets(Integer approvedHallTickets) {
         this.approvedHallTickets = approvedHallTickets;
     }
+
+    public String getRegulation() {
+        return regulation;
+    }
+
+    public void setRegulation(String regulation) {
+        this.regulation = regulation;
+    }
+    
 
 }

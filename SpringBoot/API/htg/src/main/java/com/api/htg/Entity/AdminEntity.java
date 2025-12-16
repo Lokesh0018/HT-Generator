@@ -19,12 +19,13 @@ public class AdminEntity {
     private Character section;
     private Integer year;
     private Integer semester;
+    private String regulation;
 
     public AdminEntity() {
     }
     
     public AdminEntity(String id, String name, String email, String password, String collageName, String branch,
-            Character section, Integer year, Integer semester) {
+            Character section, Integer year, Integer semester, String regulation) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -34,6 +35,7 @@ public class AdminEntity {
         this.section = section;
         this.year = year;
         this.semester = semester;
+        this.regulation = regulation;
     }
     
     public String getId() {
@@ -106,6 +108,14 @@ public class AdminEntity {
     
     public void setSemester(Integer semester) {
         this.semester = semester;
+    }
+
+    public String getRegulation() {
+        return regulation;
+    }
+
+    public void setRegulation(String regulation) {
+        this.regulation = regulation;
     }
     
 }

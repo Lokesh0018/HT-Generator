@@ -9,7 +9,7 @@ const Exams = () => {
     const { showToastMsg } = useContext(ToastContext);
 
     const [data, setData] = useState([]);
-
+    const regulation = JSON.parse(localStorage.getItem("data")).regulation;
     const [year, setYear] = useState(1);
     const [sem, setSem] = useState(1);
 
@@ -102,6 +102,31 @@ const Exams = () => {
         });
     }
 
+    const delSub = () => {
+        fetch('http://localhost:8081/admin/exams',{
+            method : "DELETE",
+            headers : { "Content-Type" : "application/json" },
+            body : JSON.stringify({
+                "subCode" : selectedRow.subCode,
+                "year" : selectedRow.year,
+                "semester" : selectedRow.semester,
+                "sub" : selectedRow.sub,
+                "date" : selectedRow.date,
+                "time" : selectedRow.time
+            })
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("delete");
+            setData(data);
+            setShowCard(null);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
+    };
+
     const [showCard, setShowCard] = useState(null);
     const [selectedRow, setSelectedRow] = useState(null);
     const cardRef = useRef(null);
@@ -130,10 +155,6 @@ const Exams = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [showCard]);
 
-    const handleDelete = () => {
-        window.location.reload();
-    };
-
     const handleCancel = () => {
         setShowCard(null);
         setSelectedRow(null);
@@ -157,7 +178,7 @@ const Exams = () => {
                         <table className="cardTable">
                             <tr>
                                 <td>Regulation</td>
-                                <td><input type="text" className="cardLable disable" value="AR20" readOnly /></td>
+                                <td><input type="text" className="cardLable disable" value={`${regulation}`} readOnly /></td>
                             </tr>
                             <tr>
                                 <td>Sub Code</td>
@@ -229,11 +250,11 @@ const Exams = () => {
                         <h2>Delete Exam</h2>
                     </div>
                     <div className="deleteContent">
-                        <p>Are you sure you want to delete the exam for <strong>{selectedRow["Subject"]}</strong> scheduled on <strong>{selectedRow["Date"]}</strong> at <strong>{selectedRow["Time"]}</strong>?</p>
+                        <p>Are you sure you want to delete the exam for <strong>{selectedRow.sub}</strong> scheduled on <strong>{selectedRow.date}</strong> at <strong>{selectedRow.time}</strong>?</p>
                     </div>
                     <div className="delActions">
                         <button className="cancelBtn" onClick={handleCancel}>Cancel</button>
-                        <button className="deleteBtn" onClick={handleDelete}>Delete</button>
+                        <button className="deleteBtn" onClick={delSub}>Delete</button>
                     </div>
                 </div>
             )}

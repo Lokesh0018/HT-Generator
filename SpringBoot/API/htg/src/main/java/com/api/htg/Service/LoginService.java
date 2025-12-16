@@ -39,6 +39,7 @@ public class LoginService {
         Integer upComingExams = 8-approvedHallTickets; 
         responseDTO.setUpComingExams(upComingExams);
         responseDTO.setApprovedHallTickets(approvedHallTickets);
+        responseDTO.setRegulation(entity.getRegulation());
         return responseDTO;
     }
 

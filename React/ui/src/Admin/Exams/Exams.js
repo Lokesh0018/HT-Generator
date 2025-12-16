@@ -1,98 +1,123 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect, useRef, useContext } from "react";
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaCirclePlus } from 'react-icons/fa6';
+import { ToastContext } from "../../Toast";
 
 const Exams = () => {
-    const data = [
-        {
-            "S.no": 1,
-            "Sub Code": "20CS501",
-            "Subject": "Data Structures",
-            "Date": "2024-03-15",
-            "Time": "10:00 - 12:00"
-        },
-        {
-            "S.no": 2,
-            "Sub Code": "20CS502",
-            "Subject": "Algorithms",
-            "Date": "2024-03-17",
-            "Time": "14:00 - 16:00"
-        },
-        {
-            "S.no": 3,
-            "Sub Code": "20CS501",
-            "Subject": "Data Structures",
-            "Date": "2024-03-15",
-            "Time": "10:00 - 12:00"
-        },
-        {
-            "S.no": 2,
-            "Sub Code": "20CS502",
-            "Subject": "Algorithms",
-            "Date": "2024-03-17",
-            "Time": "14:00 - 16:00"
-        },
-        {
-            "S.no": 1,
-            "Sub Code": "20CS501",
-            "Subject": "Data Structures",
-            "Date": "2024-03-15",
-            "Time": "10:00 - 12:00"
-        },
-        {
-            "S.no": 2,
-            "Sub Code": "20CS502",
-            "Subject": "Algorithms",
-            "Date": "2024-03-17",
-            "Time": "14:00 - 16:00"
-        },
-        {
-            "S.no": 1,
-            "Sub Code": "20CS501",
-            "Subject": "Data Structures",
-            "Date": "2024-03-15",
-            "Time": "10:00 - 12:00"
-        },
-        {
-            "S.no": 2,
-            "Sub Code": "20CS502",
-            "Subject": "Algorithms",
-            "Date": "2024-03-17",
-            "Time": "14:00 - 16:00"
-        },
-        {
-            "S.no": 9,
-            "Sub Code": "20CS501",
-            "Subject": "Data Structures",
-            "Date": "2024-03-15",
-            "Time": "10:00 - 12:00"
-        },
-        {
-            "S.no": 2,
-            "Sub Code": "20CS502",
-            "Subject": "Algorithms",
-            "Date": "2024-03-17",
-            "Time": "14:00 - 16:00"
+
+    const { showToastMsg } = useContext(ToastContext);
+
+    const [data, setData] = useState([]);
+
+    const [year, setYear] = useState(1);
+    const [sem, setSem] = useState(1);
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/admin/exams/${year}/${sem}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            setData(data);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
+    }, [year, sem]);
+
+    const addSub = () => {
+        const subCode = document.getElementById("subCode").value;
+        const sub = document.getElementById("sub").value;
+        const date = document.getElementById("date").value;
+        const stTime = document.getElementById("stTime").value;
+        const enTime = document.getElementById("enTime").value;
+
+        if (!subCode || !sub || !date || !stTime || !enTime) {
+            showToastMsg("emptyFields");
+            return;
         }
-    ];
+
+        fetch('http://localhost:8081/admin/exams', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "subCode": subCode,
+                "year": year,
+                "semester": sem,
+                "sub": sub,
+                "date": date,
+                "time": stTime + " - " + enTime
+            })
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("add");
+            setData(data);
+            setShowCard(null);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
+    };
+
+    const editSub = () => {
+        const subCode = selectedRow.subCode;
+        const year = selectedRow.year;
+        const sem = selectedRow.semester
+        const sub = selectedRow.sub;
+        const date = selectedRow.date;
+        const stTime = selectedRow.time.split(" - ")[0];
+        const enTime = selectedRow.time.split(" - ")[1];
+
+        if(!subCode || !sub || !date || !stTime || !enTime){
+            showToastMsg("emptyFields");
+            return;
+        }
+
+        fetch('http://localhost:8081/admin/exams', {
+            method : "PUT",
+            headers : { "Content-Type" : "application/json" },
+            body : JSON.stringify({
+                "subCode" : subCode,
+                "year" : year,
+                "semester" : sem,
+                "sub" : sub,
+                "date" : date,
+                "time" : stTime + " - " + enTime
+            })        
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("update");
+            setData(data);
+            setShowCard(null);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
+    }
 
     const [showCard, setShowCard] = useState(null);
     const [selectedRow, setSelectedRow] = useState(null);
     const cardRef = useRef(null);
 
-    const addSub = () => {
-        setShowCard("addSub");
+    const addCard = () => {
+        setShowCard("addCard");
     };
 
-    const editRow = (row) => {
+    const editCard = (row) => {
         setSelectedRow(row);
-        setShowCard("editSub");
+        setShowCard("editCard");
     };
 
-    const deleteRow = (row) => {
+    const delCard = (row) => {
         setSelectedRow(row);
-        setShowCard("delSub");
+        setShowCard("delCard");
     };
 
     useEffect(() => {
@@ -114,9 +139,16 @@ const Exams = () => {
         setSelectedRow(null);
     };
 
+    const handleEditChange = (key, value) => {
+        setSelectedRow(prev => ({
+            ...prev,
+            [key]: value
+        }));
+    };
+
     return (
         <div className="exams">
-            {(showCard==="addSub" &&
+            {(showCard === "addCard" &&
                 <div ref={cardRef} className="subCard">
                     <div className="cardHeader">
                         <h2>Add New Subject</h2>
@@ -125,36 +157,36 @@ const Exams = () => {
                         <table className="cardTable">
                             <tr>
                                 <td>Regulation</td>
-                                <td><input type="text" className="cardLable" value="AR20" readOnly /></td>
+                                <td><input type="text" className="cardLable disable" value="AR20" readOnly /></td>
                             </tr>
                             <tr>
                                 <td>Sub Code</td>
-                                <td><input type="text" className="cardLable" required /></td>
+                                <td><input type="text" className="cardLable" id="subCode"  /></td>
                             </tr>
                             <tr>
                                 <td>Subject</td>
-                                <td><input type="text" className="cardLable" required /></td>
+                                <td><input type="text" className="cardLable" id="sub"  /></td>
                             </tr>
                             <tr>
                                 <td>Date</td>
-                                <td><input type="date" className="cardLable" required /></td>
+                                <td><input type="date" className="cardLable" id="date"  /></td>
                             </tr>
                             <tr>
                                 <td>Start Time</td>
-                                <td><input type="time" className="cardLable" required /></td>
+                                <td><input type="time" className="cardLable" id="stTime"  /></td>
                             </tr>
                             <tr>
                                 <td>End Time</td>
-                                <td><input type="time" className="cardLable" required /></td>
+                                <td><input type="time" className="cardLable" id="enTime"  /></td>
                             </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn">Add Subject</button>
+                        <button className="saveBtn" onClick={addSub}>Add Subject</button>
                     </div>
                 </div>
             )}
-            {(showCard==="editSub" &&
+            {(showCard === "editCard" &&
                 <div ref={cardRef} className="subCard">
                     <div className="cardHeader">
                         <h2>Edit Exam Details</h2>
@@ -162,36 +194,36 @@ const Exams = () => {
                     <div className="cardForm">
                         <table className="cardTable">
                             <tr>
-                                <td>S.no</td>
-                                <td><input type="text" className="cardLable" value={selectedRow["S.no"]} readOnly /></td>
+                                <td>Regulation</td>
+                                <td><input type="text" className="cardLable disable" value={"AR20"} readOnly /></td>
                             </tr>
                             <tr>
                                 <td>Sub Code</td>
-                                <td><input type="text" className="cardLable" value={selectedRow["Sub Code"]} required /></td>
+                                <td><input type="text" className="cardLable disable" id="subCode" value={selectedRow.subCode} readOnly /></td>
                             </tr>
                             <tr>
                                 <td>Subject</td>
-                                <td><input type="text" className="cardLable" value={selectedRow["Subject"]} required /></td>
+                                <td><input type="text" className="cardLable" id="sub" value={selectedRow.sub} onChange={(e) => handleEditChange("sub", e.target.value)}  /></td>
                             </tr>
                             <tr>
                                 <td>Date</td>
-                                <td><input type="date" className="cardLable" value={selectedRow["Date"]} required /></td>
+                                <td><input type="date" className="cardLable" id="date" value={selectedRow.date} onChange={(e) => handleEditChange("date", e.target.value)}  /></td>
                             </tr>
                             <tr>
                                 <td>Start Time</td>
-                                <td><input type="time" className="cardLable" value={selectedRow["Time"] ? selectedRow["Time"].split(" - ")[0] : ""} required /></td>
+                                <td><input type="time" className="cardLable" id="stTime" value={selectedRow.time.split(" - ")[0]} onChange={(e) => handleEditChange("time", `${e.target.value} - ${selectedRow.time.split(" - ")[1]}`)}  /></td>
                             </tr>
                             <tr>
                                 <td>End Time</td>
-                                <td><input type="time" className="cardLable" value={selectedRow["Time"] ? selectedRow["Time"].split(" - ")[1] : ""} required /></td>
+                                <td><input type="time" className="cardLable" id="enTime" value={selectedRow.time.split(" - ")[1]} onChange={(e) => handleEditChange("time", `${selectedRow.time.split(" - ")[0]} - ${e.target.value}`)} /></td>
                             </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn">Save Changes</button>
+                        <button className="saveBtn" onClick={editSub}>Save Changes</button>
                     </div>
                 </div>)}
-            {(showCard==="delSub" &&
+            {(showCard === "delCard" &&
                 <div ref={cardRef} className="deleteCard">
                     <div className="cardHeader">
                         <h2>Delete Exam</h2>
@@ -211,15 +243,15 @@ const Exams = () => {
                 </div>
                 <div className="examSelector">
                     <div className="examCard">
-                        <select className="semSelect">
-                            <option value="first">First Year</option>
-                            <option value="second">Second Year</option>
-                            <option value="third">Third Year</option>
-                            <option value="fourth">Fourth Year</option>
+                        <select className="yearSelect" onChange={(e) => setYear(e.target.value)}>
+                            <option value="1">First Year</option>
+                            <option value="2">Second Year</option>
+                            <option value="3">Third Year</option>
+                            <option value="4">Fourth Year</option>
                         </select>
-                        <select className="examSelect">
-                            <option value="sem1">Semester 1</option>
-                            <option value="sem2">Semester 2</option>
+                        <select className="semSelect" onChange={(e) => setSem(e.target.value)}>
+                            <option value="1">Semester 1</option>
+                            <option value="2">Semester 2</option>
                         </select>
                     </div>
                 </div>
@@ -228,7 +260,7 @@ const Exams = () => {
                         <div className="tabTitle">
                             Time Table
                         </div>
-                        <button className="addSubBtn" onClick={addSub}><FaCirclePlus />Add Subject</button>
+                        <button className="addSubBtn" onClick={addCard}><FaCirclePlus />Add Subject</button>
                     </div>
                     <div className="tableContainer examTable">
                         <table className="table">
@@ -243,16 +275,16 @@ const Exams = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((exam) => (
-                                    <tr key={exam["S.no"]}>
-                                        <td className="cellBody">{exam["S.no"]}</td>
-                                        <td className="cellBody">{exam["Sub Code"]}</td>
-                                        <td className="cellBody">{exam["Subject"]}</td>
-                                        <td className="cellBody">{exam["Date"]}</td>
-                                        <td className="cellBody">{exam["Time"]}</td>
+                                {data && data.map((exam, idx) => (
+                                    <tr key={idx}>
+                                        <td className="cellBody">{idx + 1}</td>
+                                        <td className="cellBody">{exam["subCode"]}</td>
+                                        <td className="cellBody">{exam["sub"]}</td>
+                                        <td className="cellBody">{exam["date"]}</td>
+                                        <td className="cellBody">{exam["time"]}</td>
                                         <td className="cellBody">
-                                            <FaRegEdit data-testid="edit-icon" className="editIc" onClick={() => editRow(exam)} />
-                                            <MdDeleteOutline data-testid="delete-icon" className="delIc" onClick={() => deleteRow(exam)} />
+                                            <FaRegEdit data-testid="edit-icon" className="editIc" onClick={() => editCard(exam)} />
+                                            <MdDeleteOutline data-testid="delete-icon" className="delIc" onClick={() => delCard(exam)} />
                                         </td>
                                     </tr>
                                 ))}

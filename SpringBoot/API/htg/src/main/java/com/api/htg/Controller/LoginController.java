@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.htg.DTO.LoginRequestDTO;
 import com.api.htg.DTO.LoginResponseDTO;
-import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;

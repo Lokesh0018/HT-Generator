@@ -17,11 +17,29 @@ const ToastProvider = ({ children }) => {
             icon: <FaRegCircleCheck />,
             msg: "Verification Success"
         },
+        add: {
+            head: "Success",
+            color: "#269b24",
+            icon: <FaRegCircleCheck />,
+            msg: "Added Successfully"
+        },
+        update: {
+            head: "Success",
+            color: "#269b24",
+            icon: <FaRegCircleCheck />,
+            msg: "Updated Successfully"
+        },
+        delete: {
+            head: "Success",
+            color: "#269b24",
+            icon: <FaRegCircleCheck />,
+            msg: "Deleted Successfully"
+        },
         emptyFields: {
             head: "Info",
             color: "#124fff",
             icon: <LuInfo />,
-            msg: "Username and Password are required"
+            msg: "All fields are required"
         },
         emptyMsg: {
             head: "Info",

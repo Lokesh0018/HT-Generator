@@ -410,8 +410,8 @@ a {
     scrollbar-width: none;
 }
 
-.semSelect,
-.examSelect {
+.yearSelect,
+.semSelect {
     width: 60%;
     cursor: pointer;
     padding: 10px;

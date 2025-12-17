@@ -17,7 +17,7 @@ const DashBoard = () => {
 
 
     useEffect(() => {
-        const storedData = localStorage.getItem("data");
+        const storedData = localStorage.getItem("admin");
         if(storedData)
             setData(JSON.parse(storedData));
     },[]);

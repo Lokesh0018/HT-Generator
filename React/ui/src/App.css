@@ -20,6 +20,7 @@
     --toastSuccess: #269b24;
     --toastError: #d10d0d;
     --toastInfo: #124fff;
+    --checkBox:#ff5722;
     --bor: 1px solid rgb(255, 0, 0);
 }
 
@@ -56,6 +57,11 @@ a {
 .disable {
     cursor: not-allowed !important;
     opacity: 0.7;
+}
+
+input[type="checkbox"] {
+    accent-color: var(--checkBox);
+    cursor: pointer;
 }
 
 .toast {

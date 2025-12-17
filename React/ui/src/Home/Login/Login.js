@@ -35,7 +35,7 @@ const Login = () => {
         return res.json();
       })
       .then(data => {
-        localStorage.setItem("data", JSON.stringify(data));
+        localStorage.setItem("admin", JSON.stringify(data));
         localStorage.setItem("token", "true");
         showToastMsg("success");
         navigate("/admin");

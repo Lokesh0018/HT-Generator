@@ -9,7 +9,7 @@ const Exams = () => {
     const { showToastMsg } = useContext(ToastContext);
 
     const [data, setData] = useState([]);
-    const regulation = JSON.parse(localStorage.getItem("data")).regulation;
+    const regulation = JSON.parse(localStorage.getItem("admin")).regulation;
     const [year, setYear] = useState(1);
     const [sem, setSem] = useState(1);
 

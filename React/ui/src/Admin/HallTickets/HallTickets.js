@@ -1,32 +1,20 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useContext, useEffect, useRef, useState } from "react";
 import { FaEye } from 'react-icons/fa';
 import { LiaWpforms } from 'react-icons/lia';
+import { ToastContext } from "../../Toast";
 
 const HallTickets = () => {
-    const initialData = [
-        {
-            "S.no": 1,
-            "Id": "233J5A0513",
-            "Name": "Munakala Lokesh",
-            "Branch": "CSE",
-            "Year": 4,
-            "Semester": 1,
-            "Regulation": "AR20",
-            "Status": true
-        },
-        {
-            "S.no": 2,
-            "Id": "233J5A0514",
-            "Name": "Munakala Lokesh",
-            "Branch": "CSE",
-            "Year": 4,
-            "Semester": 1,
-            "Regulation": "AR20",
-            "Status": false
-        }
-    ];
+    const { showToastMsg } = useContext(ToastContext);
 
-    const [students, setStudents] = useState(initialData);
+    const [data, setData] = useState([]);
+    const regulation = JSON.parse(localStorage.getItem("admin")).regulation;
+    const branch = JSON.parse(localStorage.getItem("admin")).branch;
+    const year = JSON.parse(localStorage.getItem("admin")).year;
+    const sem = JSON.parse(localStorage.getItem("admin")).semester;
+    const section = JSON.parse(localStorage.getItem("admin")).section;
+
+
+    const [students, setStudents] = useState(data);
     const [showCard, setShowCard] = useState(null);
 
     const viewRef = useRef(null);
@@ -34,35 +22,65 @@ const HallTickets = () => {
     const approveAll = () => {
         setStudents(prev => {
             return prev.map(stu => {
-                return { ...stu, Status: true }
+                return { ...stu, approve: true }
             })
+        });
+
+        fetch(`http://localhost:8081/admin/halltickets/approveAll/${section}`, {
+            method : "PUT"
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            else
+                showToastMsg("update");
+        }).then((data) => {
+            localStorage.setItem("students", JSON.stringify(students));
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
         })
     }
 
-    const updateAction = (id, newStatus) => {
+    const updateAction = (id, approve) => {
         setStudents(prev =>
             prev.map(stu =>
-                stu.Id === id ? { ...stu, Status: newStatus } : stu
+                stu.id === id ? { ...stu, approve: approve } : stu,
             )
         );
+
+        fetch(`http://localhost:8081/admin/halltickets/${id}`, {
+            method : "PUT"
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            else
+                showToastMsg("update");
+        }).then((data) => {
+            localStorage.setItem("students", JSON.stringify(students));
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        })
     };
 
     const handleViewCard = (id) => {
-        const student = initialData.find(s => s.Id == id);
+        const student = data.find(s => s.id == id);
         setShowCard(student);
-        document.querySelector(".hallTickets").classList.add("blur");
     }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (showCard && viewRef.current && !viewRef.current.contains(event.target)) {
+            if (showCard && viewRef.current && !viewRef.current.contains(event.target))
                 setShowCard(null);
-                document.querySelector(".hallTickets").classList.remove("blur");
-            }
         };
         document.addEventListener("mousedown",handleClickOutside);
         return () => document.removeEventListener("mousedown",handleClickOutside);
     }, [showCard]);
+
+    useEffect(() => {
+        const storedData = localStorage.getItem("students");
+        setData(JSON.parse(storedData));
+        setStudents(JSON.parse(storedData));
+        console.log(JSON.parse(storedData));
+    },[])
 
 return (
     <>
@@ -73,33 +91,33 @@ return (
                 </div>
                 <hr />
                 <div className="stuDetailsHomeBody">
-                    <div className="stuDetailsImgHome"><img /></div>
+                    <img src={`data:image/jpeg;base64,${showCard.imgData}`}  className="stuDetailsImgHome" />
                     <table>
                         <tr>
                             <td>Name :</td>
-                            <td>{showCard.Name}</td>
+                            <td>{showCard.name}</td>
                         </tr>
                         <tr>
                             <td>Id :</td>
-                            <td>{showCard.Id}</td>
+                            <td>{showCard.id}</td>
                         </tr>
                         <tr>
                             <td>Branch :</td>
-                            <td>{showCard.Branch}</td>
+                            <td>{branch}</td>
                         </tr>
                         <tr>
                             <td>Year :</td>
-                            <td>{showCard.Year}</td>
+                            <td>{year}</td>
                         </tr>
                         <tr>
                             <td>Semester :</td>
-                            <td>{showCard.Semester}</td>
+                            <td>{sem}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         )}
-        <div className="hallTickets">
+        <div className={`hallTickets ${showCard ? "blur" : ""}`}>
             <div className="pageHeader">
                 <div className="pageTitle">HallTickets Management</div>
                 <button className="addBtn" onClick={approveAll}>Approve All</button>
@@ -120,20 +138,20 @@ return (
                         </thead>
 
                         <tbody>
-                            {students.map((stu, index) => (
-                                <tr key={index}>
-                                    <td className="cellBody">{stu["S.no"]}</td>
-                                    <td className="cellBody">{stu["Id"]}</td>
-                                    <td className="cellBody">{stu["Name"]}</td>
-                                    <td className="cellBody">{stu["Regulation"]}</td>
-                                    <td className="cellBody"><FaEye className="viewIc" onClick={() => handleViewCard(stu.Id)} /></td>
+                            {students.map((stu, idx) => (
+                                <tr key={idx}>
+                                    <td className="cellBody">{idx + 1}</td>
+                                    <td className="cellBody">{stu.id}</td>
+                                    <td className="cellBody">{stu.name}</td>
+                                    <td className="cellBody">{regulation}</td>
+                                    <td className="cellBody"><FaEye className="viewIc" onClick={() => handleViewCard(stu.id)} /></td>
 
                                     <td className="cellBody">
                                         <input
                                             type="checkbox"
-                                            checked={stu.Status}
+                                            checked={stu.approve}
                                             onChange={(e) =>
-                                                updateAction(stu.Id, e.target.checked)
+                                                updateAction(stu.id, !stu.approve)
                                             }
                                         />
                                     </td>

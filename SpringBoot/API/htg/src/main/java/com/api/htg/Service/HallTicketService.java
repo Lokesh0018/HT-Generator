@@ -12,8 +12,8 @@ public class HallTicketService {
     @Autowired
     private StudentJpa studentRepo;
 
-    public void approveAll() {
-        for (StudentEntity student : studentRepo.findAll()) {
+    public void approveAll(Character section) {
+        for (StudentEntity student : studentRepo.findBySection(section)) {
             student.setApprove(true);
             studentRepo.save(student);
         };

@@ -20,6 +20,7 @@ const Students = () => {
             return res.json();
         }).then((data) => {
             setData(data);
+            localStorage.setItem("students", JSON.stringify(data));
         }).catch((err) => {
             showToastMsg(err.message || "serverError");
         });
@@ -56,6 +57,7 @@ const Students = () => {
             showToastMsg("add");
             setData(data);
             setShowCard(null);
+            localStorage.setItem("students", JSON.stringify(data));
         }).catch((err) => {
             showToastMsg(err.message || "serverError");
         });
@@ -99,6 +101,7 @@ const Students = () => {
                 showToastMsg("update");
                 setData(data);
                 handleCancle();
+                localStorage.setItem("students", JSON.stringify(data));
             })
             .catch(err => {
                 showToastMsg(err.message || "serverError");
@@ -111,13 +114,14 @@ const Students = () => {
         fetch(`http://localhost:8081/admin/students/${id}`, {
             method: "DELETE"
         }).then((res) => {
-            if(!res.ok)
+            if (!res.ok)
                 throw new Error("serverError");
             return res.json();
         }).then((data) => {
             showToastMsg("delete");
             setData(data);
             handleCancle();
+            localStorage.setItem("students", JSON.stringify(data));
         }).catch((err) => {
             showToastMsg(err.message || "serverError");
         })

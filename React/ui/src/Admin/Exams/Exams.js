@@ -15,8 +15,7 @@ const Exams = () => {
 
     useEffect(() => {
         fetch(`http://localhost:8081/admin/exams/${year}/${sem}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
+            method: "GET"
         }).then((res) => {
             if (!res.ok)
                 throw new Error("serverError");
@@ -28,7 +27,7 @@ const Exams = () => {
         });
     }, [year, sem]);
 
-    const addSub = () => {
+    const addSubject = () => {
         const subCode = document.getElementById("subCode").value;
         const sub = document.getElementById("sub").value;
         const date = document.getElementById("date").value;
@@ -64,7 +63,7 @@ const Exams = () => {
         });
     };
 
-    const editSub = () => {
+    const editSubject = () => {
         const subCode = selectedRow.subCode;
         const year = selectedRow.year;
         const sem = selectedRow.semester
@@ -102,7 +101,7 @@ const Exams = () => {
         });
     }
 
-    const delSub = () => {
+    const delSubject = () => {
         fetch('http://localhost:8081/admin/exams',{
             method : "DELETE",
             headers : { "Content-Type" : "application/json" },
@@ -203,7 +202,7 @@ const Exams = () => {
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn" onClick={addSub}>Add Subject</button>
+                        <button className="saveBtn" onClick={addSubject}>Add Subject</button>
                     </div>
                 </div>
             )}
@@ -241,7 +240,7 @@ const Exams = () => {
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn" onClick={editSub}>Save Changes</button>
+                        <button className="saveBtn" onClick={editSubject}>Save Changes</button>
                     </div>
                 </div>)}
             {(showCard === "delCard" &&
@@ -254,7 +253,7 @@ const Exams = () => {
                     </div>
                     <div className="delActions">
                         <button className="cancelBtn" onClick={handleCancel}>Cancel</button>
-                        <button className="deleteBtn" onClick={delSub}>Delete</button>
+                        <button className="deleteBtn" onClick={delSubject}>Delete</button>
                     </div>
                 </div>
             )}

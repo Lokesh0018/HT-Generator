@@ -1,110 +1,188 @@
-import { React, use, useEffect, useRef, useState } from "react";
+import { React, useContext, useEffect, useRef, useState } from "react";
 import { FaRegEdit, FaPlus } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
+import { ToastContext } from "../../Toast";
 
 const Students = () => {
+    const { showToastMsg } = useContext(ToastContext);
 
-    const data = [
-        {
-            "S.no": 1,
-            "Id": "233J5A0513",
-            "Name": "Munakala Lokesh",
-            "Email": "233j5a0513@raghuinstech.com",
-            "Branch": "CSE",
-            "Year": 4,
-            "Semester": 1
-        },
-        {
-            "S.no": 2,
-            "Id": "233J5A0513",
-            "Name": "Munakala Lokesh",
-            "Email": "233j5a0513@raghuinstech.com",
-            "Branch": "CSE",
-            "Year": 4,
-            "Semester": 1
-        }
-    ];
+    const admin = JSON.parse(localStorage.getItem("data"));
+    const [img, setImg] = useState(null);
+    const [data, setData] = useState([]);
 
-    const [preview, setPreview] = useState(null);
-
-    const [selectedRow, setSelectedRow] = useState(null);
-
-    const addStuRef = useRef(null);
-    const editStuRef = useRef(null);
-    const delStuRef = useRef(null);
-
-    const [showCard, setShowCard] = useState(null);
+    useEffect(() => {
+        const section = admin.section;
+        fetch(`http://localhost:8081/admin/students/${section}`, {
+            method: "GET"
+        }).then((res) => {
+            if (!res.ok)
+                showToastMsg("serverError");
+            return res.json();
+        }).then((data) => {
+            setData(data);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
+    }, []);
 
     const addStudent = () => {
-        document.querySelector('.studentContent').classList.add('blur');
-        setShowCard("addStu");
+        const id = document.getElementById("id").value;
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const section = admin.section;
+
+        if (!img || !id || !name || !email) {
+            showToastMsg("emptyFields");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("img", img);
+        formData.append("entity", JSON.stringify({
+            "id": id,
+            "name": name,
+            "email": email,
+            "section": section
+        }));
+
+        fetch('http://localhost:8081/admin/students', {
+            method: "POST",
+            body: formData
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("add");
+            setData(data);
+            setShowCard(null);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
+    };
+
+    const editStudent = () => {
+        const id = selectedRow.id;
+        const name = selectedRow.name;
+        const email = selectedRow.email;
+        const section = admin.section;
+
+        if (!id || !name || !email) {
+            showToastMsg("emptyFields");
+            return;
+        }
+
+        const formData = new FormData();
+
+        if (img) {
+            formData.append("img", img);
+        }
+
+        formData.append(
+            "entity",
+            JSON.stringify({
+                "id": id,
+                "name": name,
+                "email": email,
+                "section": section
+            })
+        );
+
+        fetch("http://localhost:8081/admin/students", {
+            method: "PUT",
+            body: formData
+        }).then(res => {
+            if (!res.ok) throw new Error("serverError");
+            return res.json();
+        })
+            .then(data => {
+                showToastMsg("update");
+                setData(data);
+                handleCancle();
+            })
+            .catch(err => {
+                showToastMsg(err.message || "serverError");
+            });
+    };
+
+    const deleteStudent = () => {
+        const id = selectedRow.id;
+
+        fetch(`http://localhost:8081/admin/students/${id}`, {
+            method: "DELETE"
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("delete");
+            setData(data);
+            handleCancle();
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        })
     }
-    const editStudent = (stu) => {
-        setSelectedRow(stu);
-        document.querySelector('.studentContent').classList.add('blur');
-        setShowCard("editStu");
-    }
-    const deleteStudent = (stu) => {
-        setSelectedRow(stu);
-        document.querySelector('.studentContent').classList.add('blur');
-        setShowCard("delStu");
-    }
+
+
+    const [preview, setPreview] = useState(null);
+    const [showCard, setShowCard] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const cardRef = useRef(null);
+
+    const addCard = () => {
+        setShowCard("addCard");
+    };
+
+    const editCard = (row) => {
+        setSelectedRow(row);
+        setShowCard("editCard");
+    };
+
+    const delCard = (row) => {
+        setSelectedRow(row);
+        setShowCard("delCard");
+    };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (showCard && addStuRef.current && !addStuRef.current.contains(event.target)) {
-                setShowCard(null);
-                document.querySelector('.studentContent').classList.remove('blur');
-                setPreview(null);
+            if (showCard && cardRef.current && !cardRef.current.contains(event.target)) {
+                handleCancle();
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [showCard]);
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (showCard && editStuRef.current && !editStuRef.current.contains(event.target)) {
-                setShowCard(null);
-                document.querySelector('.studentContent').classList.remove('blur');
-                setPreview(null)
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [showCard]);
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (showCard && delStuRef.current && !delStuRef.current.contains(event.target)) {
-                setShowCard(null);
-                document.querySelector('.studentContent').classList.remove('blur');
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [showCard]);
+
+
+    const handleEditChange = (key, value) => {
+        setSelectedRow(prev => ({
+            ...prev,
+            [key]: value
+        }));
+    };
 
     const handleCancle = () => {
         setShowCard(null);
         setSelectedRow(null);
-        document.querySelector('.studentContent').classList.remove('blur');
-    }
-
-    const handleDelete = () => {
-        window.location.reload();
+        setPreview(null);
     }
 
     const handleImg = (e) => {
         const file = e.target.files[0];
-        if (file)
+        if (file) {
             setPreview(URL.createObjectURL(file));
-        else
+            setImg(file);
+        }
+        else {
             setPreview(null);
+            setImg(null);
+        }
     }
 
     return (
         <div className="students">
-            {(showCard === "addStu") &&
-                <div className="stuCard" ref={addStuRef}>
+            {(showCard === "addCard") &&
+                <div className="stuCard" ref={cardRef}>
                     <div className="cardHeader">
                         <h2>Add New Student</h2>
                     </div>
@@ -115,36 +193,47 @@ const Students = () => {
                         <table className="cardTable">
                             <tr>
                                 <td>Image</td>
-                                <td><input type="file" accept="image/*" onChange={handleImg} className="cardLable" required /></td>
+                                <td><input type="file" accept="image/*" className="cardLable" id="img" onChange={handleImg} required /></td>
                             </tr>
                             <tr>
                                 <td>Id</td>
-                                <td><input type="text" className="cardLable" required /></td>
+                                <td><input type="text" className="cardLable" id="id" required /></td>
                             </tr>
                             <tr>
                                 <td>Name</td>
-                                <td><input type="text" className="cardLable" required /></td>
+                                <td><input type="text" className="cardLable" id="name" required /></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td><input type="text" className="cardLable" required /></td>
+                                <td><input type="text" className="cardLable" id="email" required /></td>
                             </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn">Add Student</button>
+                        <button className="saveBtn" onClick={addStudent}>Add Student</button>
                     </div>
                 </div>
             }
-            {(showCard === "editStu") &&
-                <div className="stuCard" ref={editStuRef}>
+            {(showCard === "editCard") &&
+                <div className="stuCard" ref={cardRef}>
                     <div className="cardHeader">
                         <h2>Update Student</h2>
                     </div>
 
                     <div className="previewContainer">
-                        {(preview) && <img src={preview} alt="preview" className="previewImg" />}
+                        {preview ? (
+                            <img src={preview} className="previewImg" alt="preview" />
+                        ) : (
+                            selectedRow?.imgData && (
+                                <img
+                                    src={`data:image/jpeg;base64,${selectedRow.imgData}`}
+                                    className="previewImg"
+                                    alt="existing"
+                                />
+                            )
+                        )}
                     </div>
+
                     <div className="cardForm">
                         <table className="cardTable">
                             <tr>
@@ -153,41 +242,41 @@ const Students = () => {
                             </tr>
                             <tr>
                                 <td>Id</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.Id} required /></td>
+                                <td><input type="text" className="cardLable disable" value={selectedRow.id} readOnly /></td>
                             </tr>
                             <tr>
                                 <td>Name</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.Name} required /></td>
+                                <td><input type="text" className="cardLable" value={selectedRow.name} onChange={(e) => handleEditChange("name", e.target.value)} required /></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.Email} required /></td>
+                                <td><input type="text" className="cardLable" value={selectedRow.email} onChange={(e) => handleEditChange("email", e.target.value)} required /></td>
                             </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn">Save Changes</button>
+                        <button className="saveBtn" onClick={editStudent}>Save Changes</button>
                     </div>
                 </div>
             }
-            {(showCard === "delStu") &&
-                <div className="deleteCard" ref={delStuRef}>
+            {(showCard === "delCard") &&
+                <div className="deleteCard" ref={cardRef}>
                     <div className="cardHeader">
                         <h2>Delete Exam</h2>
                     </div>
                     <div className="deleteContent">
-                        <p>Are you sure you want to delete the student <strong>{selectedRow.Id}</strong> ?</p>
+                        <p>Are you sure you want to delete the student <strong>{selectedRow.id}</strong> ?</p>
                     </div>
                     <div className="delActions">
                         <button className="cancelBtn" onClick={handleCancle}>Cancel</button>
-                        <button className="deleteBtn" onClick={handleDelete}>Delete</button>
+                        <button className="deleteBtn" onClick={deleteStudent}>Delete</button>
                     </div>
                 </div>
             }
-            <div className="studentContent">
+            <div className={`studentContent ${showCard ? "blur" : ""}`}>
                 <div className="pageHeader">
                     <div className="pageTitle">Students Management</div>
-                    <button className="addBtn" onClick={addStudent}><FaPlus />Add New Student</button>
+                    <button className="addBtn" onClick={addCard}><FaPlus />Add New Student</button>
                 </div>
                 <div className="studentContainer">
                     <div className="tableContainer">
@@ -205,18 +294,18 @@ const Students = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((stu) => (
-                                    <tr key={stu.key}>
-                                        <td className="cellBody">{stu["S.no"]}</td>
-                                        <td className="cellBody">{stu["Id"]}</td>
-                                        <td className="cellBody">{stu["Name"]}</td>
-                                        <td className="cellBody">{stu["Email"]}</td>
-                                        <td className="cellBody">{stu["Branch"]}</td>
-                                        <td className="cellBody">{stu["Year"]}</td>
-                                        <td className="cellBody">{stu["Semester"]}</td>
+                                {data.map((stu, idx) => (
+                                    <tr key={idx}>
+                                        <td className="cellBody">{idx + 1}</td>
+                                        <td className="cellBody">{stu.id}</td>
+                                        <td className="cellBody">{stu.name}</td>
+                                        <td className="cellBody">{stu.email}</td>
+                                        <td className="cellBody">{admin.branch}</td>
+                                        <td className="cellBody">{admin.year}</td>
+                                        <td className="cellBody">{admin.semester}</td>
                                         <td className="cellBody">
-                                            <FaRegEdit className="editIc" onClick={() => editStudent(stu)} />
-                                            <MdDeleteOutline className="delIc" onClick={() => deleteStudent(stu)} />
+                                            <FaRegEdit className="editIc" onClick={() => editCard(stu)} />
+                                            <MdDeleteOutline className="delIc" onClick={() => delCard(stu)} />
                                         </td>
                                     </tr>
                                 ))}

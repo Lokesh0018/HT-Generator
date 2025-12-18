@@ -5,6 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.api.htg.DTO.LoginResponseDTO;
 import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Repository.AdminJpa;
@@ -33,8 +34,19 @@ public class AdminService {
         }
     }
 
-    public AdminEntity updateGeneral(AdminEntity entity) {
-        return adminRepo.save(entity);
+    public LoginResponseDTO updateGeneral(LoginResponseDTO responseDTO) {
+        AdminEntity entity = adminRepo.findById(responseDTO.getId()).get();
+        entity.setBranch(responseDTO.getBranch());
+        entity.setYear(responseDTO.getYear());
+        entity.setSemester(responseDTO.getSemester());
+        Integer students = studentRepo.findBySection(entity.getSection()).size();
+        responseDTO.setStudents(students);
+        Integer approvedHallTickets = ((entity.getYear()-1)*2)+entity.getSemester()-1;
+        Integer upComingExams = 8-approvedHallTickets; 
+        responseDTO.setUpComingExams(upComingExams);
+        responseDTO.setApprovedHallTickets(approvedHallTickets);
+        adminRepo.save(entity);
+        return responseDTO;
     }
 
 }

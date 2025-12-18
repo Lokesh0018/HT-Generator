@@ -6,7 +6,7 @@ import { ToastContext } from "../../Toast";
 const Students = () => {
     const { showToastMsg } = useContext(ToastContext);
 
-    const admin = JSON.parse(localStorage.getItem("data"));
+    const admin = JSON.parse(localStorage.getItem("admin"));
     const [img, setImg] = useState(null);
     const [data, setData] = useState([]);
 

@@ -3,7 +3,7 @@ package com.api.htg.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.htg.Entity.AdminEntity;
+import com.api.htg.DTO.LoginResponseDTO;
 import com.api.htg.Service.AdminService;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,11 +36,10 @@ public class AdminController {
     }
     
 
-    @PutMapping("settings")
-    public ResponseEntity<AdminEntity> updateGeneral(@RequestBody AdminEntity entity) {
+    @PutMapping("/settings")
+    public ResponseEntity<LoginResponseDTO> updateGeneral(@RequestBody LoginResponseDTO responseDTO) {
         try {
-            AdminEntity admin = adminService.updateGeneral(entity);
-            return new ResponseEntity<>(admin, HttpStatus.OK);
+            return new ResponseEntity<>(adminService.updateGeneral(responseDTO), HttpStatus.OK);
         }
         catch(Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

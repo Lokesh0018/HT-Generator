@@ -59,6 +59,18 @@ const ToastProvider = ({ children }) => {
             icon: <BiErrorCircle />,
             msg: "Something went wrong"
         },
+        invalidYear: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "Invalid Year"
+        },
+        invalidSem: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "Invalid Semester"
+        },
     };
 
     const showToastMsg = (type) => {

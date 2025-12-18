@@ -1,6 +1,7 @@
 package com.api.htg.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,8 +27,10 @@ public class VerificationService {
 
     public void sendOtp(String stuMail) throws Exception{
         StudentEntity student = studentRepo.findByEmail(stuMail);
+        if(student == null)
+            throw new Exception("notRegistered");
         if(!student.getApprove())
-            throw new Exception("You are not Approved");
+            throw new Exception("notApproved");
         String otp = generateOtp();
         student.setOtp(otp);
         student.setExpiryTime(LocalDateTime.now().plusMinutes(5));
@@ -41,12 +44,14 @@ public class VerificationService {
 
     public StudentEntity verifyOtp(String stuMail, String otp) throws Exception {
         StudentEntity student = studentRepo.findByEmail(stuMail);
+        if(student.getExpiryTime().isBefore(LocalDateTime.now()))
+            throw new Exception("OTP has been expired");
         if(!student.getOtp().equals(otp))
             throw new Exception( "Invalid OTP");
-        else if(student.getExpiryTime().isBefore(LocalDateTime.now()))
-            throw new Exception("OTP has been expired");
-        else
-            return student;
+        student.setOtp(null);
+        student.setExpiryTime(null);
+        studentRepo.save(student);
+        return student;
     }
 
 }

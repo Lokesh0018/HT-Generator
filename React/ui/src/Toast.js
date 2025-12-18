@@ -35,6 +35,12 @@ const ToastProvider = ({ children }) => {
             icon: <FaRegCircleCheck />,
             msg: "Deleted Successfully"
         },
+        sent: {
+            head: "Success",
+            color: "#269b24",
+            icon: <FaRegCircleCheck />,
+            msg: "OTP Sent Successfully"
+        },
         emptyFields: {
             head: "Info",
             color: "#124fff",
@@ -46,6 +52,12 @@ const ToastProvider = ({ children }) => {
             color: "#124fff",
             icon: <LuInfo />,
             msg: "Message is required"
+        },
+        clgEmail: {
+            head: "Info",
+            color: "#124fff",
+            icon: <LuInfo />,
+            msg: "Collage Email is required"
         },
         invalidCredentials: {
             head: "Error",
@@ -71,6 +83,18 @@ const ToastProvider = ({ children }) => {
             icon: <BiErrorCircle />,
             msg: "Invalid Semester"
         },
+        notRegistered: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "Not Registered contact admin"
+        },
+        notApproved: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "Not Approved contact admin"
+        }
     };
 
     const showToastMsg = (type) => {

@@ -1,51 +1,48 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { LuSend, LuInfo } from "react-icons/lu";
-import { FaRegCircleCheck } from "react-icons/fa6";
-import { BiErrorCircle } from "react-icons/bi";
-import { IoCloseOutline } from "react-icons/io5";
+import { LuSend } from "react-icons/lu";
 import { LiaWpforms } from 'react-icons/lia';
+import { ToastContext } from "../Toast";
 
 const Home = () => {
-  const [verified, setVerified] = useState(true);
-  const toastMap = {
-    success: {
-      head: "Success",
-      color: "#269b24",
-      icon: <FaRegCircleCheck />,
-      msg: "Verification Success",
-    },
-    errorMail: {
-      head: "Error",
-      color: "#d10d0d",
-      icon: <BiErrorCircle />,
-      msg: "User not registerd",
-    },
-    errorOtp: {
-      head: "Error",
-      color: "#d10d0d",
-      icon: <BiErrorCircle />,
-      msg: "OTP is invalid",
-    },
-    exception: {
-      head: "Error",
-      color: "#d10d0d",
-      icon: <BiErrorCircle />,
-      msg: "Some thing went Wrong",
-    },
-    info: {
-      head: "Info",
-      color: "#124fff",
-      icon: <LuInfo />,
-      msg: "Use Collage Mail Id",
-    },
-  };
+  const { showToastMsg } = useContext(ToastContext);
 
-  const [toastData, setToastData] = useState(null);
-  const [showToast, setShowToast] = useState(false);
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [disable, setDisable] = useState(true);
+  const [verified, setVerified] = useState(true);
 
   const otpRef = useRef([]);
-  const [disable, setDisable] = useState(true);
+
+  const verifyEmail = (e) => {
+    e.preventDefault();
+    const mailDomain = email.split("@")[1];
+
+    if (mailDomain === "raghuinstech.com") {
+      fetch(`http://localhost:8081/${email}`, {
+        method: "GET"
+      }).then((res) => {
+        console.log(res);
+        if (!res.ok)
+          if (res.status === 409)
+            throw new Error("notRegistered");
+          else if (res.status === 401)
+            throw new Error("notApproved");
+          else
+            throw new Error("serverError");
+      }).then((data) => {
+        showToastMsg("sent");
+        setDisable(false);
+      }).catch((err) => {
+        showToastMsg(err.message || "serverError");
+      })
+    }
+    else {
+      showToastMsg("clgEmail");
+      return;
+    }
+
+  }
 
   const handleChange = (e, idx) => {
     const value = e.target.value.replace(/\D/g, "").slice(0, 1);
@@ -61,21 +58,7 @@ const Home = () => {
     }
   };
 
-  const otpVerify = (e) => {
-    e.preventDefault();
-    const mailDomain = document.querySelector(".homeIp").value.split("@")[1];
-    if (mailDomain !== "raghuinstech.com") {
-      showToastMsg("info");
-    } else {
-      showToastMsg("Ssccess");
-    }
-  };
 
-  const showToastMsg = (type) => {
-    setToastData(toastMap[type]);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
   return (
     <div className="home">
       <div className="homeHeader">
@@ -89,105 +72,83 @@ const Home = () => {
         </NavLink>
       </div>
 
-      <form className="homeContent" onSubmit={otpVerify}>
-        <div className="homeDetails">
+      <form className="homeContent hc1" onSubmit={verifyEmail}>
+        <div className="homeDetails hd1">
           <span className="homeLable">Email :&nbsp;</span>
           <input
             type="email"
+            id="email"
             className="homeIp"
             placeholder="Enter Your College Mail Id"
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <button type="submit" className="sendIc">
             <LuSend />
           </button>
         </div>
-
-        <div className="homeDetails">
-          <span className="homeLable">OTP :&nbsp;&nbsp;&nbsp;</span>
+      </form>
+      <form className="homeContent hc2">
+        <div className={`homeDetails ${disable ? "disable hd2" : "hd2"}`}>
+          <span className="homeLable">OTP :&nbsp;&nbsp;&nbsp; </span>
           <div className="homeOtp">
             {[0, 1, 2, 3].map((i) => (
               <input
                 key={i}
                 type="text"
-                className="otpIp"
+                className={`otpIp ${disable ? "disable" : ""}`}
                 maxLength={1}
                 ref={(e) => (otpRef.current[i] = e)}
                 onChange={(e) => handleChange(e, i)}
                 onKeyDown={(e) => handleBack(e, i)}
-                disabled={disable}
                 required
               />
             ))}
           </div>
         </div>
 
-        <button type="submit" className="verifyBtn" disabled={disable}>
+        <button type="button" className={`verifyBtn ${disable ? "disable" : ""}`}>
           Verify
         </button>
-
-        {(verified) && (
-          <div className="stuDetailsHome">
-            <div className="stuDetailsHomeContainer">
-              <div className="stuDetailsHomeHeader">
-                <LiaWpforms className="detailsCardIc" /> <h1>Details</h1>
-              </div>
-              <hr />
-              <div className="stuDetailsHomeBody">
-                <div className="stuDetailsImgHome"><img /></div>
-                <table>
-                  <tr>
-                    <td>Name :</td>
-                    <td>Munakala Lokesh</td>
-                  </tr>
-                  <tr>
-                    <td>Id :</td>
-                    <td>233J5A0513</td>
-                  </tr>
-                  <tr>
-                    <td>Branch :</td>
-                    <td>Computer Science and Engineering</td>
-                  </tr>
-                  <tr>
-                    <td>Year :</td>
-                    <td>4</td>
-                  </tr>
-                  <tr>
-                    <td>Semester :</td>
-                    <td>2</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
-        <button type="submit" className="verifyBtn" disabled={disable}>
-          Confirm
-        </button>
       </form>
-
-      {toastData && (
-        <div className={`toast ${showToast ? "show" : ""}`}>
-          <div
-            className="toastWave"
-            style={{ backgroundColor: toastData.color }}
-          ></div>
-          <div className="toastContent">
-            <div className="toastHeader">
-              <div className="toastHead" style={{ color: toastData.color }}>
-                <span className="toastIc">{toastData.icon}</span>
-                <h1>{toastData.head}</h1>
-              </div>
-              <div className="toastClose" onClick={() => setShowToast(false)}>
-                <IoCloseOutline />
-              </div>
+      {(verified) && (
+        <div className="stuDetailsHome">
+          <div className="stuDetailsHomeContainer">
+            <div className="stuDetailsHomeHeader">
+              <LiaWpforms className="detailsCardIc" /> <h1>Details</h1>
             </div>
-            <div className="toastBody">
-              <p className="toastMsg">{toastData.msg}</p>
+            <hr />
+            <div className="stuDetailsHomeBody">
+              <div className="stuDetailsImgHome"><img /></div>
+              <table>
+                <tr>
+                  <td>Name :</td>
+                  <td>Munakala Lokesh</td>
+                </tr>
+                <tr>
+                  <td>Id :</td>
+                  <td>233J5A0513</td>
+                </tr>
+                <tr>
+                  <td>Branch :</td>
+                  <td>Computer Science and Engineering</td>
+                </tr>
+                <tr>
+                  <td>Year :</td>
+                  <td>4</td>
+                </tr>
+                <tr>
+                  <td>Semester :</td>
+                  <td>2</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
       )}
+      <button type="submit" className="verifyBtn" disabled={disable}>
+        Confirm
+      </button>
     </div>
   );
 };

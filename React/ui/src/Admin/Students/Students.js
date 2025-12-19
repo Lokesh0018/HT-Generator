@@ -27,12 +27,13 @@ const Students = () => {
     }, []);
 
     const addStudent = () => {
-        const id = document.getElementById("id").value;
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
+        const id = document.getElementById("id").value.toUpperCase().replace(/\s/g, "");
+        const name = document.getElementById("name").value.trim();
+        const email = id.trim().toLowerCase() + "@raghuinstech.com";
+        const fatherName = document.getElementById("fatherName").value.trim();
         const section = admin.section;
 
-        if (!img || !id || !name || !email) {
+        if (!img || !id || !name || !fatherName) {
             showToastMsg("emptyFields");
             return;
         }
@@ -43,6 +44,7 @@ const Students = () => {
             "id": id,
             "name": name,
             "email": email,
+            "fatherName": fatherName,
             "section": section
         }));
 
@@ -67,9 +69,10 @@ const Students = () => {
         const id = selectedRow.id;
         const name = selectedRow.name;
         const email = selectedRow.email;
+        const fatherName = selectedRow.fatherName;
         const section = admin.section;
 
-        if (!id || !name || !email) {
+        if (!id || !name || !fatherName) {
             showToastMsg("emptyFields");
             return;
         }
@@ -86,6 +89,7 @@ const Students = () => {
                 "id": id,
                 "name": name,
                 "email": email,
+                "fatherName": fatherName,
                 "section": section
             })
         );
@@ -208,8 +212,8 @@ const Students = () => {
                                 <td><input type="text" className="cardLable" id="name" required /></td>
                             </tr>
                             <tr>
-                                <td>Email</td>
-                                <td><input type="text" className="cardLable" id="email" required /></td>
+                                <td>Father Name</td>
+                                <td><input type="text" className="cardLable" id="fatherName" required /></td>
                             </tr>
                         </table>
                     </div>
@@ -253,8 +257,8 @@ const Students = () => {
                                 <td><input type="text" className="cardLable" value={selectedRow.name} onChange={(e) => handleEditChange("name", e.target.value)} required /></td>
                             </tr>
                             <tr>
-                                <td>Email</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.email} onChange={(e) => handleEditChange("email", e.target.value)} required /></td>
+                                <td>Father Name</td>
+                                <td><input type="text" className="cardLable" value={selectedRow.fatherName} onChange={(e) => handleEditChange("fatherName", e.target.value)} required /></td>
                             </tr>
                         </table>
                     </div>

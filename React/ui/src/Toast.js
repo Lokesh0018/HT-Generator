@@ -94,6 +94,18 @@ const ToastProvider = ({ children }) => {
             color: "#d10d0d",
             icon: <BiErrorCircle />,
             msg: "Not Approved contact admin"
+        },
+        invalidOtp: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "Invalid OTP"
+        },
+        otpExpired: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "OTP has been Expired"
         }
     };
 

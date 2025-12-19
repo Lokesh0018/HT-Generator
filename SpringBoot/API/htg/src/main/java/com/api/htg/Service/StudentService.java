@@ -36,7 +36,7 @@ public class StudentService {
             throw new IllegalStateException();
         StudentEntity existingEntity = optional.get();
         existingEntity.setName(entity.getName());
-        existingEntity.setEmail(entity.getEmail());
+        existingEntity.setFatherName(entity.getFatherName());
         existingEntity.setImgData(img.getBytes());
         existingEntity.setImgType(img.getContentType());
         studentRepo.save(existingEntity);

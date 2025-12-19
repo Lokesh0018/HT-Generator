@@ -5,7 +5,8 @@ import { IoMdDownload } from "react-icons/io";
 
 const HallTicket = () => {
 
-    const Year = 4;
+    const exams = JSON.parse(localStorage.getItem("exams"));
+    const Year = exams.year;
     const Month = "October";
     const YearExam = 2025;
     const Semester = 1;
@@ -166,7 +167,7 @@ const HallTicket = () => {
                             <b>Signature of the Student</b>
                         </span>
                         <span>
-                            <img src="/img/COF Sign.png" className="signature"/>
+                            <img src="/img/COF Sign.png" className="signature" />
                             <b>Controller of Examinations</b>
                         </span>
                         <span>

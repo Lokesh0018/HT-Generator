@@ -16,6 +16,7 @@ public class StudentEntity {
     private String id;
     private String name;
     private String email;
+    private String fatherName;
     private Character section;
     private String imgName;
     private String imgType;
@@ -28,10 +29,11 @@ public class StudentEntity {
     public StudentEntity() {
     }
 
-    public StudentEntity(String id, String name, String email, Character section, String imgName, String imgType, byte[] imgData) {
+    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType, byte[] imgData) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.fatherName = fatherName;
         this.section = section;
         this.imgName = imgName;
         this.imgType = imgType;
@@ -39,11 +41,12 @@ public class StudentEntity {
         this.approve = false;
     }
 
-    public StudentEntity(String id, String name, String email, Character section, String imgName, String imgType,
+    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType,
             byte[] imgData, boolean approve, String otp, LocalDateTime expiryTime) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.fatherName = fatherName;
         this.section = section;
         this.imgName = imgName;
         this.imgType = imgType;
@@ -75,6 +78,14 @@ public class StudentEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
     public Character getSection() {

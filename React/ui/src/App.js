@@ -4,7 +4,8 @@ import './App.css';
 import Home from "./Home/Home";
 import Admin from "./Admin/Admin";
 import Login from './Home/Login/Login';
-import ProtectedRoute from "./Home/ProtectedRoute/ProtectedRoute";
+import ProtectAdmin from "./Home/ProtectedRoute/ProtectAdmin";
+import ProtectHallTicket from "./Home/ProtectedRoute/ProtectHallTicket";
 import HallTicket from './Home/HallTicket/HallTicket';
 import ToastProvider from './Toast';
 
@@ -13,19 +14,29 @@ function App() {
     localStorage.getItem("token")
   );
 
+  const [verified, setVerified] = useState(
+    localStorage.getItem("student")
+  );
+
   return (
     <div className="App">
       <ToastProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/hallTicket" element={<HallTicket />} />
+            <Route path="/" element={<Home setVerified={setVerified}/>} />
+            <Route path="/hallTicket" 
+            element={
+              <ProtectHallTicket isAuth={verified}>
+                <HallTicket />
+              </ProtectHallTicket>
+            }
+            />
             <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
             <Route path="/admin/*"
               element={
-                <ProtectedRoute isAuth={authToken}>
+                <ProtectAdmin isAuth={authToken}>
                   <Admin />
-                </ProtectedRoute>
+                </ProtectAdmin>
               }
             />
           </Routes>

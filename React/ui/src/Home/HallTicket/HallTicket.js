@@ -5,7 +5,9 @@ import { IoMdDownload } from "react-icons/io";
 
 const HallTicket = () => {
 
+    const student = JSON.parse(localStorage.getItem("student"));
     const exams = JSON.parse(localStorage.getItem("exams"));
+    console.log(exams);
     const Year = exams.year;
     const Month = "October";
     const YearExam = 2025;
@@ -53,7 +55,7 @@ const HallTicket = () => {
                         </div>
                     </div>
                     <div className="branchLable">
-                        <b>CSE</b>
+                        <b>{student.branch}</b>
                         <b><u>HALL TICKET</u></b>
                         <b>ORIGINAL</b>
                     </div>
@@ -61,20 +63,20 @@ const HallTicket = () => {
                         <table>
                             <tr>
                                 <td>Hall Ticket No: </td>
-                                <td>233J5A0513</td>
+                                <td>{student.id}</td>
                             </tr>
                             <tr>
                                 <td>Student Name: </td>
-                                <td>MUNAKALA LOKESH</td>
+                                <td>{student.name}</td>
                             </tr>
                             <tr>
                                 <td>Father Name: </td>
-                                <td>MUNAKALA SRINIVASA RAO</td>
+                                <td>{student.fatherName}</td>
                             </tr>
                         </table>
-                        <img src="/img/Img2.jpeg" className="htImg" />
+                        <img src={`data:${student.imgType};base64,${student.imgData}`} className="htImg" />
                     </div>
-                    <div class="htInfo">
+                    <div className="htInfo">
                         <table>
                             <thead>
                                 <tr>
@@ -88,77 +90,18 @@ const HallTicket = () => {
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>20ES3019</td>
-                                    <td>Discrete Mathematical Structures</td>
-                                    <td>02.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>20CS2002</td>
-                                    <td>Python Programming</td>
-                                    <td>04.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>3</td>
-                                    <td>20CS3002</td>
-                                    <td>Computer Organization and Architecture</td>
-                                    <td>06.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>4</td>
-                                    <td>20CS3004</td>
-                                    <td>Object Oriented Programming through C++</td>
-                                    <td>08.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>5</td>
-                                    <td>20HS3002</td>
-                                    <td>Managerial Economics and Financial Analysis</td>
-                                    <td>10.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>6</td>
-                                    <td>20HS3002</td>
-                                    <td>Managerial Economics and Financial Analysis</td>
-                                    <td>10.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>7</td>
-                                    <td>20HS3002</td>
-                                    <td>Managerial Economics and Financial Analysis</td>
-                                    <td>10.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>8</td>
-                                    <td>20HS3002</td>
-                                    <td>Managerial Economics and Financial Analysis</td>
-                                    <td>10.01.2024</td>
-                                    <td>10:00 AM To 01:00 PM</td>
-                                    <td></td>
-                                </tr>
+                                {
+                                    exams && exams.map((exam, idx) => (
+                                        <tr>
+                                            <td>{idx+1}</td>
+                                            <td>{exam.subCode}</td>
+                                            <td>{exam.sub}</td>
+                                            <td>{exam.date}</td>
+                                            <td>{exam.time}</td>
+                                            <td></td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
                     </div>

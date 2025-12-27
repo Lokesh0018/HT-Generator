@@ -1,5 +1,6 @@
 @import url(https://db.onlinewebfonts.com/c/4ced975fa3e5923499c64211ab8d7777?family=Orev+Edge+Regular);
 
+
 :root {
     --main: #1A2B42;
     --sel: #F78C26;
@@ -28,7 +29,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Orev Edge Regular";
+    font-family: "Orev Edge", sans-serif;
 }
 
 a {

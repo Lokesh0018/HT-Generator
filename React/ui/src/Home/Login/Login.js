@@ -38,7 +38,7 @@ const Login = () => {
         localStorage.setItem("admin", JSON.stringify(data));
         localStorage.setItem("token", "true");
         showToastMsg("success");
-        navigate("/admin");
+        navigate("/admin", { replace : true });
       })
       .catch(err => {
         localStorage.removeItem("token");

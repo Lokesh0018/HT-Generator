@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdLogout, MdOutlineSave } from "react-icons/md";
 import { ToastContext } from "../../Toast";
 
@@ -55,6 +56,15 @@ const Settings = () => {
         setChanged(true);
     }
 
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("student");
+        localStorage.removeItem("admin");
+        navigate("/login", {replace : true});
+    };
+
     return (
         <div className="settings">
 
@@ -102,7 +112,7 @@ const Settings = () => {
                             <span className="value">{data.collageName}</span>
                         </div>
 
-                        <button className="logoutBtn">
+                        <button className="logoutBtn" onClick={logout}>
                             Logout <MdLogout />
                         </button>
                     </div>

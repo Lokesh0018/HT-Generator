@@ -1,5 +1,3 @@
-@import url(https://db.onlinewebfonts.com/c/4ced975fa3e5923499c64211ab8d7777?family=Orev+Edge+Regular);
-
 
 :root {
     --main: #1A2B42;
@@ -29,7 +27,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Orev Edge", sans-serif;
 }
 
 a {
@@ -795,6 +792,19 @@ input[type="checkbox"] {
     margin-top: 30px;
 }
 
+.lcSelect {
+    align-items: center;
+    justify-content: center;
+}
+
+.lcContent {
+    justify-content: center;
+}
+
+.lbSelect:hover {
+    background-color: #f4943b;
+}
+
 .home {
     position: relative;
     height: 100vh;
@@ -885,7 +895,7 @@ input[type="checkbox"] {
     width: 3.5%;
     height: 5.5%;
     padding: 10px;
-    left: 64.4%;
+    left: 65%;
     display: flex;
     align-items: center;
     justify-content: center;

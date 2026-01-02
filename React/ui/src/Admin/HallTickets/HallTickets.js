@@ -62,7 +62,7 @@ const HallTickets = () => {
     };
 
     const handleViewCard = (id) => {
-        const student = data.find(s => s.id == id);
+        const student = data.find(s => s.id = id);
         setShowCard(student);
     }
 

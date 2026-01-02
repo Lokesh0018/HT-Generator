@@ -1,4 +1,3 @@
-
 :root {
     --main: #1A2B42;
     --sel: #F78C26;
@@ -1148,4 +1147,88 @@ hr {
 .signature {
     width: 120px;
     height: 50px;
+}
+
+.invigilator {
+    height: 90vh;
+    width: 100vw;
+}
+
+.invigilatorHeader {
+    background-color: var(--main);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+}
+
+.invigilatorContent {
+    width: 100vw;
+    height: 82vh;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.invigilatorStudents:nth-child(1) {
+    width: 65%;
+}
+
+.invigilatorStudents:nth-child(2) {
+    width: 32%;
+}
+
+.qrScannerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qrScanner {
+    width: 90%;
+    height: 320px;
+    max-width: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.qrScanner video,
+.qrStartBtn {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.qrScanner video {
+    background: var(--black);
+    border: 2px solid #c57e22;
+    box-shadow: 0 0 25px rgba(197, 86, 34, 0.5);
+}
+
+.qrStartBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--AccentActionButton);
+    font-size: 10rem;
+    color: var(--GeneralBackground);
+}
+
+.invigilatorStu {
+    position: absolute;
+    height: 45%;
+    transform: translate(60%, 50%);
+    z-index: 1;
+}
+
+.invigilatorStu button {
+    width: 50%;
+    display: flex;
+    justify-content: center;
 }

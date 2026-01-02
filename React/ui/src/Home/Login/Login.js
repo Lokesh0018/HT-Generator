@@ -53,7 +53,7 @@ const Login = ({ props }) => {
 
         <div className="loginContent">
           <div className="loginDetails">
-            <span className="loginLable">Username :</span>
+            <span className="loginLable">User Id :</span>
             <input
               type="text"
               placeholder="Enter Username"

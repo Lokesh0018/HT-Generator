@@ -1,11 +1,12 @@
 import { React } from "react";
-import { CgProfile } from 'react-icons/cg';
+import { CgProfile } from 'react-icons/cg'; 
 import { Routes, Route, NavLink } from "react-router-dom";
 import Navigation from "./Navigation/Navigation";
 import DashBoard from "./DashBoard/DashBoard";
 import Exams from "./Exams/Exams";
 import Students from "./Students/Students";
 import HallTickets from "./HallTickets/HallTickets";
+import Invigilators from "./Invigilators/Invigilators";
 import Settings from "./Settings/Settings";
 import ProtectAdmin from "../Home/ProtectedRoute/ProtectAdmin";
 
@@ -44,6 +45,11 @@ const Admin = () => {
                         <Route path="/halltickets" element={
                             <ProtectAdmin isAuth={authToken}>
                                 <HallTickets />
+                            </ProtectAdmin>
+                        } />
+                        <Route path="/invigilators" element={
+                            <ProtectAdmin isAuth={authToken}>
+                                <Invigilators />
                             </ProtectAdmin>
                         } />
                         <Route path="/settings" element={

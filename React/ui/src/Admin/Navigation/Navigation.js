@@ -1,9 +1,11 @@
 import { React, useState } from "react";
 import { TbSquareRoundedLetterAFilled, TbWriting } from 'react-icons/tb';
-import { LuLayoutDashboard, LuTickets } from 'react-icons/lu';
+import { LuLayoutDashboard } from 'react-icons/lu';
 import { PiStudent } from 'react-icons/pi';
 import { MdManageAccounts } from 'react-icons/md';
 import { NavLink } from "react-router-dom";
+import { BsPersonVcard } from "react-icons/bs";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 
 const Navigation = () => {
 
@@ -55,9 +57,17 @@ const Navigation = () => {
             className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
-            <LuTickets />
+            <BsPersonVcard />
             </div>
             <span className={`navText ${pressed ? '' : 'hide'}`}>Hall&nbsp;Tickets</span>
+        </NavLink>
+        <NavLink to="/admin/invigilators"
+            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+        >
+          <div className="navIcon">
+            <LiaChalkboardTeacherSolid />
+            </div>
+            <span className={`navText ${pressed ? '' : 'hide'}`}>Invigilators</span>
         </NavLink>
         <NavLink to="/admin/settings"
             className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}

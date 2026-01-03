@@ -100,16 +100,14 @@ const Students = () => {
         }).then(res => {
             if (!res.ok) throw new Error("serverError");
             return res.json();
-        })
-            .then(data => {
-                showToastMsg("update");
-                setData(data);
-                handleCancle();
-                localStorage.setItem("students", JSON.stringify(data));
-            })
-            .catch(err => {
-                showToastMsg(err.message || "serverError");
-            });
+        }).then(data => {
+            showToastMsg("update");
+            setData(data);
+            handleCancle();
+            localStorage.setItem("students", JSON.stringify(data));
+        }).catch(err => {
+            showToastMsg(err.message || "serverError");
+        });
     };
 
     const deleteStudent = () => {

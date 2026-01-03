@@ -241,7 +241,8 @@ input[type="checkbox"] {
 .students,
 .hallTickets,
 .settings,
-.hallTicket {
+.hallTicket,
+.invigilators {
     height: 100%;
     width: 100%;
 }
@@ -1160,6 +1161,16 @@ hr {
     align-items: center;
     gap: 20px;
     padding: 10px;
+}
+
+.settingsContainer.DC {
+    padding: 20px;
+}
+
+.invigilatorDetails {
+    width: 100vw;
+    height: 82vh;
+    padding: 20px;
 }
 
 .invigilatorContent {

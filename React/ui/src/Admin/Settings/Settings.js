@@ -19,21 +19,21 @@ const Settings = () => {
             showToastMsg("emptyFields");
             return;
         }
-        else if(year.length>1){
+        else if (year.length > 1) {
             showToastMsg("invalidYear");
             return;
         }
-        else if(semester.length>1){
+        else if (semester.length > 1) {
             showToastMsg("invalidSem");
             return;
         }
 
         fetch("http://localhost:8081/admin/settings", {
-            method : "PUT",
-            headers : { "Content-Type" : "application/json" },
-            body : JSON.stringify(data)
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
         }).then(res => {
-            if(!res.ok)
+            if (!res.ok)
                 return new Error("serverError");
             return res.json();
         }).then((data) => {
@@ -51,7 +51,7 @@ const Settings = () => {
     const handleChange = (key, value) => {
         setData(prev => ({
             ...prev,
-            [key] : value
+            [key]: value
         }));
         setChanged(true);
     }
@@ -62,7 +62,7 @@ const Settings = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("student");
         localStorage.removeItem("admin");
-        navigate("/login", {replace : true});
+        navigate("/login", { replace: true });
     };
 
     return (
@@ -124,7 +124,14 @@ const Settings = () => {
                             General Settings
                         </div>
                     </div>
+
                     <div className="settingsContainer">
+
+                        <h3 className="label">Regulation:</h3>
+                        <div className="detailsContainer">
+                            <input className="value" type="text" value={data.regulation} onChange={(e) => handleChange("regulation", e.target.value)} />
+                        </div>
+
                         <h3 className="label">Branch:</h3>
                         <div className="detailsContainer">
                             <input className="value" type="text" value={data.branch} onChange={(e) => handleChange("branch", e.target.value)} />
@@ -137,15 +144,10 @@ const Settings = () => {
 
                         <h3 className="label">Semester:</h3>
                         <div className="detailsContainer">
-                            <input className="value" type="number" value={data.semester} onChange={(e) => handleChange("semester", e.target.value)}/>
+                            <input className="value" type="number" value={data.semester} onChange={(e) => handleChange("semester", e.target.value)} />
                         </div>
 
-                        <h3>Section:</h3>
-                        <div className="detailsContainer">
-                            <span className="value">{data.section}</span>
-                        </div>
-
-                        <button className={`logoutBtn ${changed ? "" : "disable"}` } onClick={updateAdmin} >
+                        <button className={`logoutBtn ${changed ? "" : "disable"}`} onClick={updateAdmin} >
                             save <MdOutlineSave />
                         </button>
                     </div>

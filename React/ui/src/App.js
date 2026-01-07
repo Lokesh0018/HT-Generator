@@ -14,19 +14,15 @@ import Invigilator from './Invigilator/Invigilator';
 
 function App() {
 
-  const [verified, setVerified] = useState(
-    localStorage.getItem("student")
-  );
-
   return (
     <div className="App">
       <ToastProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home setVerified={setVerified}/>} />
+            <Route path="/" element={<Home />} />
             <Route path="/hallTicket" 
             element={
-              <ProtectHallTicket isAuth={verified}>
+              <ProtectHallTicket>
                 <HallTicket />
               </ProtectHallTicket>
             }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const ProtectHallTicket = ({ isAuth, children }) => {
+const ProtectHallTicket = ({ children }) => {
+  const isAuth = localStorage.getItem("student");
   if (!isAuth) 
     return <Navigate to="/" replace />;
   return children;

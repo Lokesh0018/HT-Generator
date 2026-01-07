@@ -13,7 +13,7 @@ const Home = () => {
     const [students, setStudents] = useState([]);
     const [showCard, setShowCard] = useState(null);
     const [showQr, setShowQr] = useState(false);
-    const branch = JSON.parse(localStorage.getItem("admin")).branch;
+    const branch = JSON.parse(localStorage.getItem("admin")).branch || null;
     const year = JSON.parse(localStorage.getItem("admin")).year;
     const sem = JSON.parse(localStorage.getItem("admin")).semester;
     const viewRef = useRef(null);

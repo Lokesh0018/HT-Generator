@@ -86,7 +86,7 @@ const DashBoard = () => {
                     <div className="cardContent">
                         <div className="cardData">
                             <span><BsFillPassFill /></span>
-                            <span>Approved Hall Tickets :</span>
+                            <span>Allocated Hall Tickets :</span>
                             <span>{map.get("approvedHallTickets")}</span>
                         </div>
                         <NavLink to="/admin/halltickets" className="cardBtnContainer"><button className="cardBtn">View Hall Tickets</button></NavLink>

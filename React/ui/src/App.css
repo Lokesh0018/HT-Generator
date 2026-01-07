@@ -778,6 +778,12 @@ input[type="checkbox"] {
     font-size: 22px;
 }
 
+.eyeIc.invi {
+    transform: translateY(100%);
+    top: 100px;
+    right: 50px;
+}
+
 .loginBtn {
     cursor: pointer;
     height: 80%;

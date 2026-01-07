@@ -268,7 +268,7 @@ const Students = () => {
             {(showCard === "delCard") &&
                 <div className="deleteCard" ref={cardRef}>
                     <div className="cardHeader">
-                        <h2>Delete Exam</h2>
+                        <h2>Delete Student</h2>
                     </div>
                     <div className="deleteContent">
                         <p>Are you sure you want to delete the student <strong>{selectedRow.id}</strong> ?</p>

@@ -43,7 +43,6 @@ const Login = ({ props }) => {
         showToastMsg(err.message || "serverError");
       });
     }
-    else {}
   };
 
   return (

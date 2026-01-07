@@ -1,13 +1,21 @@
 import { React, useRef, useState, useEffect, useContext } from "react";
-import { FaRegEdit, FaPlus } from 'react-icons/fa';
+import { FaRegEdit, FaPlus, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 import { ToastContext } from "../../Toast";
 
 const Invigilators = () => {
     const { showToastMsg } = useContext(ToastContext);
+    const [showPassword, setShowPassword] = useState(false);
     const [showCard, setShowCard] = useState(null);
     const admin = JSON.parse(localStorage.getItem("admin"));
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([{
+        id: "invigi001",
+        password: "123",
+        name: "sp1",
+        branch: "CSE",
+        block: "A",
+        room: "LH-18"
+    }]);
     const [selectedRow, setSelectedRow] = useState(null);
     const cardRef = useRef(null);
 
@@ -27,9 +35,9 @@ const Invigilators = () => {
         setShowCard("delCard");
     };
 
-    const addStudent = () => { }
-    const editStudent = () => { }
-    const deleteStudent = () => { }
+    const addInvigilator = () => { }
+    const editInvigilator = () => { }
+    const deleteInvigilator = () => { }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -53,33 +61,48 @@ const Invigilators = () => {
             {(showCard === "addCard") &&
                 <div className="stuCard" ref={cardRef}>
                     <div className="cardHeader">
-                        <h2>Add New Student</h2>
+                        <h2>Add New Invigilator</h2>
                     </div>
-                    <div className="cardForm stu">
+                    <div className="cardForm">
                         <table className="cardTable">
                             <tr>
                                 <td>Id</td>
                                 <td><input type="text" className="cardLable" id="id" required /></td>
                             </tr>
                             <tr>
+                                <td>Password</td>
+                                <td>
+                                    <input type={(showPassword ? "text" : "password")} className="cardLable" id="password" required />
+                                    <span className="eyeIc invi" onClick={() => setShowPassword(!showPassword)}>{(showPassword) ? <FaEye /> : <FaEyeSlash />}</span>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Name</td>
                                 <td><input type="text" className="cardLable" id="name" required /></td>
                             </tr>
                             <tr>
-                                <td>Father Name</td>
-                                <td><input type="text" className="cardLable" id="fatherName" required /></td>
+                                <td>Branch</td>
+                                <td><input type="text" className="cardLable" id="branch" required /></td>
+                            </tr>
+                            <tr>
+                                <td>Block</td>
+                                <td><input type="text" className="cardLable" id="block" required /></td>
+                            </tr>
+                            <tr>
+                                <td>Room</td>
+                                <td><input type="text" className="cardLable" id="room" required /></td>
                             </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn" onClick={addStudent}>Add Student</button>
+                        <button className="saveBtn" onClick={addInvigilator}>Add Invigilator</button>
                     </div>
                 </div>
             }
             {(showCard === "editCard") &&
                 <div className="stuCard" ref={cardRef}>
                     <div className="cardHeader">
-                        <h2>Update Student</h2>
+                        <h2>Update Invigilator</h2>
                     </div>
 
                     <div className="cardForm">
@@ -89,31 +112,47 @@ const Invigilators = () => {
                                 <td><input type="text" className="cardLable disable" value={selectedRow.id} readOnly /></td>
                             </tr>
                             <tr>
+                                <td>Password</td>
+                                <td>
+                                    <input type={(showPassword ? "text" : "password")} className="cardLable" value={selectedRow.password} onChange={(e) => handleEditChange("password", e.target.value)} required />
+                                    <span className="eyeIc invi" onClick={() => setShowPassword(!showPassword)}>{(showPassword) ? <FaEye /> : <FaEyeSlash />}</span>
+
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Name</td>
                                 <td><input type="text" className="cardLable" value={selectedRow.name} onChange={(e) => handleEditChange("name", e.target.value)} required /></td>
                             </tr>
                             <tr>
-                                <td>Father Name</td>
-                                <td><input type="text" className="cardLable" value={selectedRow.fatherName} onChange={(e) => handleEditChange("fatherName", e.target.value)} required /></td>
+                                <td>Branch</td>
+                                <td><input type="text" className="cardLable" value={selectedRow.branch} onChange={(e) => handleEditChange("branch", e.target.value)} required /></td>
+                            </tr>
+                            <tr>
+                                <td>Block</td>
+                                <td><input type="text" className="cardLable" value={selectedRow.block} onChange={(e) => handleEditChange("block", e.target.value)} required /></td>
+                            </tr>
+                            <tr>
+                                <td>Room</td>
+                                <td><input type="text" className="cardLable" value={selectedRow.room} onChange={(e) => handleEditChange("room", e.target.value)} required /></td>
                             </tr>
                         </table>
                     </div>
                     <div className="saveChanges">
-                        <button className="saveBtn" onClick={editStudent}>Save Changes</button>
+                        <button className="saveBtn" onClick={editInvigilator}>Save Changes</button>
                     </div>
                 </div>
             }
             {(showCard === "delCard") &&
                 <div className="deleteCard" ref={cardRef}>
                     <div className="cardHeader">
-                        <h2>Delete Exam</h2>
+                        <h2>Delete Invigilator</h2>
                     </div>
                     <div className="deleteContent">
                         <p>Are you sure you want to delete the student <strong>{selectedRow.id}</strong> ?</p>
                     </div>
                     <div className="delActions">
                         <button className="cancelBtn" onClick={handleCancle}>Cancel</button>
-                        <button className="deleteBtn" onClick={deleteStudent}>Delete</button>
+                        <button className="deleteBtn" onClick={deleteInvigilator}>Delete</button>
                     </div>
                 </div>
             }

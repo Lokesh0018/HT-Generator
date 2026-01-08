@@ -1101,8 +1101,10 @@ hr {
 }
 
 .htImg {
+    position: relative;
     height: 120px;
     width: 120px;
+    left: 10px;
 }
 
 .htInfo {

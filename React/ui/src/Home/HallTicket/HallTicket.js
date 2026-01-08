@@ -3,6 +3,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { IoMdDownload } from "react-icons/io";
 
+
 const HallTicket = () => {
 
     const student = JSON.parse(localStorage.getItem("student"));
@@ -75,6 +76,7 @@ const HallTicket = () => {
                             </tr>
                         </table>
                         <img src={`data:${student.imgType};base64,${student.imgData}`} className="htImg" />
+                        <img src="img/QR.png" alt="QR" className="htImg" />
                     </div>
                     <div className="htInfo">
                         <table>

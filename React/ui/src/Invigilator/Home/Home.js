@@ -19,6 +19,8 @@ const Home = () => {
     const viewRef = useRef(null);
     const videoRef = useRef(null);
     const qrReaderRef = useRef(null);
+const [scanStatus, setScanStatus] = useState(null);
+const [scanMessage, setScanMessage] = useState("");
     useEffect(() => {
         setStudents(JSON.parse(localStorage.getItem("students")));
         setData(JSON.parse(localStorage.getItem("students")));
@@ -29,6 +31,9 @@ const Home = () => {
 useEffect(() => {
     if (!showQr) return;
 
+    setScanStatus(null);
+    setScanMessage("");
+
     const codeReader = new BrowserQRCodeReader();
     qrReaderRef.current = codeReader;
 
@@ -37,14 +42,26 @@ useEffect(() => {
         videoRef.current,
         (result, err) => {
             if (result) {
-                console.log("QR TEXT:", result.text);
+                const qrText = result.text;
+                console.log("QR TEXT:", qrText);
 
-                // Stop scanner after scan
                 codeReader.reset();
                 setShowQr(false);
 
-                // Send QR to backend
-                console.log(result.text);
+                // 🔍 VERIFY QR (LOCAL DEMO)
+                const student = students.find(stu => stu.id === qrText);
+
+                if (student && student.approve) {
+                    setScanStatus("VALID");
+                    setScanMessage("Student Verified Successfully");
+                } else {
+                    setScanStatus("INVALID");
+                    setScanMessage("Invalid or Unapproved Hall Ticket");
+                }
+            }
+
+            if (err && err.name !== "NotFoundException") {
+                console.error(err);
             }
         }
     );
@@ -52,7 +69,7 @@ useEffect(() => {
     return () => {
         codeReader.reset();
     };
-}, [showQr]);
+}, [showQr, students]);
 
 
     const logout = () => {
@@ -182,7 +199,7 @@ useEffect(() => {
                                         muted
                                         playsInline
                                     />
-                                    <button className="addBtn" onClick={() => setShowQr(false)} ><TbQrcodeOff />Cancle</button>
+                                    <button className="addBtn" onClick={() => setShowQr(false)} ><TbQrcodeOff />Cancel</button>
 
                                 </>
                                 )

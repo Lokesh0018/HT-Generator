@@ -1,6 +1,6 @@
 package com.api.htg.DTO;
 
-public class LoginResponseDTO {
+public class LoginAdminResponseDTO {
 
     private String id;
     private String name;
@@ -15,10 +15,10 @@ public class LoginResponseDTO {
     private Integer approvedHallTickets;
     private String regulation;
 
-    public LoginResponseDTO() {
+    public LoginAdminResponseDTO() {
     }
 
-    public LoginResponseDTO(String id, String name, String email, String collageName, String branch, Character section,
+    public LoginAdminResponseDTO(String id, String name, String email, String collageName, String branch, Character section,
             Integer year, Integer semester,Integer students, Integer upComingExams, Integer approvedHallTickets, String regulation) {
         this.id = id;
         this.name = name;

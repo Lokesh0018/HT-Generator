@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 import com.api.htg.DTO.HallTicketDto;
 import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Entity.ExamsEntity;
+import com.api.htg.Entity.InvigilatorEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Repository.AdminJpa;
 import com.api.htg.Repository.StudentJpa;
 
 @Service
-public class VerificationService {
+public class HomeService {
 
     @Autowired
     private StudentJpa studentRepo;
@@ -29,6 +30,10 @@ public class VerificationService {
 
     @Autowired
     private ExamsService examsService;
+
+    @Autowired
+    private InvigilatorService invigilatorService;
+
 
     public String generateOtp() {
         int otp = (int) (Math.random() * 9000) + 1000;
@@ -81,5 +86,20 @@ public class VerificationService {
        List<ExamsEntity> exams = examsService.getTimeTable(y, s);
        return exams;
     }
+
+    public List<StudentEntity> getStudentsByRoom(String id) throws Exception {
+        List<InvigilatorEntity> invigilators = invigilatorService.getInvigilators();
+        int index = -1;
+        for (int i = 0; i < invigilators.size(); i++)
+            if (invigilators.get(i).getId().equals(id)) {
+                index = i;
+                break;
+            }
+        if (index == -1) 
+            throw new Exception("Invigilator not found with id: " + id);
+        char section = (char) ('A' + index);
+        return studentRepo.findBySection(section);
+    }
+
 
 }

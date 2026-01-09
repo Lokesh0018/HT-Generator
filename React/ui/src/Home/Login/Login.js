@@ -19,7 +19,32 @@ const Login = ({ props }) => {
       return;
     }
     if (login === "Admin") {
-      fetch("http://localhost:8081/login", {
+      fetch("http://localhost:8081/login/admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: username,
+          password: password
+        })
+      }).then(res => {
+        if (!res.ok) {
+          if (res.status === 401)
+            throw new Error("invalidCredentials");
+          if (res.status >= 500)
+            throw new Error("serverError");
+        }
+        return res.json();
+      }).then(data => {
+        localStorage.setItem("admin", JSON.stringify(data));
+        showToastMsg("success");
+        navigate("/admin", { replace: true });
+      }).catch(err => {
+        localStorage.removeItem("data");
+        showToastMsg(err.message || "serverError");
+      });
+    }
+    else{
+      fetch("http://localhost:8081/login/invigilator", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

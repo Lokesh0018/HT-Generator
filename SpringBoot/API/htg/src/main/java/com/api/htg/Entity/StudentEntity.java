@@ -25,11 +25,12 @@ public class StudentEntity {
     private boolean approve;
     private String otp;
     private LocalDateTime expiryTime;
+    private boolean verified;
 
     public StudentEntity() {
     }
 
-    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType, byte[] imgData) {
+    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType, byte[] imgData, boolean approve) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -39,10 +40,11 @@ public class StudentEntity {
         this.imgType = imgType;
         this.imgData = imgData;
         this.approve = false;
+        this.verified = false;
     }
 
     public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType,
-            byte[] imgData, boolean approve, String otp, LocalDateTime expiryTime) {
+            byte[] imgData, boolean approve, String otp, LocalDateTime expiryTime, boolean verified) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -54,6 +56,7 @@ public class StudentEntity {
         this.approve = approve;
         this.otp = otp;
         this.expiryTime = expiryTime;
+        this.verified = verified;
     }
 
     public String getId() {
@@ -142,6 +145,14 @@ public class StudentEntity {
 
     public void setExpiryTime(LocalDateTime expiryTime) {
         this.expiryTime = expiryTime;
+    }
+
+    public boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
     
 }

@@ -5,7 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.api.htg.DTO.LoginResponseDTO;
+import com.api.htg.DTO.LoginAdminResponseDTO;
 import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Repository.AdminJpa;
@@ -34,7 +34,7 @@ public class AdminService {
         }
     }
 
-    public LoginResponseDTO updateGeneral(LoginResponseDTO responseDTO) {
+    public LoginAdminResponseDTO updateGeneral(LoginAdminResponseDTO responseDTO) {
         AdminEntity entity = adminRepo.findById(responseDTO.getId()).get();
         entity.setBranch(responseDTO.getBranch());
         entity.setYear(responseDTO.getYear());

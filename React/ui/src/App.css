@@ -232,6 +232,8 @@ input[type="checkbox"] {
 
 .pageTitle {
     color: var(--text);
+    display: flex;
+    gap: 30px;
     font-size: 40px;
     font-weight: 700;
 }

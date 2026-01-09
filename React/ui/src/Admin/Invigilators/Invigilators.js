@@ -1,6 +1,7 @@
 import { React, useRef, useState, useEffect, useContext } from "react";
 import { FaRegEdit, FaPlus, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
+import { BiReset } from "react-icons/bi";
 import { ToastContext } from "../../Toast";
 
 const Invigilators = () => {
@@ -34,10 +35,16 @@ const Invigilators = () => {
         setSelectedRow(row);
         setShowCard("delCard");
     };
+    const resetCard = () => {
+        setShowCard("resetCard");
+    };
 
     const addInvigilator = () => { }
     const editInvigilator = () => { }
     const deleteInvigilator = () => { }
+    const resetVerifications = () => { }
+
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -156,10 +163,26 @@ const Invigilators = () => {
                     </div>
                 </div>
             }
+            {(showCard === "resetCard") &&
+                <div className="deleteCard" ref={cardRef}>
+                    <div className="cardHeader">
+                        <h2>Reset Verifications</h2>
+                    </div>
+                    <div className="resetContent">
+                        <p>Are you sure you want to reset the verifications ?</p>
+                    </div>
+                    <div className="delActions">
+                        <button className="cancelBtn" onClick={handleCancle}>Cancel</button>
+                        <button className="deleteBtn" onClick={resetVerifications}>Reset</button>
+                    </div>
+                </div>
+            }
             <div className={`invigilators ${showCard ? "blur" : ""}`}>
-
                 <div className="pageHeader">
-                    <div className="pageTitle">Invigilators Management</div>
+                    <div className="pageTitle">
+                        Invigilators Management
+                        <button className="addBtn" onClick={resetCard}><BiReset /></button>
+                    </div>
                     <button className="addBtn" onClick={addCard}><FaPlus />Add New Invigilator</button>
                 </div>
 

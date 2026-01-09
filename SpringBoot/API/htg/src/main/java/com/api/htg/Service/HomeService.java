@@ -1,5 +1,6 @@
 package com.api.htg.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -8,13 +9,19 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.api.htg.DTO.HallTicketDto;
+import com.api.htg.DTO.HallTicketDTO;
 import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Entity.ExamsEntity;
 import com.api.htg.Entity.InvigilatorEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Repository.AdminJpa;
 import com.api.htg.Repository.StudentJpa;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 @Service
 public class HomeService {
@@ -57,7 +64,7 @@ public class HomeService {
         mailSender.send(message);
     }
 
-    public HallTicketDto verifyOtp(String stuMail, String otp) throws Exception {
+    public HallTicketDTO verifyOtp(String stuMail, String otp) throws Exception {
         StudentEntity student = studentRepo.findByEmail(stuMail);
         if(student.getExpiryTime().isBefore(LocalDateTime.now()) || student.getOtp() == null || student.getExpiryTime() == null)
             throw new Exception("OtpExpired");
@@ -66,17 +73,23 @@ public class HomeService {
         student.setOtp(null);
         student.setExpiryTime(null);
         studentRepo.save(student);
-        HallTicketDto hallTicket = new HallTicketDto();
-        hallTicket.setId(student.getId());
-        hallTicket.setName(student.getName());
         AdminEntity admin = adminRepo.findBySection(student.getSection());
-        hallTicket.setBranch(admin.getBranch());
-        hallTicket.setYear(admin.getYear());
-        hallTicket.setSemester(admin.getSemester());
+        String id = student.getId();
+        String name = student.getName();
+        String branch = admin.getBranch();
+        Integer year = admin.getYear();
+        Integer semester = admin.getSemester();
+        HallTicketDTO hallTicket = new HallTicketDTO();
+        hallTicket.setId(id);
+        hallTicket.setName(name);
+        hallTicket.setBranch(branch);
+        hallTicket.setYear(year);
+        hallTicket.setSemester(semester);
         hallTicket.setFatherName(student.getFatherName());
         hallTicket.setImgData(student.getImgData());
         hallTicket.setImgType(student.getImgType());
         hallTicket.setImgName(student.getImgName());
+        hallTicket.setQrData(generateQr(id));
         return hallTicket;
     }
 
@@ -101,5 +114,11 @@ public class HomeService {
         return studentRepo.findBySection(section);
     }
 
-
+    public byte[] generateQr(String json) throws Exception{
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(json,BarcodeFormat.QR_CODE,300,300);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        MatrixToImageWriter.writeToStream(bitMatrix,"PNG",byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
 }

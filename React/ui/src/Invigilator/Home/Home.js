@@ -18,58 +18,86 @@ const Home = () => {
     const sem = JSON.parse(localStorage.getItem("admin")).semester;
     const viewRef = useRef(null);
     const videoRef = useRef(null);
-    const qrReaderRef = useRef(null);
-const [scanStatus, setScanStatus] = useState(null);
-const [scanMessage, setScanMessage] = useState("");
+    const controlsRef = useRef(null);
+    const scanningRef = useRef(false);
     useEffect(() => {
         setStudents(JSON.parse(localStorage.getItem("students")));
         setData(JSON.parse(localStorage.getItem("students")));
     }, []);
     const verifyStudent = () => {
+        setData(prev => prev.);
+        showToastMsg("success");
         setShowCard(null);
     }
-useEffect(() => {
-    if (!showQr) return;
+    useEffect(() => {
+        if (!showQr || !videoRef.current || scanningRef.current) return;
 
-    setScanStatus(null);
-    setScanMessage("");
+        scanningRef.current = true;
 
-    const codeReader = new BrowserQRCodeReader();
-    qrReaderRef.current = codeReader;
+        const codeReader = new BrowserQRCodeReader();
+        controlsRef.current?.stop();
+        controlsRef.current = null;
 
-    codeReader.decodeFromVideoDevice(
-        null,
-        videoRef.current,
-        (result, err) => {
-            if (result) {
-                const qrText = result.text;
-                console.log("QR TEXT:", qrText);
+        codeReader
+            .decodeFromVideoDevice(
+                null,
+                videoRef.current,
+                (result, err) => {
+                    if (result) {
+                        const qrText = result.getText();
+                        console.log("QR TEXT:", qrText);
+                        controlsRef.current?.stop();
+                        controlsRef.current = null;
+                        scanningRef.current = false;
+                        setShowQr(false);
 
-                codeReader.reset();
-                setShowQr(false);
+                        let stuId = qrText;
+                        try {
+                            stuId = JSON.parse(qrText).stuId;
+                        } catch { }
 
-                // 🔍 VERIFY QR (LOCAL DEMO)
-                const student = students.find(stu => stu.id === qrText);
+                        const student = students.find(stu => stu.id === stuId);
 
-                if (student && student.approve) {
-                    setScanStatus("VALID");
-                    setScanMessage("Student Verified Successfully");
-                } else {
-                    setScanStatus("INVALID");
-                    setScanMessage("Invalid or Unapproved Hall Ticket");
+                        if (student && student.approve) {
+                            setShowCard(student);
+                        } else {
+                            showToastMsg("invalidQR");
+                        }
+                    }
+
+                    if (err && err.name !== "NotFoundException") {
+                        console.error(err);
+                    }
                 }
-            }
+            )
+            .then(controls => {
+                if (scanningRef.current) {
+                    controlsRef.current = controls;
+                } else {
+                    controls.stop();
+                }
+            });
 
-            if (err && err.name !== "NotFoundException") {
-                console.error(err);
-            }
-        }
-    );
+        return () => {
+            scanningRef.current = false;
+            controlsRef.current?.stop();
+            controlsRef.current = null;
+            const video = videoRef.current;
+    if (video && video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+    }
+        };
+    }, [showQr, students]);
 
-    return () => {
-        codeReader.reset();
+
+    const cancelQrScan = () => {
+        scanningRef.current = false;
+        controlsRef.current?.stop();
+        controlsRef.current = null;
+        setShowQr(false);
     };
-}, [showQr, students]);
+
 
 
     const logout = () => {
@@ -140,10 +168,10 @@ useEffect(() => {
                             </tr>
                         </table>
                     </div>
-                    <button className="addBtn" onClick={verifyStudent}><MdOutlineVerified />Verify</button>
+                    <button className="addBtn vb" onClick={verifyStudent}><MdOutlineVerified />Verify</button>
                 </div>
             )}
-             <div className={`invigilatorContent ${showCard ? "blur" : ""}`}>
+            <div className={`invigilatorContent ${showCard ? "blur" : ""}`}>
                 <div className="invigilatorStudents">
                     <div className="pageHeader">
                         <div className="pageTitle">Students</div>
@@ -199,7 +227,7 @@ useEffect(() => {
                                         muted
                                         playsInline
                                     />
-                                    <button className="addBtn" onClick={() => setShowQr(false)} ><TbQrcodeOff />Cancel</button>
+                                    <button className="addBtn" onClick={cancelQrScan} ><TbQrcodeOff />Cancel</button>
 
                                 </>
                                 )

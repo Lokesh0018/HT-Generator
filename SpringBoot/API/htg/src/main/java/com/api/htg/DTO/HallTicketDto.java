@@ -2,7 +2,7 @@ package com.api.htg.DTO;
 
 import jakarta.persistence.Lob;
 
-public class HallTicketDto {
+public class HallTicketDTO {
 
     private String id;
     private String name;
@@ -15,12 +15,14 @@ public class HallTicketDto {
     private byte[] imgData;
     private String imgType;
     private String imgName;
+    @Lob
+    private byte[] qrData;
 
-    public HallTicketDto() {
+    public HallTicketDTO() {
     }
 
-    public HallTicketDto(String id, String name, String branch, Integer year, Integer semester, String fatherName,
-            byte[] imgData, String imgType, String imgName) {
+    public HallTicketDTO(String id, String name, String branch, Integer year, Integer semester, String fatherName,
+            byte[] imgData, String imgType, String imgName, byte[] qrData) {
         this.id = id;
         this.name = name;
         this.branch = branch;
@@ -30,6 +32,7 @@ public class HallTicketDto {
         this.imgData = imgData;
         this.imgType = imgType;
         this.imgName = imgName;
+        this.qrData = qrData;
     }
 
     public String getId() {
@@ -102,6 +105,14 @@ public class HallTicketDto {
 
     public void setImgName(String imgName) {
         this.imgName = imgName;
+    }
+
+    public byte[] getQrData() {
+        return qrData;
+    }
+
+    public void setQrData(byte[] qrData) {
+        this.qrData = qrData;
     }
     
 }

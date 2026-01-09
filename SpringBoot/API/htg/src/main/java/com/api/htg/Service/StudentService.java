@@ -51,4 +51,11 @@ public class StudentService {
         return getStudents(optional.get().getSection());
     }
 
+    public void resetVerifications() {
+        for (StudentEntity student : studentRepo.findAll()) {
+            student.setVerified(false);
+            studentRepo.save(student);
+        }
+    }
+
 }

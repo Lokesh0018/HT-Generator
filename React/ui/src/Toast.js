@@ -106,6 +106,12 @@ const ToastProvider = ({ children }) => {
             color: "#d10d0d",
             icon: <BiErrorCircle />,
             msg: "OTP has been Expired"
+        },
+        invalidQR: {
+            head: "Error",
+            color: "#d10d0d",
+            icon: <BiErrorCircle />,
+            msg: "Invalid QR"
         }
     };
 

@@ -390,6 +390,11 @@ input[type="checkbox"] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.addBtn.vb {
+    height: 30px;
+    font-size: 18px;
+}
+
 .examSelector {
     height: 200px;
     border: 1px solid var(--BorderDivider);

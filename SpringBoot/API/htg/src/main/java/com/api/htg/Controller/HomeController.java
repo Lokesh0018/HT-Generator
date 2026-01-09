@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.htg.DTO.HallTicketDto;
+import com.api.htg.DTO.HallTicketDTO;
 import com.api.htg.Entity.ExamsEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Service.HomeService;
@@ -40,7 +40,7 @@ public class HomeController {
     }
     
     @PostMapping("/verify-otp")
-    public ResponseEntity<HallTicketDto> verifyOtp(@RequestBody Map<String, String> hm) {
+    public ResponseEntity<HallTicketDTO> verifyOtp(@RequestBody Map<String, String> hm) {
         try {
             String stuEmail = hm.get("email");
             String otp = hm.get("otp");

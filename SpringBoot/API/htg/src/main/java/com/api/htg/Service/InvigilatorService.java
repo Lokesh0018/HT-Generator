@@ -12,6 +12,9 @@ import com.api.htg.Repository.InvigilatorJpa;
 public class InvigilatorService {
 
     @Autowired
+    private StudentService studentService;
+
+    @Autowired
     private InvigilatorJpa invigilatorRepo;
 
     public List<InvigilatorEntity> getInvigilators() {
@@ -28,5 +31,9 @@ public class InvigilatorService {
             throw new IllegalStateException();
         invigilatorRepo.deleteById(entity.getId());
         return getInvigilators();
+    }
+
+    public void resetVerifications() throws Exception {
+        studentService.resetVerifications();
     }
 }

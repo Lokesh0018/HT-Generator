@@ -76,7 +76,7 @@ const HallTicket = () => {
                             </tr>
                         </table>
                         <img src={`data:${student.imgType};base64,${student.imgData}`} className="htImg" />
-                        <img src="img/QR.png" alt="QR" className="htImg" />
+                        <img src={`data:png;base64,${student.qrData}`} alt="QR" className="htImg" />
                     </div>
                     <div className="htInfo">
                         <table>

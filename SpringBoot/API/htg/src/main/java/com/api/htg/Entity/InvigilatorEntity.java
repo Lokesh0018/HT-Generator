@@ -16,17 +16,19 @@ public class InvigilatorEntity {
     private String branch;
     private String block;
     private String room;
+    private Character section;
 
     public InvigilatorEntity() {
     }
 
-    public InvigilatorEntity(String id, String name, String password, String branch, String block, String room) {
+    public InvigilatorEntity(String id, String name, String password, String branch, String block, String room, Character section) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.branch = branch;
         this.block = block;
         this.room = room;
+        this.section = section;
     }
 
     public String getId() {
@@ -77,4 +79,11 @@ public class InvigilatorEntity {
         this.room = room;
     }
 
+    public Character getSection() {
+        return section;
+    }
+
+    public void setSection(Character section) {
+        this.section = section;
+    }
 }

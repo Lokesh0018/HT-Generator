@@ -36,4 +36,14 @@ public class InvigilatorService {
     public void resetVerifications() throws Exception {
         studentService.resetVerifications();
     }
+
+    public void setSection() {
+        List<InvigilatorEntity> invigilators = invigilatorRepo.findAll();
+        for (int i=0;i<invigilators.size();i++) {
+            InvigilatorEntity invigilator = invigilators.get(i);
+            invigilator.setSection((char)('A'+i));
+            invigilatorRepo.save(invigilator);
+        }
+    }
+
 }

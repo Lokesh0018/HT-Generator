@@ -12,16 +12,14 @@ import org.springframework.stereotype.Service;
 import com.api.htg.DTO.HallTicketDTO;
 import com.api.htg.Entity.AdminEntity;
 import com.api.htg.Entity.ExamsEntity;
-import com.api.htg.Entity.InvigilatorEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Repository.AdminJpa;
+import com.api.htg.Repository.InvigilatorJpa;
 import com.api.htg.Repository.StudentJpa;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 @Service
 public class HomeService {
@@ -39,7 +37,7 @@ public class HomeService {
     private ExamsService examsService;
 
     @Autowired
-    private InvigilatorService invigilatorService;
+    private InvigilatorJpa invigilatorRepo;
 
 
     public String generateOtp() {
@@ -101,16 +99,7 @@ public class HomeService {
     }
 
     public List<StudentEntity> getStudentsByRoom(String id) throws Exception {
-        List<InvigilatorEntity> invigilators = invigilatorService.getInvigilators();
-        int index = -1;
-        for (int i = 0; i < invigilators.size(); i++)
-            if (invigilators.get(i).getId().equals(id)) {
-                index = i;
-                break;
-            }
-        if (index == -1) 
-            throw new Exception("Invigilator not found with id: " + id);
-        char section = (char) ('A' + index);
+        char section = invigilatorRepo.findById(id).get().getSection();
         return studentRepo.findBySection(section);
     }
 

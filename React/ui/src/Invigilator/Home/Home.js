@@ -25,7 +25,8 @@ const Home = () => {
         setData(JSON.parse(localStorage.getItem("students")));
     }, []);
     const verifyStudent = () => {
-        setData(prev => prev.);
+        setData(prev => prev.map(stu => stu.id === showCard.id ? { ...stu, verify : true } : stu ));
+        localStorage.setItem("students", JSON.stringify(data));
         showToastMsg("success");
         setShowCard(null);
     }
@@ -201,9 +202,9 @@ const Home = () => {
                                         <td className="cellBody">
                                             <input
                                                 type="checkbox"
-                                                checked={stu.approve}
+                                                checked={stu.verify}
                                                 onChange={(e) =>
-                                                    updateAction(stu.id, !stu.approve)
+                                                    updateAction(stu.id, !stu.verify)
                                                 }
                                             />
                                         </td>

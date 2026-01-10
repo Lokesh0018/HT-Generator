@@ -58,6 +58,7 @@ public class LoginService {
         responseDTO.setId(entity.getId());
         responseDTO.setName(entity.getName());
         responseDTO.setBranch(entity.getBranch());
+        responseDTO.setSection(entity.getSection());
         responseDTO.setBlock(entity.getBlock());
         responseDTO.setRoom(entity.getRoom());
         return responseDTO;

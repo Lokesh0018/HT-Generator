@@ -11,8 +11,7 @@ const Students = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        const section = admin.section;
-        fetch(`http://localhost:8081/admin/students/${section}`, {
+        fetch(`http://localhost:8081/admin/students`, {
             method: "GET"
         }).then((res) => {
             if (!res.ok)

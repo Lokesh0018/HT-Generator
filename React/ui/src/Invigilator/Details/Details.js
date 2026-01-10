@@ -26,6 +26,11 @@ const Details = () => {
                     <span className="value">{data.name}</span>
                 </div>
 
+                <h3 className="label">Branch:</h3>
+                <div className="detailsContainer">
+                    <span className="value">{data.branch}</span>
+                </div>
+
                 <h3 className="label">Block:</h3>
                 <div className="detailsContainer">
                     <span className="value">{data.collageName}</span>

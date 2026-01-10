@@ -12,22 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/{section}")
-    public ResponseEntity<String> notifyAll(@PathVariable Character section,@RequestBody String message) {
+    @PostMapping("/admin")
+    public ResponseEntity<String> notifyAll(@RequestBody String message) {
         try {
-            adminService.notifyAll(section, message);
+            adminService.notifyAll(message);
             return new ResponseEntity<>("Notification sent successfully",HttpStatus.OK);
         }
         catch(Exception e) {
@@ -36,7 +34,7 @@ public class AdminController {
     }
     
 
-    @PutMapping("/settings")
+    @PutMapping("/admin/settings")
     public ResponseEntity<LoginAdminResponseDTO> updateGeneral(@RequestBody LoginAdminResponseDTO responseDTO) {
         try {
             return new ResponseEntity<>(adminService.updateGeneral(responseDTO), HttpStatus.OK);

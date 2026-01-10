@@ -45,10 +45,10 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/students/{section}")
-    public ResponseEntity<List<StudentEntity>> getStudents(@PathVariable Character section) {
+    @GetMapping("/students")
+    public ResponseEntity<List<StudentEntity>> getStudents() {
         try {
-            List<StudentEntity> students = studentService.getStudents(section);
+            List<StudentEntity> students = studentService.getStudents();
             return new ResponseEntity<>(students,HttpStatus.OK);
         }
         catch(Exception e) {

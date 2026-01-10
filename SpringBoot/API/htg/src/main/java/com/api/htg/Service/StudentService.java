@@ -16,7 +16,11 @@ public class StudentService {
     @Autowired
     private StudentJpa studentRepo;
 
-    public List<StudentEntity> getStudents(Character section) {
+    public List<StudentEntity> getStudents() {
+        return studentRepo.findAll();
+    }
+
+    public List<StudentEntity> getStudentsBySection(Character section) {
         return studentRepo.findBySection(section);
     }
 
@@ -27,7 +31,8 @@ public class StudentService {
         entity.setImgType(img.getContentType());
         entity.setImgName(entity.getId());
         studentRepo.save(entity);
-        return getStudents(entity.getSection());
+        setSection();
+        return getStudents();
     }
 
     public List<StudentEntity> updateStudent(MultipartFile img, StudentEntity entity) throws Exception {
@@ -40,7 +45,7 @@ public class StudentService {
         existingEntity.setImgData(img.getBytes());
         existingEntity.setImgType(img.getContentType());
         studentRepo.save(existingEntity);
-        return getStudents(entity.getSection());
+        return getStudents();
     }
 
     public List<StudentEntity> deleteStudent(String stuId) throws Exception {
@@ -48,12 +53,22 @@ public class StudentService {
         if (!optional.isPresent())
             throw new IllegalStateException();
         studentRepo.deleteById(stuId);
-        return getStudents(optional.get().getSection());
+        setSection();
+        return getStudents();
     }
 
     public void resetVerifications() {
         for (StudentEntity student : studentRepo.findAll()) {
             student.setVerified(false);
+            studentRepo.save(student);
+        }
+    }
+
+    public void setSection() {
+        List<StudentEntity> students = studentRepo.findAll();
+        for (int i=0;i<students.size();i++) {
+            StudentEntity student = students.get(i);
+            student.setSection((char)('A'+(i/15)));
             studentRepo.save(student);
         }
     }

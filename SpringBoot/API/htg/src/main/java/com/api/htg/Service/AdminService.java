@@ -24,8 +24,8 @@ public class AdminService {
     JavaMailSender mailSender;
 
 
-    public void notifyAll(Character section, String message) {
-        for(StudentEntity student : studentRepo.findBySection(section)) {
+    public void notifyAll(String message) {
+        for(StudentEntity student : studentRepo.findAll()) {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(student.getEmail());
             mailMessage.setSubject("Notification From HTG");

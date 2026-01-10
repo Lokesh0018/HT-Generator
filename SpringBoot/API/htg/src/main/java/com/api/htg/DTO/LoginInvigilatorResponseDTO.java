@@ -5,16 +5,18 @@ public class LoginInvigilatorResponseDTO {
     private String id;
     private String name;
     private String branch;
+    private Character section;
     private String block;
     private String room;
 
     public LoginInvigilatorResponseDTO() {
     }
 
-    public LoginInvigilatorResponseDTO(String id, String name, String branch, String block, String room) {
+    public LoginInvigilatorResponseDTO(String id, String name, String branch, Character section, String block, String room) {
         this.id = id;
         this.name = name;
         this.branch = branch;
+        this.section = section;
         this.block = block;
         this.room = room;
     }
@@ -41,6 +43,14 @@ public class LoginInvigilatorResponseDTO {
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public Character getSection() {
+        return section;
+    }
+
+    public void setSection(Character section) {
+        this.section = section;
     }
 
     public String getBlock() {

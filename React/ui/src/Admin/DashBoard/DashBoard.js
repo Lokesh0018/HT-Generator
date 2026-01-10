@@ -33,7 +33,7 @@ const DashBoard = () => {
 
         const section = map.get("section");
         setSending(true);
-        fetch(`http://localhost:8081/admin/${section}`,{
+        fetch(`http://localhost:8081/admin`,{
             method : "POST",
             headers : {"Content-Type" : "application/json"},
             body : JSON.stringify(message)

@@ -39,7 +39,43 @@ const Invigilators = () => {
         setShowCard("resetCard");
     };
 
-    const addInvigilator = () => { }
+    const addInvigilator = () => {
+        const id = document.getElementById("id").value.toUpperCase().replace(/\s/g, "");
+        const name = document.getElementById("name").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const branch = document.getElementById("branch").value.trim();
+        const block = document.getElementById("block").value.trim();
+        const room = document.getElementById("room").value.trim();  
+        if (!id || !name || !password || !branch || !block || !room) {
+            showToastMsg("emptyFields");
+            return;
+        }
+        const entity = JSON.stringify({
+            "id": id,
+            "name": name,
+            "password": password,
+            "branch": branch,
+            "block": block,
+            "room": room,
+            "section": ''
+        });
+        fetch('http://localhost:8081/admin/invigilators', {
+            method : "POST",
+            headers : { "Content-type" : "application/json" },
+            body : entity
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("add");
+            setData(data);
+            setShowCard(null);
+            localStorage.setItem("invigilator", JSON.stringify(data));
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        })
+    }
     const editInvigilator = () => { }
     const deleteInvigilator = () => { }
     const resetVerifications = () => { }

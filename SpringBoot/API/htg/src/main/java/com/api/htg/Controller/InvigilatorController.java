@@ -49,6 +49,8 @@ public class InvigilatorController {
             return new ResponseEntity<>(invigilators,HttpStatus.CREATED);
         }
         catch(Exception e) {
+            if(e.getMessage().equals("exists"))
+                return new ResponseEntity<>(HttpStatus.IM_USED);
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }

@@ -59,6 +59,12 @@ const ToastProvider = ({ children }) => {
             icon: <LuInfo />,
             msg: "Collage Email is required"
         },
+        exists: {
+            head: "Info",
+            color: "#124fff",
+            icon: <LuInfo />,
+            msg: "Already Exists with this Id"
+        },
         invalidCredentials: {
             head: "Error",
             color: "#d10d0d",

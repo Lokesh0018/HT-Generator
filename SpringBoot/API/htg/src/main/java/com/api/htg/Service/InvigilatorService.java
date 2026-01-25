@@ -18,12 +18,11 @@ public class InvigilatorService {
     private InvigilatorJpa invigilatorRepo;
 
     public List<InvigilatorEntity> getInvigilators() {
+        setSection();
         return invigilatorRepo.findAll();
     }
 
     public List<InvigilatorEntity> addInvigilator(InvigilatorEntity entity) throws Exception {
-        if(invigilatorRepo.existsById(entity.getId()))
-            throw new Exception("exists");
         invigilatorRepo.save(entity);
         return getInvigilators();
     }

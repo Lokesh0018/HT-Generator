@@ -1,10 +1,12 @@
 package com.api.htg.Entity;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @Component
 @Entity
 public class InvigilatorEntity {

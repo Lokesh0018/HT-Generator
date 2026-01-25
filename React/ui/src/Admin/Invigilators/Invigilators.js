@@ -5,18 +5,12 @@ import { BiReset } from "react-icons/bi";
 import { ToastContext } from "../../Toast";
 
 const Invigilators = () => {
+
     const { showToastMsg } = useContext(ToastContext);
     const [showPassword, setShowPassword] = useState(false);
     const [showCard, setShowCard] = useState(null);
     const admin = JSON.parse(localStorage.getItem("admin"));
-    const [data, setData] = useState([{
-        id: "invigi001",
-        password: "123",
-        name: "sp1",
-        branch: "CSE",
-        block: "A",
-        room: "LH-18"
-    }]);
+    const [data, setData] = useState(JSON.parse(localStorage.getItem("invigilators")));
     const [selectedRow, setSelectedRow] = useState(null);
     const cardRef = useRef(null);
 
@@ -39,13 +33,81 @@ const Invigilators = () => {
         setShowCard("resetCard");
     };
 
+    useEffect(() => {
+        fetch('http://localhost:8081/admin/invigilators', {
+            method: "GET",
+            headers: { "Content-type": "application/json" }
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            setData(data);
+            localStorage.setItem("invigilators", JSON.stringify(data));
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        })
+    }, []);
+
+    const checkExists = (id) => {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].id === id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     const addInvigilator = () => {
         const id = document.getElementById("id").value.toUpperCase().replace(/\s/g, "");
         const name = document.getElementById("name").value.trim();
         const password = document.getElementById("password").value.trim();
         const branch = document.getElementById("branch").value.trim();
         const block = document.getElementById("block").value.trim();
-        const room = document.getElementById("room").value.trim();  
+        const room = document.getElementById("room").value.trim();
+        if (checkExists(id)) {
+            showToastMsg("exists");
+            return;
+        }
+        if (!id || !name || !password || !branch || !block || !room) {
+            showToastMsg("emptyFields");
+            return;
+        }
+        const entity = JSON.stringify({
+            "id": id,
+            "name": name,
+            "password": password,
+            "branch": branch,
+            "block": block,
+            "room": room,
+            "section": ''
+        })
+        fetch("http://localhost:8081/admin/invigilators", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: entity
+        }).then((res) => {
+            if(!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("add");
+            setData(data);
+            setShowCard(null);
+            localStorage.setItem("invigilators", JSON.stringify(data));
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+            setShowCard(null);
+        });
+    };
+
+    const editInvigilator = () => {
+        const id = selectedRow.id;
+        const name = selectedRow.name;
+        const password = selectedRow.password;
+        const branch = selectedRow.branch;
+        const block = selectedRow.block;
+        const room = selectedRow.room;
         if (!id || !name || !password || !branch || !block || !room) {
             showToastMsg("emptyFields");
             return;
@@ -60,27 +122,74 @@ const Invigilators = () => {
             "section": ''
         });
         fetch('http://localhost:8081/admin/invigilators', {
-            method : "POST",
-            headers : { "Content-type" : "application/json" },
-            body : entity
+            method: "PUT",
+            headers: { "Content-type": "application/json" },
+            body: entity
         }).then((res) => {
-            if(!res.ok)
+            if (!res.ok)
                 throw new Error("serverError");
             return res.json();
         }).then((data) => {
-            showToastMsg("add");
+            showToastMsg("update");
             setData(data);
             setShowCard(null);
-            localStorage.setItem("invigilator", JSON.stringify(data));
+            localStorage.setItem("invigilators", JSON.stringify(data));
         }).catch((err) => {
             showToastMsg(err.message || "serverError");
-        })
+            setShowCard(null);
+        });
     }
-    const editInvigilator = () => { }
-    const deleteInvigilator = () => { }
-    const resetVerifications = () => { }
 
+    const deleteInvigilator = () => {
+        const id = selectedRow.id;
+        const name = selectedRow.name;
+        const password = selectedRow.password;
+        const branch = selectedRow.branch;
+        const block = selectedRow.block;
+        const room = selectedRow.room;
+        const entity = JSON.stringify({
+            "id": id,
+            "name": name,
+            "password": password,
+            "branch": branch,
+            "block": block,
+            "room": room,
+            "section": ''
+        });
+        fetch('http://localhost:8081/admin/invigilators', {
+            method: "DELETE",
+            headers: { "Content-type": "application/json" },
+            body: entity
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            showToastMsg("delete");
+            setData(data);
+            setShowCard(null);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+            setShowCard(null);
+        });
+    }
 
+    const resetVerifications = () => {
+        fetch('http://localhost:8081/admin/invigilators', {
+            method: "PATCH",
+            headers: { "Content-type" : "application/json" }
+        }).then((res) => {
+            if (!res)
+                throw new Error("serverError");
+        }).then((data) => {
+            showToastMsg("success");
+            setShowCard(null);
+        })
+        .catch((err) => {
+            showToastMsg(err.message || "serverError");
+            setShowCard(null);
+        });
+     }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -92,13 +201,13 @@ const Invigilators = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [showCard]);
 
-
     const handleEditChange = (key, value) => {
         setSelectedRow(prev => ({
             ...prev,
             [key]: value
         }));
     };
+
     return (
         <>
             {(showCard === "addCard") &&
@@ -238,17 +347,17 @@ const Invigilators = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((stu, idx) => (
+                                    {data.map((invi, idx) => (
                                         <tr key={idx}>
                                             <td className="cellBody">{idx + 1}</td>
-                                            <td className="cellBody">{stu.id}</td>
-                                            <td className="cellBody">{stu.name}</td>
-                                            <td className="cellBody">{admin.branch}</td>
-                                            <td className="cellBody">{admin.year}</td>
-                                            <td className="cellBody">{admin.semester}</td>
+                                            <td className="cellBody">{invi.id}</td>
+                                            <td className="cellBody">{invi.name}</td>
+                                            <td className="cellBody">{invi.branch}</td>
+                                            <td className="cellBody">{invi.block}</td>
+                                            <td className="cellBody">{invi.room}</td>
                                             <td className="cellBody">
-                                                <FaRegEdit className="editIc" onClick={() => editCard(stu)} />
-                                                <MdDeleteOutline className="delIc" onClick={() => delCard(stu)} />
+                                                <FaRegEdit className="editIc" onClick={() => editCard(invi)} />
+                                                <MdDeleteOutline className="delIc" onClick={() => delCard(invi)} />
                                             </td>
                                         </tr>
                                     ))}

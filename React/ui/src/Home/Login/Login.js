@@ -60,9 +60,9 @@ const Login = ({ props }) => {
         }
         return res.json();
       }).then(data => {
-        localStorage.setItem("admin", JSON.stringify(data));
+        localStorage.setItem("invigilator", JSON.stringify(data));
         showToastMsg("success");
-        navigate("/admin", { replace: true });
+        navigate("/invigilator", { replace: true });
       }).catch(err => {
         localStorage.removeItem("data");
         showToastMsg(err.message || "serverError");

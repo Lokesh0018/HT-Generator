@@ -13,21 +13,34 @@ const Home = () => {
     const [students, setStudents] = useState([]);
     const [showCard, setShowCard] = useState(null);
     const [showQr, setShowQr] = useState(false);
-    const branch = JSON.parse(localStorage.getItem("admin")).branch || null;
-    const year = JSON.parse(localStorage.getItem("admin")).year;
-    const sem = JSON.parse(localStorage.getItem("admin")).semester;
+    const id = JSON.parse(localStorage.getItem("invigilator")).id;
+    const branch = JSON.parse(localStorage.getItem("invigilator")).branch || null;
+    const year = JSON.parse(localStorage.getItem("invigilator")).year;
+    const sem = JSON.parse(localStorage.getItem("invigilator")).semester;
     const viewRef = useRef(null);
     const videoRef = useRef(null);
     const controlsRef = useRef(null);
     const scanningRef = useRef(false);
     useEffect(() => {
-        setStudents(JSON.parse(localStorage.getItem("students")));
-        setData(JSON.parse(localStorage.getItem("students")));
+        fetch(`http://localhost:8081/invigilator`, {
+            method: 'POST',
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                id: id
+            })
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            return res.json();
+        }).then((data) => {
+            setData(data);
+            setStudents(data);
+        }).catch((err) => {
+            showToastMsg(err.message || "serverError");
+        });
     }, []);
     const verifyStudent = () => {
-        setData(prev => prev.map(stu => stu.id === showCard.id ? { ...stu, verify : true } : stu ));
-        localStorage.setItem("students", JSON.stringify(data));
-        showToastMsg("success");
+        updateAction(showCard.id, true);
         setShowCard(null);
     }
     useEffect(() => {
@@ -46,21 +59,18 @@ const Home = () => {
                 (result, err) => {
                     if (result) {
                         const qrText = result.getText();
-                        console.log("QR TEXT:", qrText);
                         controlsRef.current?.stop();
                         controlsRef.current = null;
                         scanningRef.current = false;
                         setShowQr(false);
 
                         let stuId = qrText;
-                        try {
-                            stuId = JSON.parse(qrText).stuId;
-                        } catch { }
-
+                        stuId = JSON.parse(qrText).stuId;
                         const student = students.find(stu => stu.id === stuId);
-
-                        if (student && student.approve) {
+                        if (student && !student.approve) {
                             setShowCard(student);
+                        } else if (student && student.approve) {
+                            showToastMsg("alreadyVerified");
                         } else {
                             showToastMsg("invalidQR");
                         }
@@ -84,10 +94,10 @@ const Home = () => {
             controlsRef.current?.stop();
             controlsRef.current = null;
             const video = videoRef.current;
-    if (video && video.srcObject) {
-        video.srcObject.getTracks().forEach(track => track.stop());
-        video.srcObject = null;
-    }
+            if (video && video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
         };
     }, [showQr, students]);
 

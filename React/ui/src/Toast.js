@@ -65,6 +65,12 @@ const ToastProvider = ({ children }) => {
             icon: <LuInfo />,
             msg: "Already Exists with this Id"
         },
+        alreadyVerified: {
+            head: "Info",
+            color: "#124fff",
+            icon: <LuInfo />,
+            msg: "Student Already Verified"
+        },
         invalidCredentials: {
             head: "Error",
             color: "#d10d0d",

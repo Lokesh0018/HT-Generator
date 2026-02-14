@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 
 const Details = () => {
-    const [data, setData] = useState(JSON.parse(localStorage.getItem("admin")));
-
+    const [data, setData] = useState(JSON.parse(localStorage.getItem("invigilator")));
+    console.log(data);
     const navigate = useNavigate();
     const logout = () => {
-        localStorage.removeItem("token");
         localStorage.removeItem("student");
-        localStorage.removeItem("admin");
+        localStorage.removeItem("invigilator");
         navigate("/login", { replace: true });
     };
     return (
@@ -33,14 +32,14 @@ const Details = () => {
 
                 <h3 className="label">Block:</h3>
                 <div className="detailsContainer">
-                    <span className="value">{data.collageName}</span>
+                    <span className="value">{data.block}</span>
                 </div>
 
                 <h3 className="label">Room:</h3>
                 <div className="detailsContainer">
-                    <span className="value">{data.email}</span>
+                    <span className="value">{data.room}</span>
                 </div>
-                <button className="logoutBtn" onClick={logout}>
+                <button className="logoutBtn invi" onClick={logout}>
                     Logout <MdLogout />
                 </button>
             </div>

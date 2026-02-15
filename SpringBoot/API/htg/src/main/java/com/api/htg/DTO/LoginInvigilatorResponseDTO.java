@@ -12,7 +12,8 @@ public class LoginInvigilatorResponseDTO {
     public LoginInvigilatorResponseDTO() {
     }
 
-    public LoginInvigilatorResponseDTO(String id, String name, String branch, Character section, String block, String room) {
+    public LoginInvigilatorResponseDTO(String id, String name, String branch, Character section, String block,
+            String room) {
         this.id = id;
         this.name = name;
         this.branch = branch;
@@ -68,5 +69,5 @@ public class LoginInvigilatorResponseDTO {
     public void setRoom(String room) {
         this.room = room;
     }
-    
+
 }

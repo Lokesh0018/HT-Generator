@@ -15,13 +15,13 @@ public class ExamsService {
     @Autowired
     private ExamsJpa examsRepo;
 
-    public List<ExamsEntity> getTimeTable(int year,int semester){
-        return examsRepo.findByYearAndSemester(year,semester);
+    public List<ExamsEntity> getTimeTable(int year, int semester) {
+        return examsRepo.findByYearAndSemester(year, semester);
     }
 
     public List<ExamsEntity> addSubject(ExamsEntity entity) throws Exception {
         Optional<ExamsEntity> optional = examsRepo.findById(entity.getSubCode());
-        if(optional.isPresent())
+        if (optional.isPresent())
             throw new IllegalStateException();
         examsRepo.save(entity);
         return getTimeTable(entity.getYear(), entity.getSemester());
@@ -38,4 +38,3 @@ public class ExamsService {
     }
 
 }
- 

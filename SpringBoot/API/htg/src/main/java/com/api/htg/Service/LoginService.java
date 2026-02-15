@@ -27,7 +27,7 @@ public class LoginService {
 
     public LoginAdminResponseDTO verifyAdminLogin(LoginRequestDTO loginDTO) throws Exception {
         Optional<AdminEntity> existingEntity = adminRepo.findById(loginDTO.getId());
-        if(!existingEntity.isPresent() || !existingEntity.get().getPassword().equals(loginDTO.getPassword()))
+        if (!existingEntity.isPresent() || !existingEntity.get().getPassword().equals(loginDTO.getPassword()))
             throw new IllegalStateException();
         AdminEntity entity = existingEntity.get();
         LoginAdminResponseDTO responseDTO = new LoginAdminResponseDTO();
@@ -41,8 +41,8 @@ public class LoginService {
         responseDTO.setSemester(entity.getSemester());
         Integer students = studentRepo.findBySection(entity.getSection()).size();
         responseDTO.setStudents(students);
-        Integer approvedHallTickets = ((entity.getYear()-1)*2)+entity.getSemester()-1;
-        Integer upComingExams = 8-approvedHallTickets; 
+        Integer approvedHallTickets = ((entity.getYear() - 1) * 2) + entity.getSemester() - 1;
+        Integer upComingExams = 8 - approvedHallTickets;
         responseDTO.setUpComingExams(upComingExams);
         responseDTO.setApprovedHallTickets(approvedHallTickets);
         responseDTO.setRegulation(entity.getRegulation());
@@ -51,7 +51,7 @@ public class LoginService {
 
     public LoginInvigilatorResponseDTO verifyInvigilatorLogin(LoginRequestDTO loginDTO) throws Exception {
         Optional<InvigilatorEntity> existingEntity = invigilatorRepo.findById(loginDTO.getId());
-        if(!existingEntity.isPresent() || !existingEntity.get().getPassword().equals(loginDTO.getPassword()))
+        if (!existingEntity.isPresent() || !existingEntity.get().getPassword().equals(loginDTO.getPassword()))
             throw new IllegalStateException();
         InvigilatorEntity entity = existingEntity.get();
         LoginInvigilatorResponseDTO responseDTO = new LoginInvigilatorResponseDTO();

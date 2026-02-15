@@ -8,7 +8,6 @@ const HallTicket = () => {
 
     const student = JSON.parse(localStorage.getItem("student"));
     const exams = JSON.parse(localStorage.getItem("exams"));
-    console.log(exams);
     const Year = exams.year;
     const Month = "October";
     const YearExam = 2025;
@@ -75,7 +74,7 @@ const HallTicket = () => {
                                 <td>{student.fatherName}</td>
                             </tr>
                         </table>
-                        <img src={`data:${student.imgType};base64,${student.imgData}`} className="htImg" />
+                        <img src={`data:${student.imgType};base64,${student.imgData}`} className="htImg" alt="" />
                         <img src={`data:png;base64,${student.qrData}`} alt="QR" className="htImg" />
                     </div>
                     <div className="htInfo">
@@ -95,7 +94,7 @@ const HallTicket = () => {
                                 {
                                     exams && exams.map((exam, idx) => (
                                         <tr>
-                                            <td>{idx+1}</td>
+                                            <td>{idx + 1}</td>
                                             <td>{exam.subCode}</td>
                                             <td>{exam.sub}</td>
                                             <td>{exam.date}</td>
@@ -112,11 +111,11 @@ const HallTicket = () => {
                             <b>Signature of the Student</b>
                         </span>
                         <span>
-                            <img src="/img/COF Sign.png" className="signature" />
+                            <img src="/img/COF Sign.png" className="signature" alt=""/>
                             <b>Controller of Examinations</b>
                         </span>
                         <span>
-                            <img src="/img/Principal Sign.png" className="signature" />
+                            <img src="/img/Principal Sign.png" className="signature" alt=""/>
                             <b>Principal</b>
                         </span>
                     </div>

@@ -109,11 +109,6 @@ const Home = () => {
         setShowQr(false);
     };
 
-
-
-    const logout = () => {
-        localStorage.removeItem("invigilator");
-    }
     const handleViewCard = (id) => {
         const student = data.find(s => s.id === id);
         setShowCard(student);
@@ -155,7 +150,7 @@ const Home = () => {
                     </div>
                     <hr />
                     <div className="stuDetailsHomeBody">
-                        <img src={`data:image/jpeg;base64,${showCard.imgData}`} className="stuDetailsImgHome" />
+                        <img src={`data:image/jpeg;base64,${showCard.imgData}`} className="stuDetailsImgHome" alt="" />
                         <table>
                             <tr>
                                 <td>Name :</td>

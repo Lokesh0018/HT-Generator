@@ -9,7 +9,7 @@ import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 
 const Navigation = () => {
 
-  const [pressed,setPressed] = useState(false);
+  const [pressed, setPressed] = useState(false);
 
   const toggle = () => {
     setPressed(!pressed);
@@ -32,50 +32,50 @@ const Navigation = () => {
           className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
-          <LuLayoutDashboard />
-        </div>
+            <LuLayoutDashboard />
+          </div>
           <span className={`navText ${pressed ? "" : "hide"}`}>Dashboard</span>
         </NavLink>
 
         <NavLink to="/admin/exams"
-            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+          className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
             <TbWriting />
-            </div>
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Exams</span>
+          </div>
+          <span className={`navText ${pressed ? '' : 'hide'}`}>Exams</span>
         </NavLink>
         <NavLink to="/admin/students"
-            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+          className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
             <PiStudent />
-            </div>
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Students</span>
+          </div>
+          <span className={`navText ${pressed ? '' : 'hide'}`}>Students</span>
         </NavLink>
         <NavLink to="/admin/halltickets"
-            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+          className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
             <BsPersonVcard />
-            </div>
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Hall&nbsp;Tickets</span>
+          </div>
+          <span className={`navText ${pressed ? '' : 'hide'}`}>Hall&nbsp;Tickets</span>
         </NavLink>
         <NavLink to="/admin/invigilators"
-            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+          className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
             <LiaChalkboardTeacherSolid />
-            </div>
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Invigilators</span>
+          </div>
+          <span className={`navText ${pressed ? '' : 'hide'}`}>Invigilators</span>
         </NavLink>
         <NavLink to="/admin/settings"
-            className={({isActive}) => `navItem ${isActive ? "selected" : ""}`}
+          className={({ isActive }) => `navItem ${isActive ? "selected" : ""}`}
         >
           <div className="navIcon">
             <MdManageAccounts />
-            </div>
-            <span className={`navText ${pressed ? '' : 'hide'}`}>Settings</span>
+          </div>
+          <span className={`navText ${pressed ? '' : 'hide'}`}>Settings</span>
         </NavLink>
 
       </div>

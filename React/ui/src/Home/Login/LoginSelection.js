@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const LoginSelection = () => {
     const navigate = useNavigate();
     const handleSelect = (e) => {
-        if(e.target.id === "admin")
+        if (e.target.id === "admin")
             navigate("/login/admin");
         else
             navigate("/login/invigilator");

@@ -1,10 +1,9 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 
 const Details = () => {
-    const [data, setData] = useState(JSON.parse(localStorage.getItem("invigilator")));
-    console.log(data);
+    const data = (JSON.parse(localStorage.getItem("invigilator")));
     const navigate = useNavigate();
     const logout = () => {
         localStorage.removeItem("student");

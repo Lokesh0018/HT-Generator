@@ -72,24 +72,24 @@ const Exams = () => {
         const stTime = selectedRow.time.split(" - ")[0];
         const enTime = selectedRow.time.split(" - ")[1];
 
-        if(!subCode || !sub || !date || !stTime || !enTime){
+        if (!subCode || !sub || !date || !stTime || !enTime) {
             showToastMsg("emptyFields");
             return;
         }
 
         fetch('http://localhost:8081/admin/exams', {
-            method : "PUT",
-            headers : { "Content-Type" : "application/json" },
-            body : JSON.stringify({
-                "subCode" : subCode,
-                "year" : year,
-                "semester" : sem,
-                "sub" : sub,
-                "date" : date,
-                "time" : stTime + " - " + enTime
-            })        
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "subCode": subCode,
+                "year": year,
+                "semester": sem,
+                "sub": sub,
+                "date": date,
+                "time": stTime + " - " + enTime
+            })
         }).then((res) => {
-            if(!res.ok)
+            if (!res.ok)
                 throw new Error("serverError");
             return res.json();
         }).then((data) => {
@@ -102,19 +102,19 @@ const Exams = () => {
     }
 
     const delSubject = () => {
-        fetch('http://localhost:8081/admin/exams',{
-            method : "DELETE",
-            headers : { "Content-Type" : "application/json" },
-            body : JSON.stringify({
-                "subCode" : selectedRow.subCode,
-                "year" : selectedRow.year,
-                "semester" : selectedRow.semester,
-                "sub" : selectedRow.sub,
-                "date" : selectedRow.date,
-                "time" : selectedRow.time
+        fetch('http://localhost:8081/admin/exams', {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "subCode": selectedRow.subCode,
+                "year": selectedRow.year,
+                "semester": selectedRow.semester,
+                "sub": selectedRow.sub,
+                "date": selectedRow.date,
+                "time": selectedRow.time
             })
         }).then((res) => {
-            if(!res.ok)
+            if (!res.ok)
                 throw new Error("serverError");
             return res.json();
         }).then((data) => {
@@ -181,23 +181,23 @@ const Exams = () => {
                             </tr>
                             <tr>
                                 <td>Sub Code</td>
-                                <td><input type="text" className="cardLable" id="subCode"  /></td>
+                                <td><input type="text" className="cardLable" id="subCode" /></td>
                             </tr>
                             <tr>
                                 <td>Subject</td>
-                                <td><input type="text" className="cardLable" id="sub"  /></td>
+                                <td><input type="text" className="cardLable" id="sub" /></td>
                             </tr>
                             <tr>
                                 <td>Date</td>
-                                <td><input type="date" className="cardLable" id="date"  /></td>
+                                <td><input type="date" className="cardLable" id="date" /></td>
                             </tr>
                             <tr>
                                 <td>Start Time</td>
-                                <td><input type="time" className="cardLable" id="stTime"  /></td>
+                                <td><input type="time" className="cardLable" id="stTime" /></td>
                             </tr>
                             <tr>
                                 <td>End Time</td>
-                                <td><input type="time" className="cardLable" id="enTime"  /></td>
+                                <td><input type="time" className="cardLable" id="enTime" /></td>
                             </tr>
                         </table>
                     </div>
@@ -223,15 +223,15 @@ const Exams = () => {
                             </tr>
                             <tr>
                                 <td>Subject</td>
-                                <td><input type="text" className="cardLable" id="sub" value={selectedRow.sub} onChange={(e) => handleEditChange("sub", e.target.value)}  /></td>
+                                <td><input type="text" className="cardLable" id="sub" value={selectedRow.sub} onChange={(e) => handleEditChange("sub", e.target.value)} /></td>
                             </tr>
                             <tr>
                                 <td>Date</td>
-                                <td><input type="date" className="cardLable" id="date" value={selectedRow.date} onChange={(e) => handleEditChange("date", e.target.value)}  /></td>
+                                <td><input type="date" className="cardLable" id="date" value={selectedRow.date} onChange={(e) => handleEditChange("date", e.target.value)} /></td>
                             </tr>
                             <tr>
                                 <td>Start Time</td>
-                                <td><input type="time" className="cardLable" id="stTime" value={selectedRow.time.split(" - ")[0]} onChange={(e) => handleEditChange("time", `${e.target.value} - ${selectedRow.time.split(" - ")[1]}`)}  /></td>
+                                <td><input type="time" className="cardLable" id="stTime" value={selectedRow.time.split(" - ")[0]} onChange={(e) => handleEditChange("time", `${e.target.value} - ${selectedRow.time.split(" - ")[1]}`)} /></td>
                             </tr>
                             <tr>
                                 <td>End Time</td>

@@ -26,7 +26,7 @@ const Home = () => {
           "email": email
         })
       }).then((res) => {
-        if (!res.ok){
+        if (!res.ok) {
           if (res.status === 409)
             throw new Error("notRegistered");
           else if (res.status === 401)

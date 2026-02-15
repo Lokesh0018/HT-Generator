@@ -30,7 +30,8 @@ public class StudentEntity {
     public StudentEntity() {
     }
 
-    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType, byte[] imgData, boolean approve) {
+    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName,
+            String imgType, byte[] imgData, boolean approve) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -43,7 +44,8 @@ public class StudentEntity {
         this.verified = false;
     }
 
-    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName, String imgType,
+    public StudentEntity(String id, String name, String email, String fatherName, Character section, String imgName,
+            String imgType,
             byte[] imgData, boolean approve, String otp, LocalDateTime expiryTime, boolean verified) {
         this.id = id;
         this.name = name;
@@ -82,7 +84,7 @@ public class StudentEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getFatherName() {
         return fatherName;
     }
@@ -154,5 +156,5 @@ public class StudentEntity {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
-    
+
 }

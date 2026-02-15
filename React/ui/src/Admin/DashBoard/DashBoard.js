@@ -18,27 +18,25 @@ const DashBoard = () => {
 
     useEffect(() => {
         const storedData = localStorage.getItem("admin");
-        if(storedData)
+        if (storedData)
             setData(JSON.parse(storedData));
-    },[]);
+    }, []);
 
     const map = data ? new Map(Object.entries(data)) : new Map();
     const handleNotify = () => {
         const message = document.querySelector(".notifyArea").value.trim();
 
-        if(!message){
+        if (!message) {
             showToastMsg("emptyMsg");
             return;
         }
-
-        const section = map.get("section");
         setSending(true);
-        fetch(`http://localhost:8081/admin`,{
-            method : "POST",
-            headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify(message)
+        fetch(`http://localhost:8081/admin`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(message)
         }).then(res => {
-            if(!res.ok)
+            if (!res.ok)
                 throw new Error("serverError");
             showToastMsg("success");
         }).catch(err => {

@@ -28,7 +28,7 @@ public class InvigilatorService {
     }
 
     public List<InvigilatorEntity> deleteInvigilator(InvigilatorEntity entity) throws Exception {
-        if(!invigilatorRepo.existsById(entity.getId()))
+        if (!invigilatorRepo.existsById(entity.getId()))
             throw new IllegalStateException();
         invigilatorRepo.deleteById(entity.getId());
         return getInvigilators();
@@ -40,9 +40,9 @@ public class InvigilatorService {
 
     public void setSection() {
         List<InvigilatorEntity> invigilators = invigilatorRepo.findAll();
-        for (int i=0;i<invigilators.size();i++) {
+        for (int i = 0; i < invigilators.size(); i++) {
             InvigilatorEntity invigilator = invigilators.get(i);
-            invigilator.setSection((char)('A'+i));
+            invigilator.setSection((char) ('A' + i));
             invigilatorRepo.save(invigilator);
         }
     }

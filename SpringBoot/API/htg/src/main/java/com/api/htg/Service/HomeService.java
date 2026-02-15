@@ -39,17 +39,16 @@ public class HomeService {
     @Autowired
     private InvigilatorJpa invigilatorRepo;
 
-
     public String generateOtp() {
         int otp = (int) (Math.random() * 9000) + 1000;
         return String.valueOf(otp);
     }
 
-    public void sendOtp(String stuMail) throws Exception{
+    public void sendOtp(String stuMail) throws Exception {
         StudentEntity student = studentRepo.findByEmail(stuMail);
-        if(student == null)
+        if (student == null)
             throw new Exception("notRegistered");
-        if(!student.getApprove())
+        if (!student.getApprove())
             throw new Exception("notApproved");
         String otp = generateOtp();
         student.setOtp(otp);
@@ -64,10 +63,11 @@ public class HomeService {
 
     public HallTicketDTO verifyOtp(String stuMail, String otp) throws Exception {
         StudentEntity student = studentRepo.findByEmail(stuMail);
-        if(student.getExpiryTime().isBefore(LocalDateTime.now()) || student.getOtp() == null || student.getExpiryTime() == null)
+        if (student.getExpiryTime().isBefore(LocalDateTime.now()) || student.getOtp() == null
+                || student.getExpiryTime() == null)
             throw new Exception("OtpExpired");
-        if(!student.getOtp().equals(otp))
-            throw new Exception( "InvalidOtp");
+        if (!student.getOtp().equals(otp))
+            throw new Exception("InvalidOtp");
         student.setOtp(null);
         student.setExpiryTime(null);
         studentRepo.save(student);
@@ -92,10 +92,10 @@ public class HomeService {
     }
 
     public List<ExamsEntity> getTimeTable(String year, String semester) {
-       Integer y = Integer.parseInt(year);
-       Integer s = Integer.parseInt(semester);
-       List<ExamsEntity> exams = examsService.getTimeTable(y, s);
-       return exams;
+        Integer y = Integer.parseInt(year);
+        Integer s = Integer.parseInt(semester);
+        List<ExamsEntity> exams = examsService.getTimeTable(y, s);
+        return exams;
     }
 
     public List<StudentEntity> getStudentsByRoom(String id) throws Exception {
@@ -103,11 +103,11 @@ public class HomeService {
         return studentRepo.findBySection(section);
     }
 
-    public byte[] generateQr(String json) throws Exception{
+    public byte[] generateQr(String json) throws Exception {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(json,BarcodeFormat.QR_CODE,300,300);
+        BitMatrix bitMatrix = qrCodeWriter.encode(json, BarcodeFormat.QR_CODE, 300, 300);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        MatrixToImageWriter.writeToStream(bitMatrix,"PNG",byteArrayOutputStream);
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
 }

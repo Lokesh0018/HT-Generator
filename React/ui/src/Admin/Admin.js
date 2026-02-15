@@ -1,5 +1,5 @@
 import { React } from "react";
-import { CgProfile } from 'react-icons/cg'; 
+import { CgProfile } from 'react-icons/cg';
 import { Routes, Route, NavLink } from "react-router-dom";
 import Navigation from "./Navigation/Navigation";
 import DashBoard from "./DashBoard/DashBoard";
@@ -21,7 +21,7 @@ const Admin = () => {
                 <div className="adminHeader">
                     <div className="profileLogo">
                         <NavLink to="/admin/settings">
-                            <CgProfile/>
+                            <CgProfile />
                         </NavLink>
                     </div>
                 </div>
@@ -29,7 +29,7 @@ const Admin = () => {
                     <Routes>
                         <Route path="/" element={
                             <ProtectAdmin isAuth={authToken}>
-                               <DashBoard />
+                                <DashBoard />
                             </ProtectAdmin>
                         } />
                         <Route path="/exams" element={

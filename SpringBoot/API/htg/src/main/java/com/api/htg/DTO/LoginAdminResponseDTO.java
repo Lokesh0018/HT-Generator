@@ -18,8 +18,10 @@ public class LoginAdminResponseDTO {
     public LoginAdminResponseDTO() {
     }
 
-    public LoginAdminResponseDTO(String id, String name, String email, String collageName, String branch, Character section,
-            Integer year, Integer semester,Integer students, Integer upComingExams, Integer approvedHallTickets, String regulation) {
+    public LoginAdminResponseDTO(String id, String name, String email, String collageName, String branch,
+            Character section,
+            Integer year, Integer semester, Integer students, Integer upComingExams, Integer approvedHallTickets,
+            String regulation) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -97,7 +99,7 @@ public class LoginAdminResponseDTO {
     public void setSemester(Integer semester) {
         this.semester = semester;
     }
-    
+
     public Integer getStudents() {
         return students;
     }
@@ -129,6 +131,5 @@ public class LoginAdminResponseDTO {
     public void setRegulation(String regulation) {
         this.regulation = regulation;
     }
-    
 
 }

@@ -59,9 +59,8 @@ public class ExamsController {
     public ResponseEntity<List<ExamsEntity>> deleteSubject(@RequestBody ExamsEntity entity) {
         try {
             List<ExamsEntity> exams = examsService.deleteSubject(entity);
-            return new ResponseEntity<>(exams,HttpStatus.OK);
-        }
-        catch(Exception e) {
+            return new ResponseEntity<>(exams, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }

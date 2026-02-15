@@ -23,9 +23,8 @@ public class AdminService {
     @Autowired
     JavaMailSender mailSender;
 
-
     public void notifyAll(String message) {
-        for(StudentEntity student : studentRepo.findAll()) {
+        for (StudentEntity student : studentRepo.findAll()) {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(student.getEmail());
             mailMessage.setSubject("Notification From HTG");
@@ -41,8 +40,8 @@ public class AdminService {
         entity.setSemester(responseDTO.getSemester());
         Integer students = studentRepo.findBySection(entity.getSection()).size();
         responseDTO.setStudents(students);
-        Integer approvedHallTickets = ((entity.getYear()-1)*2)+entity.getSemester()-1;
-        Integer upComingExams = 8-approvedHallTickets; 
+        Integer approvedHallTickets = ((entity.getYear() - 1) * 2) + entity.getSemester() - 1;
+        Integer upComingExams = 8 - approvedHallTickets;
         responseDTO.setUpComingExams(upComingExams);
         responseDTO.setApprovedHallTickets(approvedHallTickets);
         adminRepo.save(entity);

@@ -19,11 +19,13 @@ public class InvigilatorEntity {
     private String block;
     private String room;
     private Character section;
+    
 
     public InvigilatorEntity() {
     }
 
-    public InvigilatorEntity(String id, String name, String password, String branch, String block, String room, Character section) {
+    public InvigilatorEntity(String id, String name, String password, String branch, String block, String room,
+            Character section) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -44,7 +46,7 @@ public class InvigilatorEntity {
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -76,7 +78,7 @@ public class InvigilatorEntity {
     public String getRoom() {
         return room;
     }
-    
+
     public void setRoom(String room) {
         this.room = room;
     }

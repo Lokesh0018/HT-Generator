@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.api.htg.Entity.StudentEntity;
 
 @Repository
-public interface StudentJpa extends JpaRepository<StudentEntity,String> {
+public interface StudentJpa extends JpaRepository<StudentEntity, String> {
 
     List<StudentEntity> findBySection(Character section);
 

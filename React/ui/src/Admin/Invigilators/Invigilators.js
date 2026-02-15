@@ -9,8 +9,10 @@ const Invigilators = () => {
     const { showToastMsg } = useContext(ToastContext);
     const [showPassword, setShowPassword] = useState(false);
     const [showCard, setShowCard] = useState(null);
-    const admin = JSON.parse(localStorage.getItem("admin"));
-    const [data, setData] = useState(JSON.parse(localStorage.getItem("invigilators")));
+    const [data, setData] = useState(() => {
+        const stored = localStorage.getItem("invigilators");
+        return stored ? JSON.parse(stored) : [];
+    });
     const [selectedRow, setSelectedRow] = useState(null);
     const cardRef = useRef(null);
 
@@ -87,7 +89,7 @@ const Invigilators = () => {
             headers: { "Content-Type": "application/json" },
             body: entity
         }).then((res) => {
-            if(!res.ok)
+            if (!res.ok)
                 throw new Error("serverError");
             return res.json();
         }).then((data) => {
@@ -177,7 +179,7 @@ const Invigilators = () => {
     const resetVerifications = () => {
         fetch('http://localhost:8081/admin/invigilators', {
             method: "PATCH",
-            headers: { "Content-type" : "application/json" }
+            headers: { "Content-type": "application/json" }
         }).then((res) => {
             if (!res)
                 throw new Error("serverError");
@@ -185,11 +187,11 @@ const Invigilators = () => {
             showToastMsg("success");
             setShowCard(null);
         })
-        .catch((err) => {
-            showToastMsg(err.message || "serverError");
-            setShowCard(null);
-        });
-     }
+            .catch((err) => {
+                showToastMsg(err.message || "serverError");
+                setShowCard(null);
+            });
+    }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -347,7 +349,7 @@ const Invigilators = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((invi, idx) => (
+                                    {data?.map((invi, idx) => (
                                         <tr key={idx}>
                                             <td className="cellBody">{idx + 1}</td>
                                             <td className="cellBody">{invi.id}</td>

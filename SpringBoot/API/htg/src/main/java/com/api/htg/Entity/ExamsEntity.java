@@ -18,7 +18,7 @@ public class ExamsEntity {
 
     public ExamsEntity() {
     }
-    
+
     public ExamsEntity(String subCode, int year, int semester, String sub, String date, String time) {
         this.subCode = subCode;
         this.year = year;

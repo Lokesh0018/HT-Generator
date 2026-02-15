@@ -39,17 +39,16 @@ public class HomeService {
     @Autowired
     private InvigilatorJpa invigilatorRepo;
 
-
     public String generateOtp() {
         int otp = (int) (Math.random() * 9000) + 1000;
         return String.valueOf(otp);
     }
 
-    public void sendOtp(String stuMail) throws Exception{
+    public void sendOtp(String stuMail) throws Exception {
         StudentEntity student = studentRepo.findByEmail(stuMail);
-        if(student == null)
+        if (student == null)
             throw new Exception("notRegistered");
-        if(!student.getApprove())
+        if (!student.getApprove())
             throw new Exception("notApproved");
         String otp = generateOtp();
         student.setOtp(otp);
@@ -58,20 +57,42 @@ public class HomeService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(stuMail);
         message.setSubject("HTG Account Verification – OTP (Valid for 5 Minutes)");
-        message.setText("Your OTP is: " + otp + "\nPlease do not share this with anyone.");
+        message.setText(
+                "Dear Student,\n\n" +
+                        "Your OTP for Hall Ticket login is: " + otp + "\n\n" +
+                        "This OTP is valid for 5 minutes.\n\n" +
+                        "Do not share this OTP with anyone.\n\n" +
+                        "HTG Examination System");
         mailSender.send(message);
     }
 
     public HallTicketDTO verifyOtp(String stuMail, String otp) throws Exception {
+        if (stuMail == null || stuMail.isBlank())
+            throw new Exception("invalidOtp");
+        if (otp == null || otp.isBlank())
+            throw new Exception("invalidOtp");
         StudentEntity student = studentRepo.findByEmail(stuMail);
-        if(student.getExpiryTime().isBefore(LocalDateTime.now()) || student.getOtp() == null || student.getExpiryTime() == null)
-            throw new Exception("OtpExpired");
-        if(!student.getOtp().equals(otp))
-            throw new Exception( "InvalidOtp");
-        student.setOtp(null);
-        student.setExpiryTime(null);
-        studentRepo.save(student);
-        AdminEntity admin = adminRepo.findBySection(student.getSection());
+        if (student == null)
+            throw new Exception("invalidOtp");
+        if (student.getOtp() == null || student.getExpiryTime() == null)
+            throw new Exception("otpExpired");
+        if (student.getExpiryTime().isBefore(LocalDateTime.now()))
+            throw new Exception("otpExpired");
+        if (!student.getOtp().equals(otp))
+            throw new Exception("invalidOtp");
+        AdminEntity admin = null;
+        if (student.getSection() != null) {
+            admin = adminRepo.findBySection(student.getSection());
+        }
+        if (admin == null) {
+            // Fallback: many setups have a single admin record with global settings
+            List<AdminEntity> admins = adminRepo.findAll();
+            if (admins.size() == 1) {
+                admin = admins.get(0);
+            }
+        }
+        if (admin == null)
+            throw new Exception("serverError");
         String id = student.getId();
         String name = student.getName();
         String branch = admin.getBranch();
@@ -88,14 +109,19 @@ public class HomeService {
         hallTicket.setImgType(student.getImgType());
         hallTicket.setImgName(student.getImgName());
         hallTicket.setQrData(generateQr(id));
+
+        student.setOtp(null);
+        student.setExpiryTime(null);
+        studentRepo.save(student);
+
         return hallTicket;
     }
 
     public List<ExamsEntity> getTimeTable(String year, String semester) {
-       Integer y = Integer.parseInt(year);
-       Integer s = Integer.parseInt(semester);
-       List<ExamsEntity> exams = examsService.getTimeTable(y, s);
-       return exams;
+        Integer y = Integer.parseInt(year);
+        Integer s = Integer.parseInt(semester);
+        List<ExamsEntity> exams = examsService.getTimeTable(y, s);
+        return exams;
     }
 
     public List<StudentEntity> getStudentsByRoom(String id) throws Exception {
@@ -103,11 +129,11 @@ public class HomeService {
         return studentRepo.findBySection(section);
     }
 
-    public byte[] generateQr(String json) throws Exception{
+    public byte[] generateQr(String json) throws Exception {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(json,BarcodeFormat.QR_CODE,300,300);
+        BitMatrix bitMatrix = qrCodeWriter.encode(json, BarcodeFormat.QR_CODE, 300, 300);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        MatrixToImageWriter.writeToStream(bitMatrix,"PNG",byteArrayOutputStream);
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
 }

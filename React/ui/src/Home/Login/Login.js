@@ -43,7 +43,7 @@ const Login = ({ props }) => {
         showToastMsg(err.message || "serverError");
       });
     }
-    else{
+    else {
       fetch("http://localhost:8081/login/invigilator", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

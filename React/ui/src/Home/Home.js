@@ -26,7 +26,7 @@ const Home = () => {
           "email": email
         })
       }).then((res) => {
-        if (!res.ok){
+        if (!res.ok) {
           if (res.status === 409)
             throw new Error("notRegistered");
           else if (res.status === 401)
@@ -62,14 +62,21 @@ const Home = () => {
         "email": email,
         "otp": otp
       })
-    }).then((res) => {
-      if (!res.ok)
-        if (res.status === 409)
-          throw new Error("otpExpired");
-        else if (res.status === 401)
-          throw new Error("invalidOtp");
-        else
-          throw new Error("serverError");
+    }).then(async (res) => {
+      if (!res.ok) {
+        let msg = "";
+        try {
+          msg = (await res.text()) || "";
+        } catch (e) {
+          msg = "";
+        }
+        console.error("verify-otp failed:", res.status, msg);
+        // Prefer backend-provided error keys/messages
+        if (msg) throw new Error(msg);
+        if (res.status === 409) throw new Error("otpExpired");
+        if (res.status === 401) throw new Error("invalidOtp");
+        throw new Error("serverError");
+      }
       return res.json();
     }).then((data) => {
       showToastMsg("success");

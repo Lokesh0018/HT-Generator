@@ -114,5 +114,5 @@ public class HallTicketDTO {
     public void setQrData(byte[] qrData) {
         this.qrData = qrData;
     }
-    
+
 }

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const ProtectHallTicket = ({ children }) => {
   const isAuth = localStorage.getItem("student");
-  if (!isAuth) 
+  if (!isAuth)
     return <Navigate to="/" replace />;
   return children;
 };

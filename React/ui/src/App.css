@@ -18,7 +18,7 @@
     --toastSuccess: #269b24;
     --toastError: #d10d0d;
     --toastInfo: #124fff;
-    --checkBox:#ff5722;
+    --checkBox: #ff5722;
     --bor: 1px solid rgb(255, 0, 0);
 }
 
@@ -1035,6 +1035,7 @@ hr {
     height: 100%;
     object-fit: cover;
 }
+
 .pageHeader.ht {
     font-family: Arial, Helvetica, sans-serif;
     justify-content: center;
@@ -1233,7 +1234,7 @@ hr {
     object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
-    border: none;    
+    border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

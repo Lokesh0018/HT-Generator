@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from "./Home/Home";
@@ -20,12 +20,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/hallTicket" 
-            element={
-              <ProtectHallTicket>
-                <HallTicket />
-              </ProtectHallTicket>
-            }
+            <Route path="/hallTicket"
+              element={
+                <ProtectHallTicket>
+                  <HallTicket />
+                </ProtectHallTicket>
+              }
             />
             <Route path="/login" element={<LoginSelection />} />
             <Route path="/login/admin" element={<Login props="Admin" />} />

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.api.htg.Entity.AdminEntity;
 
 @Repository
-public interface AdminJpa extends JpaRepository<AdminEntity,String> {
+public interface AdminJpa extends JpaRepository<AdminEntity, String> {
 
     public AdminEntity findBySection(Character section);
 

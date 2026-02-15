@@ -66,9 +66,9 @@ public class StudentService {
 
     public void setSection() {
         List<StudentEntity> students = studentRepo.findAll();
-        for (int i=0;i<students.size();i++) {
+        for (int i = 0; i < students.size(); i++) {
             StudentEntity student = students.get(i);
-            student.setSection((char)('A'+(i/15)));
+            student.setSection((char) ('A' + (i / 15)));
             studentRepo.save(student);
         }
     }

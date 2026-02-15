@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/admin")
@@ -26,8 +25,7 @@ public class HallTicketController {
         try {
             hallTicketService.approveAll(section);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
@@ -37,12 +35,9 @@ public class HallTicketController {
         try {
             hallTicketService.updateApproval(stuId);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
-    
-    
 
 }

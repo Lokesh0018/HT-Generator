@@ -1,4 +1,5 @@
 package com.api.htg.Controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/login")
@@ -27,9 +27,8 @@ public class LoginController {
     public ResponseEntity<LoginAdminResponseDTO> verifyAdminLogin(@RequestBody LoginRequestDTO loginDTO) {
         try {
             LoginAdminResponseDTO responseDTO = loginService.verifyAdminLogin(loginDTO);
-            return new ResponseEntity<>(responseDTO,HttpStatus.OK);
-        }
-        catch(Exception e) {
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
@@ -38,11 +37,10 @@ public class LoginController {
     public ResponseEntity<LoginInvigilatorResponseDTO> verifyInvigilatorLogin(@RequestBody LoginRequestDTO loginDTO) {
         try {
             LoginInvigilatorResponseDTO responseDTO = loginService.verifyInvigilatorLogin(loginDTO);
-            return new ResponseEntity<>(responseDTO,HttpStatus.OK);
-        }
-        catch(Exception e){
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
-    
+
 }

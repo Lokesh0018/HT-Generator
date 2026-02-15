@@ -52,42 +52,34 @@ const Home = () => {
         controlsRef.current?.stop();
         controlsRef.current = null;
 
-        codeReader
-            .decodeFromVideoDevice(
-                null,
-                videoRef.current,
-                (result, err) => {
-                    if (result) {
-                        const qrText = result.getText();
-                        controlsRef.current?.stop();
-                        controlsRef.current = null;
-                        scanningRef.current = false;
-                        setShowQr(false);
+        codeReader.decodeFromConstraints(
+            { video: { facingMode: "environment" } },
+            videoRef.current,
+            (result) => {
+                if (result) {
+                    const stuId = result.getText();
+                    controlsRef.current?.stop();
+                    scanningRef.current = false;
+                    setShowQr(false);
 
-                        let stuId = qrText;
-                        stuId = JSON.parse(qrText).stuId;
-                        const student = students.find(stu => stu.id === stuId);
-                        if (student && !student.approve) {
-                            setShowCard(student);
-                        } else if (student && student.approve) {
-                            showToastMsg("alreadyVerified");
-                        } else {
-                            showToastMsg("invalidQR");
-                        }
-                    }
+                    const student = students.find(stu => stu.id === stuId);
 
-                    if (err && err.name !== "NotFoundException") {
-                        console.error(err);
+                    if (student && !student.approve) {
+                        setShowCard(student);
+                    } else if (student && student.approve) {
+                        showToastMsg("alreadyVerified");
+                    } else {
+                        showToastMsg("invalidQR");
                     }
                 }
-            )
-            .then(controls => {
-                if (scanningRef.current) {
-                    controlsRef.current = controls;
-                } else {
-                    controls.stop();
-                }
-            });
+            }
+        ).then(controls => {
+            if (scanningRef.current) {
+                controlsRef.current = controls;
+            } else {
+                controls.stop();
+            }
+        });
 
         return () => {
             scanningRef.current = false;
@@ -109,11 +101,6 @@ const Home = () => {
         setShowQr(false);
     };
 
-
-
-    const logout = () => {
-        localStorage.removeItem("invigilator");
-    }
     const handleViewCard = (id) => {
         const student = data.find(s => s.id === id);
         setShowCard(student);
@@ -155,7 +142,7 @@ const Home = () => {
                     </div>
                     <hr />
                     <div className="stuDetailsHomeBody">
-                        <img src={`data:image/jpeg;base64,${showCard.imgData}`} className="stuDetailsImgHome" />
+                        <img src={`data:image/jpeg;base64,${showCard.imgData}`} className="stuDetailsImgHome" alt="" />
                         <table>
                             <tr>
                                 <td>Name :</td>
@@ -212,9 +199,9 @@ const Home = () => {
                                         <td className="cellBody">
                                             <input
                                                 type="checkbox"
-                                                checked={stu.verify}
+                                                checked={stu.approve}
                                                 onChange={(e) =>
-                                                    updateAction(stu.id, !stu.verify)
+                                                    updateAction(stu.id, !stu.approve)
                                                 }
                                             />
                                         </td>

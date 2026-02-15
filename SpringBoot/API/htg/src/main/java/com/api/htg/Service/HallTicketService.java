@@ -16,7 +16,8 @@ public class HallTicketService {
         for (StudentEntity student : studentRepo.findBySection(section)) {
             student.setApprove(true);
             studentRepo.save(student);
-        };
+        }
+        ;
     }
 
     public void updateApproval(String stuId) {

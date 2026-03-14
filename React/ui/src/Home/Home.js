@@ -71,7 +71,6 @@ const Home = () => {
           msg = "";
         }
         console.error("verify-otp failed:", res.status, msg);
-        // Prefer backend-provided error keys/messages
         if (msg) throw new Error(msg);
         if (res.status === 409) throw new Error("otpExpired");
         if (res.status === 401) throw new Error("invalidOtp");

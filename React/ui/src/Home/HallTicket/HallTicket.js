@@ -8,10 +8,13 @@ const HallTicket = () => {
 
     const student = JSON.parse(localStorage.getItem("student"));
     const exams = JSON.parse(localStorage.getItem("exams"));
-    const Year = exams.year;
-    const Month = "October";
-    const YearExam = 2025;
-    const Semester = 1;
+    const Year = exams[0].year;
+    const dateParts = exams[0].date.split("-");
+    const date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+    const Months = ["January", "Febraury","March","April","May","June","July","August","September","October","November","December"];
+    const Month = Months[date.getMonth()];
+    const YearExam = date.getFullYear();
+    const Semester = exams[0].semester;
 
 
     const printRef = useRef();
@@ -61,18 +64,20 @@ const HallTicket = () => {
                     </div>
                     <div className="htLable">
                         <table>
-                            <tr>
-                                <td>Hall Ticket No: </td>
-                                <td>{student.id}</td>
-                            </tr>
-                            <tr>
-                                <td>Student Name: </td>
-                                <td>{student.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Father Name: </td>
-                                <td>{student.fatherName}</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>Hall Ticket No: </td>
+                                    <td>{student.id}</td>
+                                </tr>
+                                <tr>
+                                    <td>Student Name: </td>
+                                    <td>{student.name}</td>
+                                </tr>
+                                <tr>
+                                    <td>Father Name: </td>
+                                    <td>{student.fatherName}</td>
+                                </tr>
+                            </tbody>
                         </table>
                         <img src={`data:${student.imgType};base64,${student.imgData}`} className="htImg" alt="" />
                         <img src={`data:image/png;base64,${student.qrData}`} alt="QR" className="htImg" />

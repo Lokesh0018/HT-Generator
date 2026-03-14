@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.htg.DTO.HallTicketDTO;
 import com.api.htg.Entity.ExamsEntity;
 import com.api.htg.Entity.StudentEntity;
 import com.api.htg.Service.HomeService;

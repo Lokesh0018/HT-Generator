@@ -24,8 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/admin")
 public class ExamsController {
 
-    @Autowired
-    private ExamsService examsService;
+    @Autowired private ExamsService examsService;
 
     @GetMapping("/exams/{year}/{semester}")
     public ResponseEntity<List<ExamsEntity>> getTimeTable(@PathVariable int year, @PathVariable int semester) {
@@ -60,6 +59,16 @@ public class ExamsController {
         try {
             List<ExamsEntity> exams = examsService.deleteSubject(entity);
             return new ResponseEntity<>(exams, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/exams-tt/{year}/{semester}")
+    public ResponseEntity<?> sendTimeTable(@PathVariable int year, @PathVariable int semester) {
+        try {
+            examsService.sendTimeTable(year, semester);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

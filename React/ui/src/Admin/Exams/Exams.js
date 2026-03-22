@@ -3,13 +3,15 @@ import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { ToastContext } from "../../Toast";
+import { HiMail } from "react-icons/hi";
 
 const Exams = () => {
 
     const { showToastMsg } = useContext(ToastContext);
 
     const [data, setData] = useState([]);
-    const regulation = JSON.parse(localStorage.getItem("admin")).regulation;
+    const admin = JSON.parse(localStorage.getItem("admin"));
+    const regulation = admin.regulation;
     const [year, setYear] = useState(1);
     const [sem, setSem] = useState(1);
 
@@ -125,6 +127,22 @@ const Exams = () => {
             showToastMsg(err.message || "serverError");
         });
     };
+
+    const sendTT = () => {
+        const yr = admin.year;
+        const sm = admin.semester;
+        fetch(`http://localhost:8081/admin/exams-tt/${yr}/${sm}`, {
+            method: "GET",
+            headers: { "content-Type": "application/json" }
+        }).then((res) => {
+            if (!res.ok)
+                throw new Error("serverError");
+            showToastMsg("notify");
+        }).catch((err) => {
+            console.log(err);
+            showToastMsg(err.message || "serverError");
+        });
+    }
 
     const [showCard, setShowCard] = useState(null);
     const [selectedRow, setSelectedRow] = useState(null);
@@ -263,16 +281,19 @@ const Exams = () => {
                 </div>
                 <div className="examSelector">
                     <div className="examCard">
-                        <select className="yearSelect" onChange={(e) => setYear(e.target.value)}>
-                            <option value="1">First Year</option>
-                            <option value="2">Second Year</option>
-                            <option value="3">Third Year</option>
-                            <option value="4">Fourth Year</option>
-                        </select>
-                        <select className="semSelect" onChange={(e) => setSem(e.target.value)}>
-                            <option value="1">Semester 1</option>
-                            <option value="2">Semester 2</option>
-                        </select>
+                        <div className="examSelect">
+                            <select className="yearSelect" onChange={(e) => setYear(e.target.value)}>
+                                <option value="1">First Year</option>
+                                <option value="2">Second Year</option>
+                                <option value="3">Third Year</option>
+                                <option value="4">Fourth Year</option>
+                            </select>
+                            <select className="semSelect" onChange={(e) => setSem(e.target.value)}>
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                            </select>
+                        </div>
+                        <button className="examsBtnContainer"><HiMail onClick={sendTT} /></button>
                     </div>
                 </div>
                 <div className="examContainer">

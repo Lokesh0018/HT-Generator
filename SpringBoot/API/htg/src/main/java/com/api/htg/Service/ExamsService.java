@@ -13,6 +13,9 @@ import com.api.htg.Repository.ExamsJpa;
 public class ExamsService {
 
     @Autowired
+    private AdminService adminService;
+
+    @Autowired
     private ExamsJpa examsRepo;
 
     public List<ExamsEntity> getTimeTable(int year, int semester) {
@@ -35,6 +38,10 @@ public class ExamsService {
     public List<ExamsEntity> deleteSubject(ExamsEntity entity) {
         examsRepo.deleteById(entity.getSubCode());
         return getTimeTable(entity.getYear(), entity.getSemester());
+    }
+
+    public void sendTimeTable(int year, int semester) {
+        adminService.sendTimeTable(year, semester, getTimeTable(year, semester));
     }
 
 }

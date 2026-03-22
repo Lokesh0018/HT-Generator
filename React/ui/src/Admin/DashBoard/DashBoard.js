@@ -38,7 +38,7 @@ const DashBoard = () => {
         }).then(res => {
             if (!res.ok)
                 throw new Error("serverError");
-            showToastMsg("success");
+            showToastMsg("notify");
         }).catch(err => {
             showToastMsg(err.message || "serverError");
         }).finally(() => {

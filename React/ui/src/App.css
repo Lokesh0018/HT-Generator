@@ -404,7 +404,55 @@ input[type="checkbox"] {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.examCard,
+.examSelect {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 80%;
+}
+
+.examCard {
+    width: 100%;
+    background-color: #F5F7FA;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.examsBtnContainer {
+    height: 100%;
+    width: 20%;
+    color: var(--AccentActionButton);
+    font-size: 132px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+}
+
+.examsBtnContainer svg {
+    cursor: pointer;
+    transition: all 0.15s ease;
+    filter: drop-shadow(0 5px 0 #c96d1f)
+            drop-shadow(0 8px 8px rgba(247, 140, 47, 0.4));
+}
+
+.examsBtnContainer svg:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 7px 0 #c96d1f)
+            drop-shadow(0 10px 10px rgba(247, 140, 47, 0.45));
+}
+
+.examsBtnContainer svg:active {
+    transform: translateY(3px) scale(0.95);
+    filter: drop-shadow(0 2px 0 #c96d1f)
+            drop-shadow(0 3px 4px rgba(247, 140, 47, 0.3));
+}
+
 .tableContainer {
     background-color: #F5F7FA;
     height: 100%;
@@ -425,7 +473,7 @@ input[type="checkbox"] {
 
 .yearSelect,
 .semSelect {
-    width: 60%;
+    width: 100%;
     cursor: pointer;
     padding: 10px;
     font-size: 16px;

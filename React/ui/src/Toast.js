@@ -41,6 +41,12 @@ const ToastProvider = ({ children }) => {
             icon: <FaRegCircleCheck />,
             msg: "OTP Sent Successfully"
         },
+        notify: {
+            head: "Success",
+            color: "#269b24",
+            icon: <FaRegCircleCheck />,
+            msg: "Successsfully Sent"
+        },
         emptyFields: {
             head: "Info",
             color: "#124fff",
